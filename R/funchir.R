@@ -1,17 +1,17 @@
-# Convenience Infix Operators ####
+# Convenient Infix Operators ####
 ## Concatenation shorthand
 "%+%" <- function(s1, s2) paste0(s1, s2)
 
 ## Set operations shorthand
 ### Set difference
 ###  *Note: only need one backslash for use
-"%\\%" <- function(set1, set2) setdiff(set1, set2)
+"%\\%" <- function(A, B) setdiff(A, B)
 
 ### Set union
-"%u%" <- function(set1, set2) union(set1, set2)
+"%u%" <- function(A, B) union(A, B)
 
 ### Set intersection
-"%^%" <- function(set1, set2) intersect(set1, set2)
+"%^%" <- function(A, B) intersect(A, B)
 
 # Plotting Convenience Functions ####
 ## Implicit simulcast: Write plot to specified
@@ -39,11 +39,11 @@ dev.off2 <- function(typ = "pdf"){
 
 ## Multiplot axis generator
 ##   Plot #n in an MxN grid
-tile_axes <- function(n, M, N, ...){
+tile.axes <- function(n, M, N, ...){
   #only print x axes on the last row
-  if (n > (M - 1) * N) do.call("axis", c(side = 1, list(...)))
+  if (n > (M - 1) * N | M == 1) do.call("axis", c(side = 1, list(...)))
   #only print y axes on the first column
-  if (n %% N == 1) do.call("axis", c(side = 2, list(...)))
+  if (n %% N == 1 | N == 1) do.call("axis", c(side = 2, list(...)))
 }
 
 # Table & regression convenience functions ####
@@ -111,6 +111,6 @@ to.pct <- function(x, dig = Inf) round(100 * x, digits = dig)
 nx.mlt <- function(x, n) n * ceiling(x / n)
 
 ## Convert numbers for printing to dollar format
-dol_form <- function(x, dig = 0L){
+dol.form <- function(x, dig = 0L){
   "$" %+% prettyNum(round(x, digits = dig), big.mark = ",")
 }

@@ -1,17 +1,17 @@
-\name{funchir-infix}
-\alias{%+%}
-\alias{%\%}
-\alias{%u%}
-\alias{%^%}
 \title{ Convenient Infix Operators }
+\name{funchir-infix}
+\alias{\%+\%}
+\alias{\%\\\%}
+\alias{\%u\%}
+\alias{\%^\%}
 \description{
-   Several infix operators which are convenient shorthand for common operations, namely, (paired) string \emph{concatenation}, set \emph{modulation} (A\B), set \emph{union} (AUB) and set \emph{intersection} (A & B).
+   Several infix operators which are convenient shorthand for common operations, namely, (paired) string \emph{concatenation}, set \emph{modulation} (A\\B), set \emph{union} (AUB) and set \emph{intersection} (A & B).
 }
 \usage{
-   s1 %+% s2
-   A %\% B
-   A %u% B
-   A %^% B
+   s1 \%+\% s2
+   A \%\\\% B
+   A \%u\% B
+   A \%^\% B
 }
 \arguments{
   \item{s1}{ A string, or anything that can be understood in the first argument of \code{paste0}. }
