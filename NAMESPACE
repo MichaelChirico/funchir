@@ -1,0 +1,7 @@
+export("%+%","%^%","%u%","%\\%")
+export(read.xlsx3)
+export(pdf2,png2,dev.off2,tile_axes)
+export(table2)
+export(abbr_to_colClass)
+export(print.xtable2,texreg2)
+export(create_quantiles,to.pct,nx.mlt,dol_form)
