@@ -28,7 +28,7 @@
 
   \code{nx.mlt} returns the least multiple of \code{n} which (weakly) exceeds \code{x}. Convenient for making axes ticks land on pretty numbers.
 
-  \code{dol.form} takes a financial input and converts it to a (American-formatted, American-currency) string for printing--appending a dollar sign (\code{"$"}) and inserting commas after every third digit from the left of the decimal point.
+  \code{dol.form} takes a financial input and converts it to a (American-formatted, American-currency) string for printing--appending a dollar sign (\code{"\$"}) and inserting commas after every third digit from the left of the decimal point.
 }
 
 \seealso{ 

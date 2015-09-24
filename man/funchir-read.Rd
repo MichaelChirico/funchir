@@ -11,11 +11,11 @@
 }
 \arguments{
   \item{...}{ Arguments to be passed to \code{read.xlsx2}. }
-  \item{inits}{ Initials of data types to be passed to a \code{colClasses} argument (most typically in \code{fread} for me). See details. }
+  \item{inits}{ Initials of data types to be passed to a \code{colClasses} argument (most typically in \code{fread} from \code{data.table} for me). See details. }
   \item{counts}{ Corresponding counts (as an \emph{unbroken string}) of each type given in \code{inits}. See details }
 }
 \details{
-  \code{read.xlsx3} is a simple wrapper for \code{read.xlsx2} which subsequently calls \code{gc} (invisibly) due to an apparent memory leak problem in \code{read.xlsx2}.
+  \code{read.xlsx3} is a simple wrapper for \code{read.xlsx2} (from the package \code{xlsx}) which subsequently calls \code{gc} (invisibly) due to an apparent memory leak problem in \code{read.xlsx2}.
 
   \code{abbr_to_colClass} was designed specifically for reading in large (read: wide, i.e., with many fields) data files when it is also necessary to specify the types to expect to the reader for speed or for accuracy.
 
@@ -26,9 +26,6 @@
   Note that since \code{counts} is read digit-by-digit, sequences of length greater than 9 must be broken up into size-9 (or smaller) chunks, e.g., if there are 20 \code{Date} fields in a row, we could set \code{inits="ddd"}, \code{counts="992"}. This approach was taken (rather than, say, requiring \code{counts} to be an integer vector of counts) as I find it speedier and more concise, and the direct parallel to \code{inits} can elucidate issues which arise directly in the code instead of, say, checking \code{cbind(strsplit(inits,split="")[[1L]],counts)}.
 }
 
-\seealso{ 
-  \code{\link{read.xlsx2}}, \code{\link{fread}}
-}
 \examples{
   \dontrun{
       fl <- "~/path/to/Excel/file.xlsx"
