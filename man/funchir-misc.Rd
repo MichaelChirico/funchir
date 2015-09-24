@@ -3,6 +3,7 @@
 \alias{to.pct}
 \alias{nx.mlt}
 \alias{dol.form}
+\alias{ntostr}
 \title{ Miscellaneous commonly used functions }
 \description{
    Several odds-and-ends functions for data manipulation & representation
@@ -12,6 +13,7 @@
    to.pct(x, dig = Inf)
    nx.mlt(x, n)
    dol.form(x, dig = 0L)
+   ntostr(n, dig = 2L)
 }
 \arguments{
   \item{x}{ A numeric vector. }
@@ -29,6 +31,8 @@
   \code{nx.mlt} returns the least multiple of \code{n} which (weakly) exceeds \code{x}. Convenient for making axes ticks land on pretty numbers.
 
   \code{dol.form} takes a financial input and converts it to a (American-formatted, American-currency) string for printing--appending a dollar sign (\code{"\$"}) and inserting commas after every third digit from the left of the decimal point.
+  
+  \code{ntostr} converts \code{n} to a \code{character} vector with each element width \code{dig}. This is particularly nice for converting 99:100 to "99" and "100".
 }
 
 \seealso{ 
@@ -46,4 +50,6 @@
   nx.mlt(x,1/3)
 
   dol.form(x, dig=2L)
+  
+  ntostr(999:1000, dig = 3L)
 }

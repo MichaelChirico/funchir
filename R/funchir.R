@@ -110,6 +110,16 @@ to.pct <- function(x, dig = Inf) round(100 * x, digits = dig)
 ## Get the nearest multiple of n weakly larger than x
 nx.mlt <- function(x, n) n * ceiling(x / n)
 
+## Convert numbers to strings OF SPECIFIED LENGTH
+##   Convenient for getting c("99","00") from 99:100
+ntostr <- function(n, dig = 2L){
+  #TODO: speed this up significantly
+  paste0(ifelse(log10(n) < dig - 1,
+                substr(n + 10^dig, 2L, dig + 1L),
+                ifelse(log10(n) >= dig,
+                       substr(n, nchar(n) - dig + 1L, nchar(n)),n)))
+}
+
 ## Convert numbers for printing to dollar format
 dol.form <- function(x, dig = 0L){
   "$" %+% prettyNum(round(x, digits = dig), big.mark = ",")
