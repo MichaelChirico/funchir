@@ -1,15 +1,15 @@
 \name{funchir-table}
 \alias{table2}
-\alias{print.xtable2}
-\alias{texreg2}
+\alias{lyx.xtable}
+\alias{lyx.texreg}
 \title{ Convenient Wrappers for creating and printing tables }
 \description{
    Here are a wrappers for common table creation/manipulation/printing operations.
 }
 \usage{
    table2(..., dig = if (prop) 2L else NULL, prop = FALSE, ord = FALSE, pct = FALSE)
-   print.xtable2(...)
-   texreg2(...)
+   lyx.xtable(...)
+   lyx.texreg(...)
 }
 \arguments{
   \item{...}{ For all three functions, the code to be passed to the underlying function (i.e., less the suffix 2). For \code{table2}, can also include arguments to \code{prop.table}. }
@@ -21,7 +21,7 @@
 \details{
   \code{table2} is especially useful for two common usages of \code{table}--producing ordered frequency tables of a variable (to find most/least common realizations) and producing proportional two-way tables of two variables.
 
-  \code{print.xtable2} (based on package \code{xtable}) and \code{texreg2} (based on package \code{texreg}) are designed specifically for users of the free WYSIWYM LaTeX editor LyX, which converts copy-pasted LaTeX to indecipherable gibberish unless lines of code are separated by two newlines.
+  \code{lyx.xtable} (based on package \code{xtable}) and \code{lyx.texreg} (based on package \code{texreg}) are designed specifically for users of the free WYSIWYM LaTeX editor LyX, which converts copy-pasted LaTeX to indecipherable gibberish unless lines of code are separated by two newlines. Note that \code{lyx.xtable} wraps \code{xtable::print.xtable} and \code{lyx.texreg} wraps \code{xtable::xtable}.
 }
 
 \seealso{ 
@@ -33,9 +33,9 @@
   tbl <- table2(x, y, prop = TRUE, margin = 1)
   
   \dontrun{
-    print.xtable2(xtable(tbl))
+    lyx.xtable(xtable(tbl))
 
     reg <- lm(x~y)
-    texreg2(reg)
+    lyx.texreg(reg)
   }
 }

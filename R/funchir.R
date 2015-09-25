@@ -2,6 +2,10 @@
 ## Concatenation shorthand
 "%+%" <- function(s1, s2) paste0(s1, s2)
 
+"%<unescaped bksl>%" <- function(){
+  cat("What are you thinking? Don't use this function. See ?\"%\\%\"")
+}
+
 ## Set operations shorthand
 ### Set difference
 ###  *Note: only need one backslash for use
@@ -64,12 +68,12 @@ table2<-function(..., dig = if (prop) 2L else NULL,
 }
 
 #For pretty copy-pasting into LyX
-print.xtable2 <- function(...){
+lyx.xtable <- function(...){
   cat(capture.output(do.call('print.xtable', list(...))), sep = "\n\n")
 }
 
 #For pretty copy-pasting into Lyx
-texreg2 <- function(...){
+lyx.texreg <- function(...){
   cat(capture.output(do.call('texreg', list(...))), sep = "\n\n")
 }
 

@@ -3,5 +3,10 @@ export(read.xlsx3)
 export(pdf2,png2,dev.off2,tile.axes)
 export(table2)
 export(abbr_to_colClass)
-export(print.xtable2,texreg2)
+export(lyx.xtable,lyx.texreg)
 export(create_quantiles,to.pct,nx.mlt,dol.form,ntostr)
+
+importFrom("stats", "quantile")
+importFrom("grDevices", "dev.copy", "dev.list", "dev.new", "dev.off",
+             "dev.set", "graphics.off")
+importFrom("utils", "capture.output")

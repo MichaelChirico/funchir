@@ -2,6 +2,7 @@
 \name{funchir-infix}
 \alias{\%+\%}
 \alias{\%\\\%}
+\alias{\%<unescaped bksl>\%}
 \alias{\%u\%}
 \alias{\%^\%}
 \description{
