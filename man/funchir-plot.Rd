@@ -23,7 +23,7 @@
 \details{
   Instead of the standard \code{pdf("file.pdf") [plot code] dev.off()} approach used to write a plot to file, simply replacing the former and latter with these convenience functions will write the same file, but also print the output in the RStudio plotting window.
 
-  \code{tile.axes} provides a simple way to incorporate the plotting of axes into a loop which creates the plots in a matrix of plots (e.g., by using \code{par(mfrow=c(2,2))}) \emph{when the axes are shared by all plots}. x axes are only printed on the bottom row of plots, and y axes are only printed on the first column of plots--this saves potentially wasted / white space by eliminating redundant axes, yet can still be done in a loop.
+  \code{tile.axes} provides a simple way to incorporate the plotting of axes into a loop which creates the plots in a matrix of plots (e.g., by using \code{par(mfrow=c(2, 2))}) \emph{when the axes are shared by all plots}. x axes are only printed on the bottom row of plots, and y axes are only printed on the first column of plots--this saves potentially wasted / white space by eliminating redundant axes, yet can still be done in a loop.
 }
 
 \seealso{ 
@@ -31,20 +31,21 @@
 }
 \examples{
   smpl <- rnorm(100)
+  
   \dontrun{
-   #Works from RStudio command line
-   pdf2("test.pdf")
-   hist(smpl)
-   dev.off2()
+    #Runs in RStudio
+    pdf2() 
+    hist(smpl)
+    dev.off2()
 
-   png2("test.png")
-   hist(smpl)
-   dev.off2(typ="png")
+    png2()
+    hist(smpl)
+    dev.off2(typ="png")
   }
 
-  par(mfrow=c(2,1),mar=c(0,0,0,0),oma=c(5.1,4.1,4.1,2.1))
+  par(mfrow = c(2, 1), mar = c(0, 0, 0, 0), oma=c(5, 4, 4, 2) + .1)
   for (ii in 1:2){
-    hist(smpl[sample(length(smpl),100,rep=TRUE)],xaxt="n",yaxt="n")
-    tile.axes(ii,2,1)
+    hist(smpl[sample(length(smpl), 100, rep = TRUE)], xaxt = "n", yaxt = "n")
+    tile.axes(ii, 2, 1)
   }
 }

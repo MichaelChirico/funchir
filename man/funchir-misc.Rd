@@ -46,10 +46,12 @@
   create_quantiles(x, 7)
 
   to.pct(x)
+  to.pct(x, dig = 2) #output of the form xxx.xx
 
-  nx.mlt(x,1/3)
+  nx.mlt(x, 1/3)
 
   dol.form(x, dig=2L)
   
-  ntostr(999:1000, dig = 3L)
+  ntostr(999:1000, dig = 3L) # c("999","000")
+  ntostr(999:1000, dig = 2L) # c("99","00")
 }

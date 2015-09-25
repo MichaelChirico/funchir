@@ -32,5 +32,5 @@
       read.xlsx3(fl)
   }
   
-  abbr_to_colClass(inits="ncifdfd", counts="1234567")
+  abbr_to_colClass(inits = "ncifdfd", counts = "1234567")
 }
