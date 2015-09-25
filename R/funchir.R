@@ -103,9 +103,10 @@ abbr_to_colClass <- function(inits, counts){
 
 # Miscellaneous functions ####
 ## Specific wrapper of cut to create a factor of quantiles of a vector
-create_quantiles <- function(x, num, right = FALSE, include.lowest = TRUE){
+create_quantiles <- function(x, num, right = FALSE,
+                             include.lowest = TRUE, labels = 1:num){
   cut(x, breaks = quantile(x, probs = seq(0, 1, by = 1 / num)),
-      labels = 1:num, right = right, include.lowest = include.lowest)
+      labels = labels, right = right, include.lowest = include.lowest)
 }
 
 ## Inline conversion to percentage
