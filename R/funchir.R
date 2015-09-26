@@ -72,6 +72,28 @@ lyx.xtable <- function(...){
   cat(capture.output(do.call('print.xtable', list(...))), sep = "\n\n")
 }
 
+sanitize2 <- function(str) {
+  result <- str
+  result <- gsub("\\\\", "SANITIZE.BACKSLASH", result)
+  result <- gsub("$", "\\$", result, fixed = TRUE)
+  result <- gsub(">", "$>$", result, fixed = TRUE)
+  result <- gsub("<", "$<$", result, fixed = TRUE)
+  result <- gsub("|", "$|$", result, fixed = TRUE)
+  result <- gsub("{", "\\{", result, fixed = TRUE)
+  result <- gsub("}", "\\}", result, fixed = TRUE)
+  result <- gsub("%", "\\%", result, fixed = TRUE)
+  result <- gsub("&", "\\&", result, fixed = TRUE)
+  result <- gsub("_", "\\_", result, fixed = TRUE)
+  result <- gsub("#", "\\#", result, fixed = TRUE)
+  result <- gsub("[", "\\lbrack", result, fixed = TRUE)
+  result <- gsub("]", "\\rbrack", result, fixed = TRUE)
+  result <- gsub("^", "\\verb|^|", result, fixed = TRUE)
+  result <- gsub("~", "\\~{}", result, fixed = TRUE)
+  result <- gsub("SANITIZE.BACKSLASH", "$\\backslash$", 
+                 result, fixed = TRUE)
+  return(result)
+}
+
 #For pretty copy-pasting into Lyx
 lyx.texreg <- function(...){
   cat(capture.output(do.call('texreg', list(...))), sep = "\n\n")

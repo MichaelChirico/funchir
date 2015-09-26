@@ -9,7 +9,7 @@
    Several odds-and-ends functions for data manipulation & representation
 }
 \usage{
-   create_quantiles(x, num, right = FALSE, include.lowest = TRUE)
+   create_quantiles(x, num, right = FALSE, include.lowest = TRUE, labels = 1:num)
    to.pct(x, dig = Inf)
    nx.mlt(x, n)
    dol.form(x, dig = 0L)
@@ -20,6 +20,7 @@
   \item{num}{ A number, typically an integer, specifying how many equal-count intervals into which to divide the data.}
   \item{right}{ logical, indicating if the intervals should be closed on the right (and open on the left) or vice versa. }
   \item{include.lowest}{ logical, indicating if an \code{x[i]} equal to the lowest (or highest, for \code{right = FALSE}) \code{breaks} value should be included.}
+  \item{labels}{ \code{character} vector of length \code{num}; the labels to be applied to the resulting \code{factor}. }
   \item{dig}{ The number of digits to be included past the decimal in output; sent directly to \code{round}. }
   \item{n}{ A number; see details. }
 }
