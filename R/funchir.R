@@ -151,3 +151,13 @@ ntostr <- function(n, dig = 2L){
 dol.form <- function(x, dig = 0L){
   "$" %+% prettyNum(round(x, digits = dig), big.mark = ",")
 }
+
+## Write the output of sessionInfo() & the date to a file
+##   (for tracking package versions over time)
+write.packages <- function(file) {
+  x<-
+    capture.output({
+      cat("Package info for code run on " %+% Sys.time() %+% ":\n")
+      sessionInfo()})
+  writeLines(x,con=file)
+}
