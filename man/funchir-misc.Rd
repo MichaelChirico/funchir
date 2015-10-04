@@ -5,9 +5,10 @@
 \alias{dol.form}
 \alias{ntostr}
 \alias{write.packages}
+\alias{embed.mat}
 \title{ Miscellaneous commonly used functions }
 \description{
-   Several odds-and-ends functions for data manipulation & representation, etc.
+   Several odds-and-ends functions for data manipulation & representation, etc. See details.
 }
 \usage{
    create_quantiles(x, num, right = FALSE, include.lowest = TRUE, labels = 1:num)
@@ -16,6 +17,7 @@
    dol.form(x, dig = 0L)
    ntostr(n, dig = 2L)
    write.packages(file)
+   embed.mat(mat, M = nrow(mat), N = ncol(mat), m = 1L, n = 1L, fill = 0L)
 }
 \arguments{
   \item{x}{ A numeric vector. }
@@ -24,8 +26,13 @@
   \item{include.lowest}{ logical, indicating if an \code{x[i]} equal to the lowest (or highest, for \code{right = FALSE}) \code{breaks} value should be included.}
   \item{labels}{ \code{character} vector of length \code{num}; the labels to be applied to the resulting \code{factor}. }
   \item{dig}{ The number of digits to be included past the decimal in output; sent directly to \code{round}. }
-  \item{n}{ A number; see details. }
+  \item{n}{ For \code{nx.mlt} and \code{ntostr}, a number; see details. For \code{embed.mat}, an integer specifying the column at which to insert \code{mat}. }
   \item{file}{ A file/connection where output should be written. }
+  \item{mat}{ A matrix. }
+  \item{M}{ An integer specifying the number of rows in the enclosing matrix. }
+  \item{N}{ An integer specifying the number of columns in the enclosing matrix. }
+  \item{m}{ An integer specifying the row at which to insert \code{mat}. }
+  \item{fill}{ An atomic vector specifying how to fill the enclosing matrix. }
 }
 \value{
   \code{create_quantiles} is a parsimonious function for generating quantiles of a vector (e.g., quartiles for \code{num=4} or quintiles for \code{num=5}). Basically a wrapper for the \code{cut} function; the type of the output is \code{factor}.
@@ -39,6 +46,8 @@
   \code{ntostr} converts \code{n} to a \code{character} vector with each element width \code{dig}. This is particularly nice for converting 99:100 to "99" and "100".
   
   \code{write.packages} captures the current date & time and writes the output to the specified file. This may be essential for tracking across time which package versions were being used.
+  
+  \code{embed.mat} inserts a supplied matrix into a (weakly) larger enclosing matrix, typically filled with 0s, at a specified position.
 }
 
 \seealso{ 
@@ -63,4 +72,8 @@
   
   library(stats)
   write.packages(paste0(tempdir(),"test.txt"))
+  
+  inmat <- matrix(1:9, ncol = 3L)
+  embed.mat(inmat, M = 4L, N = 4L)
+  embed.mat(inmat, N = 6L, n = 4L, fill = NA)
 }

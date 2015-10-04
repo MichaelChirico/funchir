@@ -161,3 +161,16 @@ write.packages <- function(file) {
       sessionInfo()})
   writeLines(x,con=file)
 }
+
+## Embed the matrix mat in a larger matrix by
+##   placing the top-left element of mat at the supplied
+##   position (m,n).
+embed.mat <- function(mat, M = nrow(mat), N = ncol(mat), m = 1L, n = 1L, fill = 0L) {
+  if (m > M || n > N) stop("Supplied starting position outside supplied enclosing matrix bounds")
+  if (m + nrow(mat) - 1L - M > 0 || n + ncol(mat) - 1L - N > 0){
+    stop("Supplied matrix too large for supplied enclosing matrix")
+  }
+  out <- matrix(fill, nrow = M, ncol = N)
+  out[m:(m + nrow(mat) - 1L), n:(n + ncol(mat) - 1L)] <- mat
+  out
+}
