@@ -21,9 +21,10 @@
 ## Implicit simulcast: Write plot to specified
 ##   file while also printing the output to
 ##   the RStudio plotting window
-pdf2 <- function(...){
+pdf2 <- function(pin = c(4,3), ...){
   graphics.off()
   dev.new()
+  par(pin = pin)
   do.call('pdf', list(...))
   dev.set(which = dev.list()["RStudioGD"])
 }
