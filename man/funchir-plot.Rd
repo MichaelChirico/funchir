@@ -8,13 +8,12 @@
    Several wrapper functions which make it convenient / parsimonious to simultaneously write a plot to a file (currently limited to .png and .pdf types) \emph{and} to print the plot to the Rstudio graphics window.
 }
 \usage{
-   pdf2(pin = c(4,3), ...)
+   pdf2(...)
    png2(...)
    dev.off2(typ = "pdf")
    tile.axes(n, M, N, ...)
 }
 \arguments{
-  \item{pin}{ Set plot dimensions (passed directly to \code{par("pin")}) since current default is to use the RStudio window size which is in constant flux for my workflow; default is to set a 4" x 3" window. }
   \item{...}{ For \code{pdf2}, \code{png2}: list of arguments to be passed directly to \code{pdf} or \code{png}. For \code{tile.axes}, arguments to be passed to \code{axis}. }
   \item{typ}{ Either \code{"pdf"} or \code{"png"}, must match the plot type currently open.}
   \item{n}{ Integer. Cell in \code{mfrow} to which to apply the axes; fills by \emph{row}, following base functionality.}
