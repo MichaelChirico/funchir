@@ -119,7 +119,10 @@ abbr_to_colClass <- function(inits, counts){
   types[x == "f"] <- "factor"
   types[x == "i"] <- "integer"
   types[x == "n"] <- "numeric"
-  types[x == "d"] <- "Date"
+  types[x == "D"] <- "Date"
+  #For readxl (Hadley)'s odd read_excel options
+  types[x == "t"] <- "text"
+  types[x == "d"] <- "date"
   rep(types, strsplit(counts, split = "")[[1L]])
 }
 
