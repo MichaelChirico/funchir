@@ -1,6 +1,6 @@
 export("%+%","%^%","%u%","%\\%")
 export(read.xlsx3)
-export(pdf2,png2,dev.off2,tile.axes)
+export(pdf2,png2,dev.off2,tile.axes,rel_coord)
 export(table2)
 export(abbr_to_colClass)
 export(lyx.xtable,lyx.texreg,sanitize2)
