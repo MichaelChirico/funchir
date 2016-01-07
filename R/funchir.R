@@ -50,6 +50,25 @@ tile.axes <- function(n, M, N, ...){
   if (n %% N == 1 | N == 1) do.call("axis", c(side = 2, list(...)))
 }
 
+## Methods for getting relative position in axes
+##  **TODO: more sophistication with handling text input,
+#   **perhaps ideally mimicking 'legend'
+rel_coord <- function(ax, lambda = 0){
+  lmc <- is.character(lambda)
+  lamn <- if (lmc){if (lambda %in% c("right", "top")) .95 else .05} else lambda
+  usr <- par("usr")
+  if (ax == "x"){
+    lims <- usr[1:2]
+    if (lmc & !lambda %in% c("left", "right"))
+        stop('Valid text arguments for `lambda` are "left" and "right" on the x axis')
+  } else if (ax == "y"){
+    lims <- usr[3:4]
+    if (lmc & !lambda %in% c("top", "bottom"))
+        stop('Valid text arguments for `lambda` are "top" and "bottom" on the y axis')
+  }
+  sum(lims * c(1 - lamn, lamn))
+}
+
 # Table & regression convenience functions ####
 ## Extending base table with some common options
 table2<-function(..., dig = if (prop) 2L else NULL,
