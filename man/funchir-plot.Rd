@@ -28,9 +28,11 @@
   Instead of the standard \code{pdf("file.pdf") [plot code] dev.off()} approach used to write a plot to file, simply replacing the former and latter with these convenience functions will write the same file, but also print the output in the RStudio plotting window.
 
   \code{tile.axes} provides a simple way to incorporate the plotting of axes into a loop which creates the plots in a matrix of plots (e.g., by using \code{par(mfrow=c(2, 2))}) \emph{when the axes are shared by all plots}. x axes are only printed on the bottom row of plots, and y axes are only printed on the first column of plots--this saves potentially wasted / white space by eliminating redundant axes, yet can still be done in a loop.
-}
+
 
   \code{rel_coord} gives a simple way to place text, labels, etc. in a plot by specifying only relative coordinates. The first form mimics the flexibility of \code{\link{legend}}, which accepts such relatively-defined positions as \code{"top"} and \code{"left"}. For example, specifying \code{lambda = "right"} will return an x coordinate close to the right endpoint of the currently defined axes. Alternatively, an exact proportion can be supplied -- if the desired coordinate is 75\% of the way to the right endpoint, for example, specify \code{rel_coord("x", .75)}.
+  
+  }
 \seealso{ 
   \code{\link{pdf}}, \code{\link{png}} , \code{\link{dev.off}}
 }
