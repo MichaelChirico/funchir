@@ -12,17 +12,18 @@
    pdf2(...)
    png2(...)
    dev.off2(typ = "pdf")
-   tile.axes(n, M, N, ...)
+   tile.axes(n, M, N, params)
    rel_coord(ax, lambda = 0)
 }
 \arguments{
-  \item{...}{ For \code{pdf2}, \code{png2}: list of arguments to be passed directly to \code{pdf} or \code{png}. For \code{tile.axes}, arguments to be passed to \code{axis}. }
+  \item{...}{ For \code{pdf2}, \code{png2}: list of arguments to be passed directly to \code{pdf} or \code{png}. }
   \item{typ}{ Either \code{"pdf"} or \code{"png"}, must match the plot type currently open.}
   \item{n}{ Integer. Cell in \code{mfrow} to which to apply the axes; fills by \emph{row}, following base functionality.}
   \item{M}{ Integer. Number of rows specified in \code{mfrow}. }
   \item{N}{ Integer. Number of columns specified in \code{mfrow}. }
   \item{ax}{ Either \code{"x"} or \code{"y"}; axis for which we're specifying coordinates. }
   \item{lambda}{ Either a mixing weight, giving the percentage of the way between the lower and higher endpoint of the specified axis (0 : smaller endpoint, 1 : larger endpoint), or one of the following relative position characters: \code{c("top", "bottom", "left", "right")}. }
+  \item{params}{ A length-2 \code{list}. \code{params[[1]]} is a \code{list} of parameters to be passed to the x-axis. \code{params[[2]]} is a \code{list} of parameters to be passed to the y-axis.
 }
 \details{
   Instead of the standard \code{pdf("file.pdf") [plot code] dev.off()} approach used to write a plot to file, simply replacing the former and latter with these convenience functions will write the same file, but also print the output in the RStudio plotting window.
