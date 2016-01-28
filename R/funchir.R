@@ -162,11 +162,7 @@ nx.mlt <- function(x, n) n * ceiling(x / n)
 ## Convert numbers to strings OF SPECIFIED LENGTH
 ##   Convenient for getting c("99","00") from 99:100
 ntostr <- function(n, dig = 2L){
-  #TODO: speed this up significantly
-  paste0(ifelse(log10(n) < dig - 1,
-                substr(n + 10^dig, 2L, dig + 1L),
-                ifelse(log10(n) >= dig,
-                       substr(n, nchar(n) - dig + 1L, nchar(n)),n)))
+  sprintf("%0" %+% dig %+% "d", x %% 10^dig)
 }
 
 ## Convert numbers for printing to dollar format
