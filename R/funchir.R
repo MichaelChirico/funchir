@@ -17,6 +17,9 @@
 ### Set intersection
 "%^%" <- function(A, B) intersect(A, B)
 
+### Left-to-right naming
+"%=%" <- function(nm, obj){names(obj) <- nm; obj}
+
 # Plotting Convenience Functions ####
 ## Implicit simulcast: Write plot to specified
 ##   file while also printing the output to

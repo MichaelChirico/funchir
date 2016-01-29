@@ -1,4 +1,4 @@
-export("%+%","%^%","%u%","%\\%")
+export("%+%","%^%","%u%","%\\%","%=%")
 export(read.xlsx3)
 export(pdf2,png2,dev.off2,tile.axes,rel_coord)
 export(table2)
