@@ -39,6 +39,14 @@ png2 <- function(...){
 }
 
 dev.off2 <- function(typ = "pdf"){
+  #dev.new() creates an RStudio device AND a png device.
+  #  So there are multiple png devices when we've
+  #  created our own png device. As such we have to
+  #  take care to select the most recent png device.
+  #  Inspection of the object .Devices after running
+  #  graphics.off(); dev.new(); png("test.png")
+  #  shows that this is probably the right approach.
+  #  SOLVES #2: https://github.com/MichaelChirico/funchir/issues/2
   idx <- which(names(dl <- dev.list()) == typ)
   num <- dl[idx[length(idx)]]
   dev.copy(which = num)
