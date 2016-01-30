@@ -156,7 +156,7 @@ abbr_to_colClass <- function(inits, counts){
 ## Specific wrapper of cut to create a factor of quantiles of a vector
 create_quantiles <- function(x, num, right = FALSE,
                              include.lowest = TRUE, labels = 1:num){
-  cut(x, breaks = quantile(x, probs = seq(0, 1, by = 1 / num)),
+  cut(x, breaks = quantile(x, probs = (1 / num) * 0:num),
       labels = labels, right = right, include.lowest = include.lowest)
 }
 
@@ -184,18 +184,21 @@ write.packages <- function(file) {
     capture.output({
       cat("Package info for code run on " %+% Sys.time() %+% ":\n")
       sessionInfo()})
-  writeLines(x,con=file)
+  writeLines(x, con = file)
 }
 
 ## Embed the matrix mat in a larger matrix by
 ##   placing the top-left element of mat at the supplied
 ##   position (m,n).
-embed.mat <- function(mat, M = nrow(mat), N = ncol(mat), m = 1L, n = 1L, fill = 0L) {
-  if (m > M || n > N) stop("Supplied starting position outside supplied enclosing matrix bounds")
-  if (m + nrow(mat) - 1L - M > 0 || n + ncol(mat) - 1L - N > 0){
+embed.mat <- function(mat, M = nrow(mat), N = ncol(mat), 
+                      m = 1L, n = 1L, fill = 0L) {
+  if (m > M || n > N) 
+    stop("Supplied starting position outside supplied enclosing matrix bounds")
+  if ((end1 <- m + nrow(mat) - 1L) > M || 
+      (end2 <- n + ncol(mat) - 1L) > N){
     stop("Supplied matrix too large for supplied enclosing matrix")
   }
   out <- matrix(fill, nrow = M, ncol = N)
-  out[m:(m + nrow(mat) - 1L), n:(n + ncol(mat) - 1L)] <- mat
+  out[m:end1, n:end2] <- mat
   out
 }
