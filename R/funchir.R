@@ -28,18 +28,19 @@ pdf2 <- function(...){
   graphics.off()
   dev.new()
   do.call('pdf', list(...))
-  dev.set(which = dev.list()["RStudioGD"])
+  invisible(dev.set(which = dev.list()["RStudioGD"]))
 }
 
 png2 <- function(...){
   graphics.off()
   dev.new()
   do.call('png', list(...))
-  dev.set(which = dev.list()["RStudioGD"])
+  invisible(dev.set(which = dev.list()["RStudioGD"]))
 }
 
 dev.off2 <- function(typ = "pdf"){
-  num <- dev.list()[typ]
+  idx <- which(names(dl <- dev.list()) == typ)
+  num <- dl[idx[length(idx)]]
   dev.copy(which = num)
   invisible(dev.off(which = num))
 }
