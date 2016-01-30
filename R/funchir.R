@@ -145,16 +145,11 @@ read.xlsx3 <- function(...){
 ##   starts to mushroom considerably
 abbr_to_colClass <- function(inits, counts){
   x <- strsplit(inits, split = "")[[1L]]
-  types <- character(length(x))
-  types[x == "c"] <- "character"
-  types[x == "f"] <- "factor"
-  types[x == "i"] <- "integer"
-  types[x == "n"] <- "numeric"
-  types[x == "D"] <- "Date"
-  #For readxl (Hadley)'s odd read_excel options
-  types[x == "t"] <- "text"
-  types[x == "d"] <- "date"
-  rep(types, strsplit(counts, split = "")[[1L]])
+  lookup <- c(c = "character", f = "factor",
+              i = "integer", n = "numeric", D = "Date", 
+              #For readxl (Hadley)'s odd read_excel options
+              t = "text", d = "date")
+  rep(unname(lookup[x]), strsplit(counts, split = "")[[1L]])
 }
 
 # Miscellaneous functions ####
