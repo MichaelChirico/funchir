@@ -205,12 +205,12 @@ embed.mat <- function(mat, M = nrow(mat), N = ncol(mat),
 
 ## Quick conversion of a code snippet into
 ##   a form copy-paste-able on Stack Overflow
-SOprint <- function(x, drop.ref = TRUE){
+SOprint <- function(exp, drop.ref = TRUE){
   #note that `deparse(substitute(x))` will pre-evaluate
   #  certain expressions, e.g., turning 'x := y'
   #  from 'data.table' into `:=`(x, y). This regex
   #  reverses this (unless we don't want it to)
-  if (grepl("`:=`", dsx <- deparse(substitute(x)), fixed = TRUE) && drop.ref)
+  if (grepl("`:=`", dsx <- deparse(substitute(exp)), fixed = TRUE) && drop.ref)
     dsx <- gsub("`:=`\\(([^,]*)\\,([^)]*)\\)", "\\1 := \\2", dsx)
-  cat(dsx, capture.output(x), sep = "\n# ")
+  cat(dsx, capture.output(exp), sep = "\n# ")
 }
