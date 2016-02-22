@@ -214,14 +214,13 @@ get_age <- function(birthdays, ref_dates){
                             val = c(3L, 2L, 1L, 4L, 3L),
                             key = "start,end"))$val]
   I4 <- diag(4)[ , -4]
-  for (ct in seq.int(4L)){
-    x[cycle_type == ct, extra := 
-        foverlaps(data.table(start = rem, end = rem),
-                  data.table(start = st <- cumsum(c(0, rep(365, 3) + I4[ct,])),
-                             end = c(st[-1L] - 1L, 1461),
-                             int_yrs = c(0, 1, 2, 3), key = "start,end")
-        )[ , int_yrs + (i.start - start) / (end + 1L - start)]]
-  }
+  x[ , extra := 
+       foverlaps(data.table(start = rem, end = rem),
+                 data.table(start = st <- cumsum(c(0, rep(365, 3) +
+                                                     I4[.BY[[1]],])),
+                            end = c(st[-1L] - 1L, 1461),
+                            int_yrs = c(0, 1, 2, 3), key = "start,end")
+       )[ , int_yrs + (i.start - start) / (end + 1L - start)], by = cycle_type]
   4 * ((ref - bday) %/% 1461) + x$extra
 }
 
