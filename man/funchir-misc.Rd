@@ -19,6 +19,7 @@
    write.packages(file)
    embed.mat(mat, M = nrow(mat), N = ncol(mat), m = 1L, n = 1L, fill = 0L)
    SOprint(exp, drop.ref = TRUE)
+   get_age(birthdays, ref_dates)
 }
 \arguments{
   \item{x}{ A numeric vector. }
@@ -36,6 +37,8 @@
   \item{fill}{ An atomic vector specifying how to fill the enclosing matrix. }
   \item{exp}{ Any R expression / code snippet. }
   \item{drop.ref}{ If \code{`:=`} is found in \code{exp}, should it be returned in infix form? }
+  \item{birthdays}{ A vector of \code{Date}s. }
+  \item{ref_dates}{ A vector of \code{Date}s. }
 }
 \value{
   \code{create_quantiles} is a parsimonious function for generating quantiles of a vector (e.g., quartiles for \code{num=4} or quintiles for \code{num=5}). Basically a wrapper for the \code{cut} function; the type of the output is \code{factor}.
@@ -53,6 +56,8 @@
   \code{embed.mat} inserts a supplied matrix into a (weakly) larger enclosing matrix, typically filled with 0s, at a specified position.
   
   \code{SOprint} is a wrapper for code snippets that can be copy-pasted easily to Stack Overflow, namely if an answer/comment involves evaluating an expression for which showing the output contributes to the elucidation. Will print the line of code and then its output, with the output pre-commented out so that viewers can copy-paste the output without issue. The \code{drop.ref} argument was added with \code{data.table}'s \code{`:=`} operator in mind. \code{substitute(x := y)} will return \code{`:=`(x, y)}; if this is OK, use \code{drop.ref = FALSE}.
+  
+  \code{get_age} returns the accurate, fractional age (in years) of each individual, quickly. Accuracy deteriorates when non-leap century years are involved (i.e., any year congruent to 0 mod 100 but not 0 mod 400); designed for use with currently-relevant birthdays and ages.
 }
 
 \seealso{ 

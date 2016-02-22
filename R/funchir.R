@@ -203,6 +203,28 @@ embed.mat <- function(mat, M = nrow(mat), N = ncol(mat),
   out
 }
 
+## Accurately calculate fractional age, quickly
+get_age <- function(birthdays, ref_dates){
+  x <- data.table(bday <- unclass(birthdays),
+                  rem = ((ref <- unclass(ref_dates)) - bday) %% 1461)
+  x[ , cycle_type := 
+       foverlaps(data.table(start = bdr <- bday %% 1461, end = bdr),
+                 data.table(start = c(0, 59, 424, 790, 1155), 
+                            end = c(58, 423, 789, 1154, 1460), 
+                            val = c(3L, 2L, 1L, 4L, 3L),
+                            key = "start,end"))$val]
+  I4 <- diag(4)[ , -4]
+  for (ct in seq.int(4L)){
+    x[cycle_type == ct, extra := 
+        foverlaps(data.table(start = rem, end = rem),
+                  data.table(start = st <- cumsum(c(0, rep(365, 3) + I4[ct,])),
+                             end = c(st[-1L] - 1L, 1461),
+                             int_yrs = c(0, 1, 2, 3), key = "start,end")
+        )[ , int_yrs + (i.start - start) / (end + 1L - start)]]
+  }
+  4 * ((ref - bday) %/% 1461) + x$extra
+}
+
 ## Quick conversion of a code snippet into
 ##   a form copy-paste-able on Stack Overflow
 SOprint <- function(exp, drop.ref = TRUE){
@@ -214,3 +236,4 @@ SOprint <- function(exp, drop.ref = TRUE){
     dsx <- gsub("`:=`\\(([^,]*)\\,([^)]*)\\)", "\\1 := \\2", dsx)
   cat(dsx, capture.output(exp), sep = "\n# ")
 }
+
