@@ -6,6 +6,9 @@
 \alias{ntostr}
 \alias{write.packages}
 \alias{embed.mat}
+\alias{SOprint}
+\alias{get_age}
+\alias{D}
 \title{ Miscellaneous commonly used functions }
 \description{
    Several odds-and-ends functions for data manipulation & representation, etc. See details.
@@ -20,6 +23,7 @@
    embed.mat(mat, M = nrow(mat), N = ncol(mat), m = 1L, n = 1L, fill = 0L)
    SOprint(exp, drop.ref = TRUE)
    get_age(birthdays, ref_dates)
+   D(...)
 }
 \arguments{
   \item{x}{ A numeric vector. }
@@ -39,6 +43,7 @@
   \item{drop.ref}{ If \code{`:=`} is found in \code{exp}, should it be returned in infix form? }
   \item{birthdays}{ A vector of \code{Date}s. }
   \item{ref_dates}{ A vector of \code{Date}s. }
+  \item{...}{ Items and possibly arguments to (methods of) \code{as.Date}. }
 }
 \value{
   \code{create_quantiles} is a parsimonious function for generating quantiles of a vector (e.g., quartiles for \code{num=4} or quintiles for \code{num=5}). Basically a wrapper for the \code{cut} function; the type of the output is \code{factor}.
@@ -58,6 +63,8 @@
   \code{SOprint} is a wrapper for code snippets that can be copy-pasted easily to Stack Overflow, namely if an answer/comment involves evaluating an expression for which showing the output contributes to the elucidation. Will print the line of code and then its output, with the output pre-commented out so that viewers can copy-paste the output without issue. The \code{drop.ref} argument was added with \code{data.table}'s \code{`:=`} operator in mind. \code{substitute(x := y)} will return \code{`:=`(x, y)}; if this is OK, use \code{drop.ref = FALSE}.
   
   \code{get_age} returns the accurate, fractional age (in years) of each individual, quickly. Accuracy deteriorates when non-leap century years are involved (i.e., any year congruent to 0 mod 100 but not 0 mod 400); designed for use with currently-relevant birthdays and ages.
+  
+  \code{D} is designed with the simplicity of \code{c} in mind to create vectors of \code{Date}s. 
 }
 
 \seealso{ 
@@ -86,4 +93,12 @@
   inmat <- matrix(1:9, ncol = 3L)
   embed.mat(inmat, M = 4L, N = 4L)
   embed.mat(inmat, N = 6L, n = 4L, fill = NA)
+  
+  SOprint(strsplit("test,string", ","))
+  
+  D("01-01-2016", format = "\%m-\%d-\%Y")
+  D("2004-03-02")
+  D(1L, 2L, origin = D("1980-01-01"))
+  
+  get_age(D("1987-05-02"), D("2016-02-23"))
 }
