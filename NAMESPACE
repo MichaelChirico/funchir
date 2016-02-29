@@ -6,7 +6,7 @@ export(abbr_to_colClass)
 export(lyx.xtable,lyx.texreg,sanitize2)
 export(create_quantiles,to.pct,get_age,
        nx.mlt,dol.form,ntostr,embed.mat,
-       D,install_github)
+       D,install_gh)
 export(write.packages)
 export(SOprint)
 

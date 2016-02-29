@@ -243,7 +243,7 @@ D <- function(...){
 }
 
 ## devtools has too many dependencies. Use Jan Tilly's alternative
-install_github <- function(repo, branch = "master", dependencies = TRUE, method = "auto"){
+install_gh <- function(repo, branch = "master", dependencies = TRUE, method = "auto"){
   source("http://jtilly.io/install_github/install_github.R")
   install_github(repo, branch, dependencies, method)
 }
