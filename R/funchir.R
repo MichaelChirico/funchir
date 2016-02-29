@@ -55,12 +55,12 @@ dev.off2 <- function(typ = "pdf"){
 
 ## Multiplot axis generator
 ##   Plot #n in an MxN grid
-tile.axes <- function(n, M, N, params = list(list(),list()), 
+tile.axes <- function(n, M, N, params = list(x = list(), y = list()), 
                       use.x = TRUE, use.y = TRUE){
   #only print x axes on the last row
-  if ((n > (M - 1) * N | M == 1) & use.x) do.call("axis", c(side = 1, params[[1]]))
+  if ((n > (M - 1) * N | M == 1) & use.x) do.call("axis", c(side = 1, params$x))
   #only print y axes on the first column
-  if ((n %% N == 1 | N == 1) & use.y) do.call("axis", c(side = 2, params[[2]]))
+  if ((n %% N == 1 | N == 1) & use.y) do.call("axis", c(side = 2, params$y))
 }
 
 ## Methods for getting relative position in axes
