@@ -238,7 +238,8 @@ SOprint <- function(exp, drop.ref = TRUE){
 
 ## Tired of over-using as.Date everywhere...
 D <- function(...){
-  if (is.null(names(dl <- list(...)))) return(do.call("as.Date", dl))
+  if (is.null(names(dl <- list(...)))) 
+    return(do.call("as.Date", list(do.call("c", dl))))
   do.call("as.Date", c(list(do.call("c", dl[nm <- names(dl) == ""])), dl[!nm]))
 }
 
