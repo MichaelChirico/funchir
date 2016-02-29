@@ -241,3 +241,9 @@ D <- function(...){
   if (is.null(names(dl <- list(...)))) return(do.call("as.Date", dl))
   do.call("as.Date", c(list(do.call("c", dl[nm <- names(dl) == ""])), dl[!nm]))
 }
+
+## devtools has too many dependencies. Use Jan Tilly's alternative
+install_github <- function(repo, branch = "master", dependencies = TRUE, method = "auto"){
+  source("http://jtilly.io/install_github/install_github.R")
+  install_github(repo, branch, dependencies, method)
+}
