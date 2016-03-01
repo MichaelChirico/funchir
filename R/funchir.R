@@ -82,6 +82,11 @@ rel_coord <- function(ax, lambda = 0){
   sum(lims * c(1 - lamn, lamn))
 }
 
+## barplot.default doesn't dispatch as.matrix to a data.table
+barplot.data.table <- function(height, ...){
+  do.call("barplot", c(list(as.matrix(height)), list(...)))
+}
+
 # Table & regression convenience functions ####
 ## Extending base table with some common options
 table2<-function(..., dig = if (prop) 2L else NULL,
