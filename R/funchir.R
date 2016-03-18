@@ -166,6 +166,11 @@ create_quantiles <- function(x, num, right = FALSE,
       labels = labels, right = right, include.lowest = include.lowest)
 }
 
+## Return output of quantile as a list instead of as a vector
+lquantile <- function(...){
+  as.list(do.call("quantile", list(...)))
+}
+
 ## Inline conversion to percentage
 to.pct <- function(x, dig = Inf) round(100 * x, digits = dig)
 
