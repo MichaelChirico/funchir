@@ -4,7 +4,7 @@ export(pdf2,png2,dev.off2,tile.axes,rel_coord)
 export(table2)
 export(abbr_to_colClass)
 export(lyx.xtable,lyx.texreg,sanitize2)
-export(create_quantiles,lquantile,to.pct,get_age,
+export(create_quantiles,to.pct,get_age,
        nx.mlt,dol.form,ntostr,embed.mat,
        D,install_github)
 export(write.packages)

@@ -17,7 +17,7 @@
    create_quantiles(x, num, right = FALSE, include.lowest = TRUE, labels = 1:num)
    to.pct(x, dig = Inf)
    nx.mlt(x, n)
-   dol.form(x, dig = 0L)
+   dol.form(x, dig = 0L, suff = "")
    ntostr(n, dig = 2L)
    write.packages(file)
    embed.mat(mat, M = nrow(mat), N = ncol(mat), m = 1L, n = 1L, fill = 0L)
@@ -32,6 +32,7 @@
   \item{include.lowest}{ logical, indicating if an \code{x[i]} equal to the lowest (or highest, for \code{right = FALSE}) \code{breaks} value should be included.}
   \item{labels}{ \code{character} vector of length \code{num}; the labels to be applied to the resulting \code{factor}. }
   \item{dig}{ The number of digits to be included past the decimal in output; sent directly to \code{round}. }
+  \item{suff}{ The suffix to appended/unit in which to express \code{x}. Currently one of \code{c("", "k", "m", "b")}, corresponding to plain units, thousands, millions, and billions, respectively. }
   \item{n}{ For \code{nx.mlt} and \code{ntostr}, a number; see details. For \code{embed.mat}, an integer specifying the column at which to insert \code{mat}. }
   \item{file}{ A file/connection where output should be written. }
   \item{mat}{ A matrix. }
