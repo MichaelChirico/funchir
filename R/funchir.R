@@ -179,8 +179,14 @@ ntostr <- function(n, dig = 2L){
 }
 
 ## Convert numbers for printing to dollar format
-dol.form <- function(x, dig = 0L){
-  "$" %+% prettyNum(round(x, digits = dig), big.mark = ",")
+dol.form <- function(x, dig = 0L, suff = ""){
+  neg <- rep("", length(x))
+  neg[x<0] <- "-"
+  div <- c(1, "k"=1e3, "m"=1e6, "b"=1e9)
+  idx <- which(names(div) == suff)
+  paste0(neg, "$",
+         prettyNum(round(abs(x)/div[idx], digits = dig), 
+                   big.mark = ","), suff)
 }
 
 ## Write the output of sessionInfo() & the date to a file
