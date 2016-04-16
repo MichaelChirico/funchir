@@ -151,7 +151,7 @@ read.xlsx3 <- function(...){
 ##   starts to mushroom considerably
 abbr_to_colClass <- function(inits, counts){
   x <- strsplit(inits, split = "")[[1L]]
-  lookup <- c(c = "character", f = "factor",
+  lookup <- c(c = "character", f = "factor", l = "logical",
               i = "integer", n = "numeric", D = "Date", 
               #For readxl (Hadley)'s odd read_excel options
               t = "text", d = "date")
