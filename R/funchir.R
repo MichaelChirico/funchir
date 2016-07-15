@@ -314,10 +314,10 @@ read.xlsx3 <- function(...){
 ##   starts to mushroom considerably
 abbr_to_colClass <- function(inits, counts){
   x <- strsplit(inits, split = "")[[1L]]
-  lookup <- c(c = "character", f = "factor", l = "logical",
-              i = "integer", n = "numeric", D = "Date", 
+  lookup <- c(b = "blank", c = "character", f = "factor", 
+              l = "logical", i = "integer", n = "numeric",
               #For readxl (Hadley)'s odd read_excel options
-              t = "text", d = "date")
+              D = "Date", t = "text", d = "date")
   rep(unname(lookup[x]), strsplit(counts, split = "")[[1L]])
 }
 
