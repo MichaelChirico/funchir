@@ -342,12 +342,12 @@ ntostr <- function(n, dig = 2L){
 }
 
 ## Convert numbers for printing to dollar format
-dol.form <- function(x, dig = 0L, suff = ""){
+dol.form <- function(x, dig = 0L, suff = "", tex = FALSE){
   neg <- rep("", length(x))
-  neg[x<0] <- "-"
+  neg[x < 0] <- "-"
   div <- c(1, "k"=1e3, "m"=1e6, "b"=1e9)
   idx <- which(names(div) == suff)
-  paste0(neg, "$",
+  paste0(neg, if (tex) "\\", "$",
          prettyNum(round(abs(x)/div[idx], digits = dig), 
                    big.mark = ","), suff)
 }
