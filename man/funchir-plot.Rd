@@ -12,7 +12,8 @@
    pdf2(...)
    png2(...)
    dev.off2(typ = "pdf")
-   tile.axes(n, M, N, params)
+   tile.axes(n, M, N, params = list(x = list(), y = list()),
+             use.x = TRUE, use.y = TRUE)
    rel_coord(ax, lambda = 0)
 }
 \arguments{
@@ -23,7 +24,9 @@
   \item{N}{ Integer. Number of columns specified in \code{mfrow}. }
   \item{ax}{ Either \code{"x"} or \code{"y"}; axis for which we're specifying coordinates. }
   \item{lambda}{ Either a mixing weight, giving the percentage of the way between the lower and higher endpoint of the specified axis (0 : smaller endpoint, 1 : larger endpoint), or one of the following relative position characters: \code{c("top", "bottom", "left", "right")}. }
-  \item{params}{ A length-2 \code{list}. \code{params[[1]]} is a \code{list} of parameters to be passed to the x-axis. \code{params[[2]]} is a \code{list} of parameters to be passed to the y-axis. }
+  \item{params}{ A length-2 \code{list}. \code{params$x} is a \code{list} of parameters to be passed to the x-axis. \code{params$y} is a \code{list} of parameters to be passed to the y-axis. }
+  \item{use.x}{ \code{logical}. Should the x-axis be printed? }
+  \item{use.y}{ \code{logical}. Should the y-axis be printed? }
 }
 \details{
   Instead of the standard \code{pdf("file.pdf") [plot code] dev.off()} approach used to write a plot to file, simply replacing the former and latter with these convenience functions will write the same file, but also print the output in the RStudio plotting window.

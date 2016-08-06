@@ -58,9 +58,9 @@ dev.off2 <- function(typ = "pdf"){
 tile.axes <- function(n, M, N, params = list(x = list(), y = list()), 
                       use.x = TRUE, use.y = TRUE){
   #only print x axes on the last row
-  if ((n > (M - 1) * N | M == 1) & use.x) do.call("axis", c(side = 1, params$x))
+  if ((n > (M - 1) * N | M == 1) && use.x) do.call("axis", c(side = 1, params$x))
   #only print y axes on the first column
-  if ((n %% N == 1 | N == 1) & use.y) do.call("axis", c(side = 2, params$y))
+  if ((n %% N == 1 | N == 1) && use.y) do.call("axis", c(side = 2, params$y))
 }
 
 ## Methods for getting relative position in axes
@@ -338,7 +338,7 @@ nx.mlt <- function(x, n) n * ceiling(x / n)
 ## Convert numbers to strings OF SPECIFIED LENGTH
 ##   Convenient for getting c("99","00") from 99:100
 ntostr <- function(n, dig = 2L){
-  sprintf("%0" %+% dig %+% "d", x %% 10^dig)
+  sprintf("%0" %+% dig %+% "d", n %% 10^dig)
 }
 
 ## Convert numbers for printing to dollar format
@@ -379,6 +379,10 @@ embed.mat <- function(mat, M = nrow(mat), N = ncol(mat),
 }
 
 ## Accurately calculate fractional age, quickly
+
+## R CMD check appeasement
+cycle_type = extra = rem = int_yrs = i.start = NULL
+
 get_age <- function(birthdays, ref_dates){
   x <- data.table(bday <- unclass(birthdays),
                   rem = ((ref <- unclass(ref_dates)) - bday) %% 1461)
@@ -392,7 +396,7 @@ get_age <- function(birthdays, ref_dates){
   x[ , extra := 
        foverlaps(data.table(start = rem, end = rem),
                  data.table(start = st <- cumsum(c(0, rep(365, 3) +
-                                                     I4[.BY[[1]],])),
+                                                     I4[.BY[[1]], ])),
                             end = c(st[-1L] - 1L, 1461),
                             int_yrs = c(0, 1, 2, 3), key = "start,end")
        )[ , int_yrs + (i.start - start) / (end + 1L - start)], by = cycle_type]
@@ -416,10 +420,4 @@ D <- function(...){
   if (is.null(names(dl <- list(...)))) 
     return(do.call("as.Date", list(do.call("c", dl))))
   do.call("as.Date", c(list(do.call("c", dl[nm <- names(dl) == ""])), dl[!nm]))
-}
-
-## devtools has too many dependencies. Use Jan Tilly's alternative
-install_github <- function(repo, branch = "master", dependencies = TRUE, method = "auto"){
-  source("http://jtilly.io/install_github/install_github.R", local = TRUE)
-  install_github(repo, branch, dependencies, method)
 }
