@@ -1,17 +1,17 @@
-\name{funchir-misc}
+\name{funchir-utils}
 \alias{create_quantiles}
 \alias{to.pct}
 \alias{nx.mlt}
 \alias{dol.form}
 \alias{ntostr}
 \alias{write.packages}
+\alias{clean_slate}
 \alias{embed.mat}
-\alias{SOprint}
 \alias{get_age}
 \alias{D}
-\title{ Miscellaneous commonly used functions }
+\title{ Miscellaneous utile functions }
 \description{
-   Several odds-and-ends functions for data manipulation & representation, etc. See details.
+   Several odds-and-ends functions for data manipulation & representation, etc. See details and examples.
 }
 \usage{
    create_quantiles(x, num, right = FALSE, include.lowest = TRUE, labels = 1:num)
@@ -20,8 +20,9 @@
    dol.form(x, dig = 0L, suff = "", tex = FALSE)
    ntostr(n, dig = 2L)
    write.packages(file)
+   clean_slate(detach.packages = TRUE, gc = TRUE, 
+               all = TRUE, envir = .GlobalEnv)
    embed.mat(mat, M = nrow(mat), N = ncol(mat), m = 1L, n = 1L, fill = 0L)
-   SOprint(exp, drop.ref = TRUE)
    get_age(birthdays, ref_dates)
    D(...)
 }
@@ -36,13 +37,15 @@
   \item{tex}{ Should \code{$} be printed as \code{\\$} for direct copy-pasting to TeX files? }
   \item{n}{ For \code{nx.mlt} and \code{ntostr}, a number; see details. For \code{embed.mat}, an integer specifying the column at which to insert \code{mat}. }
   \item{file}{ A file/connection where output should be written. }
+  \item{detach.packages}{ \code{logical}; should non-base packages be detached?}
+  \item{gc}{ \code{logical}; Should garbage clearing be performed with \code{\link{gc}}? }
+  \item{all}{ \code{logical}; Should all (including hidden) objects be removed? }
+  \item{envir}{ In which environment should objects be listed and removed? }
   \item{mat}{ A matrix. }
   \item{M}{ An integer specifying the number of rows in the enclosing matrix. }
   \item{N}{ An integer specifying the number of columns in the enclosing matrix. }
   \item{m}{ An integer specifying the row at which to insert \code{mat}. }
   \item{fill}{ An atomic vector specifying how to fill the enclosing matrix. }
-  \item{exp}{ Any R expression / code snippet. }
-  \item{drop.ref}{ If \code{`:=`} is found in \code{exp}, should it be returned in infix form? }
   \item{birthdays}{ A vector of \code{Date}s. }
   \item{ref_dates}{ A vector of \code{Date}s. }
   \item{...}{ Items and possibly arguments to (methods of) \code{as.Date}. }
@@ -60,9 +63,9 @@
   
   \code{write.packages} captures the current date & time and writes the output to the specified file. This may be essential for tracking across time which package versions were being used.
   
-  \code{embed.mat} inserts a supplied matrix into a (weakly) larger enclosing matrix, typically filled with 0s, at a specified position.
+  \code{clean_slate} wipes the current R session's slate clean (by default, running a garbage-clearing call to \code{gc()}, removing all objects in the global environment, and detaching all non-base packages).
   
-  \code{SOprint} is a wrapper for code snippets that can be copy-pasted easily to Stack Overflow, namely if an answer/comment involves evaluating an expression for which showing the output contributes to the elucidation. Will print the line of code and then its output, with the output pre-commented out so that viewers can copy-paste the output without issue. The \code{drop.ref} argument was added with \code{data.table}'s \code{`:=`} operator in mind. \code{substitute(x := y)} will return \code{`:=`(x, y)}; if this is OK, use \code{drop.ref = FALSE}.
+  \code{embed.mat} inserts a supplied matrix into a (weakly) larger enclosing matrix, typically filled with 0s, at a specified position.
   
   \code{get_age} returns the accurate, fractional age (in years) of each individual, quickly. Accuracy deteriorates when non-leap century years are involved (i.e., any year congruent to 0 mod 100 but not 0 mod 400); designed for use with currently-relevant birthdays and ages.
   
@@ -92,11 +95,13 @@
   library(stats)
   write.packages(paste0(tempdir(), "test.txt"))
   
+  \dontrun{
+    clean_slate(detach.packages = FALSE)
+  }
+  
   inmat <- matrix(1:9, ncol = 3L)
   embed.mat(inmat, M = 4L, N = 4L)
   embed.mat(inmat, N = 6L, n = 4L, fill = NA)
-  
-  SOprint(strsplit("test,string", ","))
   
   D("01-01-2016", format = "\%m-\%d-\%Y")
   D("2004-03-02")
