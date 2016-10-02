@@ -9,6 +9,7 @@
 \alias{embed.mat}
 \alias{get_age}
 \alias{quick_year}
+\alias{quick_wday}
 \alias{D}
 \title{ Miscellaneous utile functions }
 \description{
@@ -26,6 +27,7 @@
    embed.mat(mat, M = nrow(mat), N = ncol(mat), m = 1L, n = 1L, fill = 0L)
    get_age(birthdays, ref_dates)
    quick_year(dates)
+   quick_wday(dates)
    D(...)
 }
 \arguments{
@@ -72,7 +74,7 @@
   
   \code{get_age} returns the accurate, fractional age (in years) of each individual, quickly. Accuracy deteriorates when non-leap century years are involved (i.e., any year congruent to 0 mod 100 but not 0 mod 400); designed for use with currently-relevant birthdays and ages.
   
-  \code{quick_year} converts a \code{Date} object into its year efficiently; also ignores concerns of leap centuries. Returns as an \code{integer}.
+  \code{quick_year} converts a \code{Date} object into its year efficiently; also ignores concerns of leap centuries. \code{quick_wday} returns the day of the week (Sunday is \code{1L} and Saturday is \code{7L}). Returns as an \code{integer}.
   
   \code{D} is designed with the simplicity of \code{c} in mind to create vectors of \code{Date}s. 
 }

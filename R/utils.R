@@ -101,6 +101,10 @@ quick_year = function(dates) {
   1970L + 4L * quadrennia + rem_yrs
 }
 
+# Hopefully integrated to data.table soon... check
+#   https://github.com/Rdatatable/data.table/pull/1863
+quick_wday = function(dates) (unclass(dates) + 4L) %% 7L + 1L
+
 # Tired of over-using as.Date everywhere...
 D <- function(...){
   if (is.null(names(dl <- list(...)))) 
