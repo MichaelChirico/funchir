@@ -8,6 +8,7 @@
 \alias{clean_slate}
 \alias{embed.mat}
 \alias{get_age}
+\alias{quick_year}
 \alias{D}
 \title{ Miscellaneous utile functions }
 \description{
@@ -24,6 +25,7 @@
                all = TRUE, envir = .GlobalEnv)
    embed.mat(mat, M = nrow(mat), N = ncol(mat), m = 1L, n = 1L, fill = 0L)
    get_age(birthdays, ref_dates)
+   quick_year(dates)
    D(...)
 }
 \arguments{
@@ -48,6 +50,7 @@
   \item{fill}{ An atomic vector specifying how to fill the enclosing matrix. }
   \item{birthdays}{ A vector of \code{Date}s. }
   \item{ref_dates}{ A vector of \code{Date}s. }
+  \item{dates}{ A vector of \code{Date}s. }
   \item{...}{ Items and possibly arguments to (methods of) \code{as.Date}. }
 }
 \value{
@@ -68,6 +71,8 @@
   \code{embed.mat} inserts a supplied matrix into a (weakly) larger enclosing matrix, typically filled with 0s, at a specified position.
   
   \code{get_age} returns the accurate, fractional age (in years) of each individual, quickly. Accuracy deteriorates when non-leap century years are involved (i.e., any year congruent to 0 mod 100 but not 0 mod 400); designed for use with currently-relevant birthdays and ages.
+  
+  \code{quick_year} converts a \code{Date} object into its year efficiently; also ignores concerns of leap centuries. Returns as an \code{integer}.
   
   \code{D} is designed with the simplicity of \code{c} in mind to create vectors of \code{Date}s. 
 }
@@ -108,4 +113,5 @@
   D(1L, 2L, origin = D("1980-01-01"))
   
   get_age(D("1987-05-02"), D("2016-02-23"))
+  quick_year(D("1987-05-02"))
 }

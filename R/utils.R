@@ -93,6 +93,14 @@ get_age <- function(birthdays, ref_dates){
   4 * ((ref - bday) %/% 1461) + x$extra
 }
 
+# Quickly get the year of a date
+quick_year = function(dates) {
+  quadrennia = as.integer(unclass(dates) %/% 1461L)
+  rr = unclass(dates) %% 1461L
+  rem_yrs = (rr > 365L) + (rr > 730L) + (rr > 1096L)
+  1970L + 4L * quadrennia + rem_yrs
+}
+
 # Tired of over-using as.Date everywhere...
 D <- function(...){
   if (is.null(names(dl <- list(...)))) 
