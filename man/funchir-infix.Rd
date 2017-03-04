@@ -25,7 +25,7 @@
 }
 
 \seealso{ 
-  \code{\link{paste0}}, \code{\link{setdiff}} , \code{\link{union}}, \code{\link{intersect}}}
+  \code{\link{paste0}}, \code{\link{setdiff}} , \code{\link{union}}, \code{\link{intersect}}
 }
 \examples{
   directory <- "~/some/directory"
