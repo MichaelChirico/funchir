@@ -41,10 +41,6 @@
   \item{tex}{ Should \code{$} be printed as \code{\\$} for direct copy-pasting to TeX files? }
   \item{n}{ For \code{nx.mlt} and \code{ntostr}, a number; see details. For \code{embed.mat}, an integer specifying the column at which to insert \code{mat}. }
   \item{file}{ A file/connection where output should be written. }
-  \item{detach.packages}{ \code{logical}; should non-base packages be detached?}
-  \item{gc}{ \code{logical}; Should garbage clearing be performed with \code{\link{gc}}? }
-  \item{all}{ \code{logical}; Should all (including hidden) objects be removed? }
-  \item{envir}{ In which environment should objects be listed and removed? }
   \item{mat}{ A matrix. }
   \item{M}{ An integer specifying the number of rows in the enclosing matrix. }
   \item{N}{ An integer specifying the number of columns in the enclosing matrix. }
@@ -67,9 +63,7 @@
   \code{ntostr} converts \code{n} to a \code{character} vector with each element width \code{dig}. This is particularly nice for converting 99:100 to "99" and "100".
   
   \code{write.packages} captures the current date & time and writes the output to the specified file. This may be essential for tracking across time which package versions were being used.
-  
-  \code{clean_slate} wipes the current R session's slate clean (by default, running a garbage-clearing call to \code{gc()}, removing all objects in the global environment, and detaching all non-base packages).
-  
+
   \code{embed.mat} inserts a supplied matrix into a (weakly) larger enclosing matrix, typically filled with 0s, at a specified position.
   
   \code{get_age} returns the accurate, fractional age (in years) of each individual, quickly. Accuracy deteriorates when non-leap century years are involved (i.e., any year congruent to 0 mod 100 but not 0 mod 400); designed for use with currently-relevant birthdays and ages.
@@ -102,10 +96,6 @@
   library(stats)
   write.packages(paste0(tempdir(), "test.txt"))
   
-  \dontrun{
-    clean_slate(detach.packages = FALSE)
-  }
-  
   inmat <- matrix(1:9, ncol = 3L)
   embed.mat(inmat, M = 4L, N = 4L)
   embed.mat(inmat, N = 6L, n = 4L, fill = NA)
@@ -116,4 +106,6 @@
   
   get_age(D("1987-05-02"), D("2016-02-23"))
   quick_year(D("1987-05-02"))
+  quick_wday(D("1987-05-02"))
+  quick_mday(D("1987-05-02"))
 }
