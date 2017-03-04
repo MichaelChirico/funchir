@@ -23,8 +23,6 @@
    dol.form(x, dig = 0L, suff = "", tex = FALSE)
    ntostr(n, dig = 2L)
    write.packages(file)
-   clean_slate(detach.packages = TRUE, gc = TRUE, 
-               all = TRUE, envir = .GlobalEnv)
    embed.mat(mat, M = nrow(mat), N = ncol(mat), m = 1L, n = 1L, fill = 0L)
    get_age(birthdays, ref_dates)
    quick_year(dates)

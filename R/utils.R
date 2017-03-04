@@ -30,18 +30,19 @@ ntostr <- function(n, dig = 2L){
 
 # Condensed cleaning of work space at
 #   outset of R script
-clean_slate = function(detach.packages = TRUE, gc = TRUE,
-                       all = TRUE, envir = .GlobalEnv) {
-  rm(list = ls(envir = envir, all.names = all), envir = envir)
-  if (gc) gc(verbose = FALSE)
-  if (detach.packages) {
-    base.pkg = "package:" %+% c("stats", "graphics", "grDevices",
-                                "utils", "datasets", "methods", "base")
-    invisible(lapply(setdiff(grep("^package:", 
-                                  search(), value = TRUE), base.pkg), 
-                     detach, character.only = TRUE, unload = TRUE))
-  }
-}
+# **has some errors when applied to more general setups**
+# clean_slate = function(detach.packages = TRUE, gc = TRUE,
+#                        all = TRUE, envir = .GlobalEnv) {
+#   rm(list = ls(envir = envir, all.names = all), envir = envir)
+#   if (gc) gc(verbose = FALSE)
+#   if (detach.packages) {
+#     base.pkg = "package:" %+% c("stats", "graphics", "grDevices",
+#                                 "utils", "datasets", "methods", "base")
+#     invisible(lapply(setdiff(grep("^package:", 
+#                                   search(), value = TRUE), base.pkg), 
+#                      detach, character.only = TRUE, unload = TRUE))
+#   }
+# }
 
 # Write the output of sessionInfo() & the date to a file
 #   (for tracking package versions over time)
