@@ -125,11 +125,6 @@ sanitize2 <- function(str) {
   return(result)
 }
 
-#For pretty copy-pasting into Lyx
-lyx.texreg <- function(...){
-  cat(capture.output(do.call('texreg', list(...))), sep = "\n\n")
-}
-
 # Data reading convenience functions ####
 ## read.xlsx2 wrapper to invisibly handle
 ##   the memory leak problem of read.xlsx2
