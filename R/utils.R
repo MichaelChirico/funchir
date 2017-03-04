@@ -105,6 +105,23 @@ quick_year = function(dates) {
 #   https://github.com/Rdatatable/data.table/pull/1863
 quick_wday = function(dates) (unclass(dates) + 4L) %% 7L + 1L
 
+quick_yday = function(dates) 
+  ((((unclass(dates) %% 1461L) %% 1096L) %% 730L) %% 365L) + 
+  365L * (unclass(dates) == 1095L) + 1L
+
+#Month days in the quadrennial cycle
+.mday1461__ = c(1L:31L, 1L:28L, 1L:31L, 1L:30L, 1L:31L, 1L:30L,
+                1L:31L, 1L:31L, 1L:30L, 1L:31L, 1L:30L, 1L:31L,
+                1L:31L, 1L:28L, 1L:31L, 1L:30L, 1L:31L, 1L:30L,
+                1L:31L, 1L:31L, 1L:30L, 1L:31L, 1L:30L, 1L:31L,
+                1L:31L, 1L:29L, 1L:31L, 1L:30L, 1L:31L, 1L:30L,
+                1L:31L, 1L:31L, 1L:30L, 1L:31L, 1L:30L, 1L:31L,
+                1L:31L, 1L:28L, 1L:31L, 1L:30L, 1L:31L, 1L:30L,
+                1L:31L, 1L:31L, 1L:30L, 1L:31L, 1L:30L, 1L:31L)
+
+quick_mday = function(dates) 
+  .mday1461__[1L + unclass(dates) %% 1461L]
+
 # Tired of over-using as.Date everywhere...
 D <- function(...){
   if (is.null(names(dl <- list(...)))) 

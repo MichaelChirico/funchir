@@ -10,6 +10,7 @@
 \alias{get_age}
 \alias{quick_year}
 \alias{quick_wday}
+\alias{quick_mday}
 \alias{D}
 \title{ Miscellaneous utile functions }
 \description{
@@ -28,6 +29,7 @@
    get_age(birthdays, ref_dates)
    quick_year(dates)
    quick_wday(dates)
+   quick_mday(dates)
    D(...)
 }
 \arguments{
@@ -74,7 +76,7 @@
   
   \code{get_age} returns the accurate, fractional age (in years) of each individual, quickly. Accuracy deteriorates when non-leap century years are involved (i.e., any year congruent to 0 mod 100 but not 0 mod 400); designed for use with currently-relevant birthdays and ages.
   
-  \code{quick_year} converts a \code{Date} object into its year efficiently; also ignores concerns of leap centuries. \code{quick_wday} returns the day of the week (Sunday is \code{1L} and Saturday is \code{7L}). Returns as an \code{integer}.
+  \code{quick_year} converts a \code{Date} object into its year efficiently; also ignores concerns of leap centuries. \code{quick_wday} returns the day of the week (Sunday is \code{1L} and Saturday is \code{7L}). \code{quick_mday} returns the day of the month. Returns as an \code{integer}.
   
   \code{D} is designed with the simplicity of \code{c} in mind to create vectors of \code{Date}s. 
 }

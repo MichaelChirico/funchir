@@ -1,4 +1,4 @@
-export("%+%","%^%","%u%","%\\%","%=%")
+export("%+%","%^%","%u%","%\\%")
 export(read.xlsx3)
 export(pdf2,png2,dev.off2,tile.axes,rel_coord)
 export(table2)
@@ -6,7 +6,8 @@ export(abbr_to_colClass)
 export(lyx.xtable,lyx.texreg,sanitize2)
 export(create_quantiles,to.pct,
        nx.mlt,dol.form,ntostr,embed.mat,D)
-export(get_age, quick_year, quick_wday)
+export(get_age, quick_year, quick_wday,
+       quick_mday)
 export(write.packages, clean_slate)
 
 importFrom("stats", "quantile")
