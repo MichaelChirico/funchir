@@ -28,7 +28,7 @@
   \code{\link{paste0}}, \code{\link{setdiff}} , \code{\link{union}}, \code{\link{intersect}}
 }
 \examples{
-  directory <- "~/some/directory"
+  directory <- "~/some/directory/"
   fil <- "some_file.ext"
   # very convenient for repeated calls to a directory outside getwd()
   directory \%+\% fil  

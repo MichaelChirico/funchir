@@ -94,7 +94,7 @@
   ntostr(999:1000, dig = 2L) # c("99","00")
   
   library(stats)
-  write.packages(paste0(tempdir(), "test.txt"))
+  write.packages(file.path(tempdir(), "test.txt"))
   
   inmat <- matrix(1:9, ncol = 3L)
   embed.mat(inmat, M = 4L, N = 4L)

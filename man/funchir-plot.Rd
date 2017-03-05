@@ -45,11 +45,11 @@
   
   \dontrun{
     #Runs in RStudio
-    pdf2() 
+    pdf2(file.path(temp.dir(), 'test.pdf')) 
     hist(smpl)
     dev.off2()
 
-    png2()
+    png2(file.path(temp.dir(), 'test.png'))
     hist(smpl)
     dev.off2(typ="png")
   }
