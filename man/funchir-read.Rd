@@ -19,7 +19,7 @@
 
   \code{abbr_to_colClass} was designed specifically for reading in large (read: wide, i.e., with many fields) data files when it is also necessary to specify the types to expect to the reader for speed or for accuracy.
 
-  Currently recognized types are \code{character}, \code{factor}, \code{integer}, \code{numeric}, \code{Date}, \code{date}, and \code{text}, which are abbreviated to their first initials: \code{"c"}, \code{"f"}, \code{"i"}, \code{"n"}, \code{"D"}, \code{"d"}, and \code{"t"}, respectively.
+  Currently recognized types are \code{blank}, \code{character}, \code{factor}, \code{integer}, \code{numeric}, \code{Date}, \code{date}, \code{text} and \code{skip}, which are abbreviated to their first initials: \code{"b"}, \code{"c"}, \code{"f"}, \code{"i"}, \code{"n"}, \code{"D"}, \code{"d"}, \code{"s"} and \code{"t"}, respectively. \code{"blank"} has been deprecated in \code{readxl} and will lose support here as well. 
 
   Since like types are often found in sequence, the \code{counts} argument can condense the call considerably--if three integer columns appear in a row, for example, we could specify \code{inits="i"} and \code{counts="3"} instead of the breathier \code{inits="iii"}, \code{counts="111"}.
 

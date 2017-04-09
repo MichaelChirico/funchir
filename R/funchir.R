@@ -143,6 +143,6 @@ abbr_to_colClass <- function(inits, counts){
   lookup <- c(b = "blank", c = "character", f = "factor", 
               l = "logical", i = "integer", n = "numeric",
               #For readxl (Hadley)'s odd read_excel options
-              D = "Date", t = "text", d = "date")
+              D = "Date", t = "text", d = "date", s = 'skip')
   rep(unname(lookup[x]), strsplit(counts, split = "")[[1L]])
 }
