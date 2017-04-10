@@ -70,6 +70,28 @@ embed.mat <- function(mat, M = nrow(mat), N = ncol(mat),
   out
 }
 
+# Quick scan of code for whether the 
+#   packages loaded are actually used
+stale_package_check = function(file_name) {
+  code = readLines(file_name)
+  #should fix this to match require calls too...
+  pkg_used = 
+    #also misses lines with multiple package calls
+    gsub('.*library\\(["]?([^)]*)["]?\\).*', '\\1', 
+         grep('library', code, value = TRUE, fixed = TRUE))
+  for (pkg in unique(pkg_used)) {
+    fns = getNamespaceExports(pkg)
+    # issue: short function names like D are likely
+    #   to be matched even if unused as a function --
+    #   this check could be more sophisticated
+    used = names(which(sapply(fns, function(x) 
+      any(grepl(x, code, fixed = TRUE)))))
+    if (length(used)) cat('\nFunctions matched from package ', pkg, ': ',
+                          paste(used, collapse = ', '), sep = '')
+    else cat('\n**No exported functions matched from ', pkg, '**', sep = '')
+  }
+}
+
 # Accurately calculate fractional age, quickly
 ## R CMD check appeasement
 cycle_type = extra = rem = int_yrs = i.start = start = end = NULL

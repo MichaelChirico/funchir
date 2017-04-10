@@ -8,7 +8,7 @@ export(create_quantiles,to.pct,
        nx.mlt,dol.form,ntostr,embed.mat,D)
 export(get_age, quick_year, quick_wday,
        quick_mday)
-export(write.packages)
+export(write.packages, stale_package_check)
 
 importFrom("stats", "quantile")
 importFrom("grDevices", "dev.copy", "dev.list", "dev.new", "dev.off",

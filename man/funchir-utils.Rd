@@ -5,6 +5,7 @@
 \alias{dol.form}
 \alias{ntostr}
 \alias{write.packages}
+\alias{stale_package_check}
 \alias{clean_slate}
 \alias{embed.mat}
 \alias{get_age}
@@ -23,6 +24,7 @@
    dol.form(x, dig = 0L, suff = "", tex = FALSE)
    ntostr(n, dig = 2L)
    write.packages(file)
+   stale_package_check(file_name)
    embed.mat(mat, M = nrow(mat), N = ncol(mat), m = 1L, n = 1L, fill = 0L)
    get_age(birthdays, ref_dates)
    quick_year(dates)
@@ -41,6 +43,7 @@
   \item{tex}{ Should \code{$} be printed as \code{\\$} for direct copy-pasting to TeX files? }
   \item{n}{ For \code{nx.mlt} and \code{ntostr}, a number; see details. For \code{embed.mat}, an integer specifying the column at which to insert \code{mat}. }
   \item{file}{ A file/connection where output should be written. }
+  \item{file_name}{ A file name containing R code. }
   \item{mat}{ A matrix. }
   \item{M}{ An integer specifying the number of rows in the enclosing matrix. }
   \item{N}{ An integer specifying the number of columns in the enclosing matrix. }
@@ -63,6 +66,8 @@
   \code{ntostr} converts \code{n} to a \code{character} vector with each element width \code{dig}. This is particularly nice for converting 99:100 to "99" and "100".
   
   \code{write.packages} captures the current date & time and writes the output to the specified file. This may be essential for tracking across time which package versions were being used.
+  
+  \code{stale_package_check} reads a file and checks which functions are actually used from each loaded package. Currently only checks for \code{library} (i.e., not \code{require}) calls. 
 
   \code{embed.mat} inserts a supplied matrix into a (weakly) larger enclosing matrix, typically filled with 0s, at a specified position.
   
