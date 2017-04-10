@@ -9,11 +9,4 @@ I doubt anyone is reading this, but if so, please feel free to give feedback or 
 
 Cheers!
 
-PS For now, this package is not on CRAN.
-
-To install, use [Jan Tilly](https://github.com/jtilly)'s [minimalist GitHub installer](https://github.com/jtilly/install_github) _via_:
-
-```
-source("http://jtilly.io/install_github/install_github.R")
-install_github("MichaelChirico/funchir")
-```
+Package has been on [CRAN](https://cran.r-project.org/web/packages/funchir/index.html) since 0.1.3.
