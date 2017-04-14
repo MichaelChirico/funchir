@@ -10,3 +10,5 @@ I doubt anyone is reading this, but if so, please feel free to give feedback or 
 Cheers!
 
 Package has been on [CRAN](https://cran.r-project.org/web/packages/funchir/index.html) since 0.1.3.
+
+[![](http://cranlogs.r-pkg.org/badges/funchir)](http://cran.rstudio.com/web/packages/funchir/index.html)
