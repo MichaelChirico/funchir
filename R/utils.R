@@ -19,7 +19,7 @@ dol.form <- function(x, dig = 0L, suff = "", tex = FALSE){
   idx <- which(names(div) == suff)
   paste0(neg, if (tex) "\\", "$",
          prettyNum(round(abs(x)/div[idx], digits = dig), 
-                   big.mark = ","), suff)
+                   big.mark = ",", scientific = FALSE), suff)
 }
 
 # Convert numbers to strings OF SPECIFIED LENGTH
