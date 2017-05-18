@@ -3,7 +3,7 @@ create_quantiles <- function(x, num, right = FALSE, na.rm = FALSE,
                              include.lowest = TRUE, labels = seq_len(num)){
   uniq_Qs = unique(quantile(x, probs = 0:num/num, na.rm = na.rm))
   if (length(uniq_Qs) != length(labels) + 1L) 
-    stop('Overlapping quantiles. Please provide ', length(uniq_Qs), ' labels.')
+    stop('Overlapping quantiles. Please provide ', length(uniq_Qs) - 1L, ' labels.')
   cut(x, breaks = uniq_Qs, labels = labels, right = right, 
       include.lowest = include.lowest)
 }
