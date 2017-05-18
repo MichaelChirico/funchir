@@ -18,7 +18,8 @@
    Several odds-and-ends functions for data manipulation & representation, etc. See details and examples.
 }
 \usage{
-   create_quantiles(x, num, right = FALSE, include.lowest = TRUE, labels = 1:num)
+   create_quantiles(x, num, right = FALSE, na.rm = FALSE,
+                    include.lowest = TRUE, labels = 1:num)
    to.pct(x, dig = Inf)
    nx.mlt(x, n)
    dol.form(x, dig = 0L, suff = "", tex = FALSE)
@@ -36,6 +37,7 @@
   \item{x}{ A numeric vector. }
   \item{num}{ A number, typically an integer, specifying how many equal-count intervals into which to divide the data.}
   \item{right}{ logical, indicating if the intervals should be closed on the right (and open on the left) or vice versa. }
+  \item{na.rm}{ \code{logical} passed to \code{\link{quantile}} with the usual interpretation. }
   \item{include.lowest}{ logical, indicating if an \code{x[i]} equal to the lowest (or highest, for \code{right = FALSE}) \code{breaks} value should be included.}
   \item{labels}{ \code{character} vector of length \code{num}; the labels to be applied to the resulting \code{factor}. }
   \item{dig}{ The number of digits to be included past the decimal in output; sent directly to \code{round}. }
@@ -55,7 +57,7 @@
   \item{...}{ Items and possibly arguments to (methods of) \code{as.Date}. }
 }
 \value{
-  \code{create_quantiles} is a parsimonious function for generating quantiles of a vector (e.g., quartiles for \code{num=4} or quintiles for \code{num=5}). Basically a wrapper for the \code{cut} function; the type of the output is \code{factor}.
+  \code{create_quantiles} is a parsimonious function for generating quantiles of a vector (e.g., quartiles for \code{num=4} or quintiles for \code{num=5}). Basically a wrapper for the \code{cut} function; the type of the output is \code{factor}. Fails for vectors with overlapping quantiles (e.g., with >50\% of values of \code{x} equal to zero) unless the correct number of labels (i.e., the number of unique quantile breaks) is given in the \code{labels} argument. 
 
   \code{to.pct} converts a number (probably a proportion, i.e., typically between 0 and 1) to a percentage; also has an argument (\code{dig}) which can be used to round the output inline.
 
