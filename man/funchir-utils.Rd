@@ -2,6 +2,7 @@
 \alias{create_quantiles}
 \alias{to.pct}
 \alias{nx.mlt}
+\alias{divide}
 \alias{dol.form}
 \alias{ntostr}
 \alias{write.packages}
@@ -22,6 +23,7 @@
                     include.lowest = TRUE, labels = 1:num)
    to.pct(x, dig = Inf)
    nx.mlt(x, n)
+   divide(x, n, na.rm = FALSE)
    dol.form(x, dig = 0L, suff = "", tex = FALSE)
    ntostr(n, dig = 2L)
    write.packages(file)
@@ -43,7 +45,7 @@
   \item{dig}{ The number of digits to be included past the decimal in output; sent directly to \code{round}. }
   \item{suff}{ The suffix to appended/unit in which to express \code{x}. Currently one of \code{c("", "k", "m", "b")}, corresponding to plain units, thousands, millions, and billions, respectively. }
   \item{tex}{ Should \code{$} be printed as \code{\\$} for direct copy-pasting to TeX files? }
-  \item{n}{ For \code{nx.mlt} and \code{ntostr}, a number; see details. For \code{embed.mat}, an integer specifying the column at which to insert \code{mat}. }
+  \item{n}{ For \code{nx.mlt}, \code{divide} and \code{ntostr}, a number; see details. For \code{embed.mat}, an integer specifying the column at which to insert \code{mat}. }
   \item{file}{ A file/connection where output should be written. }
   \item{file_name}{ A file name containing R code. }
   \item{mat}{ A matrix. }
@@ -62,6 +64,8 @@
   \code{to.pct} converts a number (probably a proportion, i.e., typically between 0 and 1) to a percentage; also has an argument (\code{dig}) which can be used to round the output inline.
 
   \code{nx.mlt} returns the least multiple of \code{n} which (weakly) exceeds \code{x}. Convenient for making axes ticks land on pretty numbers.
+  
+  \code{divide} divides the range (min through max) of \code{x} into \code{n} points (basically a shorthand for \code{seq}).
 
   \code{dol.form} takes a financial input and converts it to a (American-formatted, American-currency) string for printing--appending a dollar sign (\code{"\$"}) and inserting commas after every third digit from the left of the decimal point.
   

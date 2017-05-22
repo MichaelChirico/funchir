@@ -14,6 +14,12 @@ to.pct <- function(x, dig = Inf) round(100 * x, digits = dig)
 # Get the nearest multiple of n weakly larger than x
 nx.mlt <- function(x, n) n * ceiling(x / n)
 
+# Create a linear progression along the range of x with n points
+divide = function(x, n, na.rm = FALSE) {
+  r = range(x, na.rm = na.rm)
+  seq(r[1L], r[2L], length.out = n)
+}
+
 # Convert numbers for printing to dollar format
 dol.form <- function(x, dig = 0L, suff = "", tex = FALSE){
   neg <- rep("", length(x))
