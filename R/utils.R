@@ -133,10 +133,6 @@ quick_year = function(dates) {
   1970L + 4L * quadrennia + rem_yrs
 }
 
-# Hopefully integrated to data.table soon... check
-#   https://github.com/Rdatatable/data.table/pull/1863
-quick_wday = function(dates) (unclass(dates) + 4L) %% 7L + 1L
-
 quick_yday = function(dates) 
   ((((unclass(dates) %% 1461L) %% 1096L) %% 730L) %% 365L) + 
   365L * (unclass(dates) == 1095L) + 1L
