@@ -7,8 +7,7 @@ export(lyx.xtable,sanitize2)
 export(create_quantiles, to.pct,
        nx.mlt, divide, dol.form,
        ntostr, embed.mat, D)
-export(get_age, quick_year, quick_wday,
-       quick_mday)
+export(get_age, quick_year, quick_mday)
 export(write.packages, stale_package_check)
 
 importFrom("stats", "quantile")
