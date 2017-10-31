@@ -4,9 +4,16 @@
 \alias{dev.off2}
 \alias{tile.axes}
 \alias{rel_coord}
-\title{ Simulcast Plot Wrappers }
+\alias{xdev2in}
+\alias{ydev2in}
+\alias{xydev2in}
+\title{ Convenience Functions for Plotting }
 \description{
    Several wrapper functions which make it convenient / parsimonious to simultaneously write a plot to a file (currently limited to .png and .pdf types) \emph{and} to print the plot to the Rstudio graphics window.
+   
+   \code{tile.axes} is used in for loops to generate axes in a multi-panel plot with shared x & y axes (within row and column).
+   
+   \code{xdev2in} is the inverse of \code{graphics::xinch}; namely, it converts from plotting device units into inches.
 }
 \usage{
    pdf2(...)
@@ -15,6 +22,9 @@
    tile.axes(n, M, N, params = list(x = list(), y = list()),
              use.x = TRUE, use.y = TRUE)
    rel_coord(ax, lambda = 0)
+   xdev2in(x = 1)
+   ydev2in(y = 1)
+   xydev2in(xy = 1)
 }
 \arguments{
   \item{...}{ For \code{pdf2}, \code{png2}: list of arguments to be passed directly to \code{pdf} or \code{png}. }
@@ -27,6 +37,9 @@
   \item{params}{ A length-2 \code{list}. \code{params$x} is a \code{list} of parameters to be passed to the x-axis. \code{params$y} is a \code{list} of parameters to be passed to the y-axis. }
   \item{use.x}{ \code{logical}. Should the x-axis be printed? }
   \item{use.y}{ \code{logical}. Should the y-axis be printed? }
+  \item{x}{ \code{numeric} value to convert into inches (along the horizontal axis). }
+  \item{y}{ \code{numeric} value to convert into inches (along the vertical axis). }
+  \item{xy}{ \code{numeric} value to convert into inches (along both axes simultaneously). }
 }
 \details{
   Instead of the standard \code{pdf("file.pdf") [plot code] dev.off()} approach used to write a plot to file, simply replacing the former and latter with these convenience functions will write the same file, but also print the output in the RStudio plotting window.
@@ -36,9 +49,10 @@
 
   \code{rel_coord} gives a simple way to place text, labels, etc. in a plot by specifying only relative coordinates. The first form mimics the flexibility of \code{\link{legend}}, which accepts such relatively-defined positions as \code{"top"} and \code{"left"}. For example, specifying \code{lambda = "right"} will return an x coordinate close to the right endpoint of the currently defined axes. Alternatively, an exact proportion can be supplied -- if the desired coordinate is 75\% of the way to the right endpoint, for example, specify \code{rel_coord("x", .75)}.
   
+  Some graphics functions specify some arguments with units in inches (namely, \code{graphics::arrows}' \code{length} argument). \code{graphics::xinch} provides the inverse functionality enabling conversion from inches into plotting units; up to numerical accuracy, then, \code{graphics::xinch(xdev2in(x)) == x}.
   }
 \seealso{ 
-  \code{\link{pdf}}, \code{\link{png}} , \code{\link{dev.off}}
+  \code{\link{pdf}}, \code{\link{png}} , \code{\link{dev.off}}, \code{\link{xinch}}
 }
 \examples{
   smpl <- rnorm(100)

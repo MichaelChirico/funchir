@@ -81,6 +81,24 @@ rel_coord <- function(ax, lambda = 0){
   sum(lims * c(1 - lamn, lamn))
 }
 
+# Functions to invert graphics::{x,y,xy}inch --
+#   Convert from graphics device units
+#   into inches (in particular useful for
+#   specifying length argument in arrows); inspiration:
+#   https://stackoverflow.com/questions/47034898
+xdev2in = function(x = 1) {
+  x * par('pin')[1L]/diff(par('usr')[1L:2L])
+}
+
+ydev2in = function(y = 1) {
+  y * par('pin')[2L]/diff(par('usr')[3L:4L])
+}
+
+xydev2in = function(xy = 1) {
+  u = par('usr')
+  xy * par('pin')/c(u[2L] - u[1L], u[4L] - u[3L])
+}
+
 # Table & regression convenience functions ####
 ## Extending base table with some common options
 table2<-function(..., dig = if (prop) 2L else NULL,
