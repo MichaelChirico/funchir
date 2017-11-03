@@ -15,6 +15,6 @@ importFrom("stats", "quantile")
 importFrom("grDevices", "dev.copy", "dev.list", "dev.new", "dev.off",
              "dev.set", "graphics.off")
 importFrom("utils", "capture.output", "sessionInfo")
-importFrom("graphics", "par", 'usr')
+importFrom("graphics", "par")
 
 import(data.table)
