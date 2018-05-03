@@ -116,11 +116,6 @@ table2<-function(..., dig = if (prop) 2L else NULL,
   if (is.null(dig)) tab else round(tab, digits = dig)
 }
 
-#For pretty copy-pasting into LyX
-lyx.xtable <- function(...){
-  cat(capture.output(do.call('print.xtable', list(...))), sep = "\n\n")
-}
-
 sanitize2 <- function(str) {
   result <- str
   result <- gsub("\\\\", "SANITIZE.BACKSLASH", result)

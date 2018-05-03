@@ -71,7 +71,7 @@
   
   \code{ntostr} converts \code{n} to a \code{character} vector with each element width \code{dig}. This is particularly nice for converting 99:100 to "99" and "100".
   
-  \code{write.packages} captures the current date & time and writes the output to the specified file. This may be essential for tracking across time which package versions were being used.
+  \code{write.packages} captures the current package environment (inspired by \code{sessionInfo()} and writes it as a JSON to \code{file}; a \code{list} version of this object is returned. This may be essential for tracking across time which package versions were being used.
   
   \code{stale_package_check} reads a file and checks which functions are actually used from each loaded package. Currently only checks for \code{library} (i.e., not \code{require}) calls. 
 

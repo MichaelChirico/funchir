@@ -56,11 +56,30 @@ ntostr <- function(n, dig = 2L){
 # Write the output of sessionInfo() & the date to a file
 #   (for tracking package versions over time)
 write.packages <- function(file) {
-  x<-
-    capture.output({
-      cat("Package info for code run on " %+% Sys.time() %+% ":\n")
-      sessionInfo()})
-  writeLines(x, con = file)
+  si = sessionInfo()
+  desc_fields = c('Version', 'Depends', 'Imports', 'Suggests', 
+                  'License', 'URL', 'Packaged', 'Built')
+  desc_pad = function(desc) `names<-`(desc[desc_fields], desc_fields)
+  locale_list = function(loc_str) {
+    pairs = do.call(rbind, strsplit(strsplit(Sys.getlocale(), ';', 
+                                             fixed = TRUE)[[1L]], '=', 
+                                    fixed = TRUE))
+    setNames(as.list(pairs[ , 2L]), pairs[ , 1L])
+  }
+  out = list(
+    r_version = list(platform = si$platform,
+                     version.string = si$R.version$version.string),
+    locale = locale_list(si$locale),
+    running = si$running,
+    linear_algebra = list(matrix_products = si$matprod,
+                          blas = si$BLAS, lapack= si$LAPACK),
+    base_packages = si$basePkgs,
+    other_packages = lapply(si$otherPkgs, desc_pad),
+    loaded_via_namespace = lapply(si$loadedOnly, desc_pad),
+    write_package_time = format(Sys.time(), tz = 'UTC', usetz = TRUE)
+  )
+  writeLines(toJSON(out, pretty = TRUE, auto_unbox = TRUE), file)
+  return(out)
 }
 
 # Embed the matrix mat in a larger matrix by
