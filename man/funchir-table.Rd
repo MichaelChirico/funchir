@@ -1,7 +1,5 @@
 \name{funchir-table}
 \alias{table2}
-\alias{lyx.xtable}
-\alias{lyx.texreg}
 \alias{sanitize2}
 \title{ Convenient Wrappers for creating and printing tables }
 \description{
@@ -9,7 +7,6 @@
 }
 \usage{
    table2(..., dig = if (prop) 2L else NULL, prop = FALSE, ord = FALSE, pct = FALSE)
-   lyx.xtable(...)
    sanitize2(str)
 }
 \arguments{
@@ -23,8 +20,6 @@
 \details{
   \code{table2} is especially useful for two common usages of \code{table}--producing ordered frequency tables of a variable (to find most/least common realizations) and producing proportional two-way tables of two variables.
 
-  \code{lyx.xtable} (based on package \code{xtable}) is designed specifically for users of the free WYSIWYM LaTeX editor LyX, which converts copy-pasted LaTeX to indecipherable gibberish unless lines of code are separated by two newlines. Note that \code{lyx.xtable} wraps \code{xtable::print.xtable}.
-  
   \code{sanitize2} is a replacement to the internal \code{sanitize} function used by default in \code{xtable}. Adds items for fixing left and right square brackets, which are (in the current--2017/03/03--version of \code{print.xtable} ) by default left alone, which can cause errors.
 }
 
@@ -38,8 +33,4 @@
   table2(x, ord = "dec")
   table2(y, ord = TRUE)
   table2(y, dig = -1L)
-  
-  \dontrun{
-    lyx.xtable(xtable(tbl), sanitize.text.function = sanitize2)
-  }
 }

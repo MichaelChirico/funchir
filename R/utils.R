@@ -1,6 +1,6 @@
 # Specific wrapper of cut to create a factor of quantiles of a vector
 create_quantiles <- function(x, num, right = FALSE, na.rm = FALSE,
-                             include.lowest = TRUE, labels = seq_len(num)){
+                             include.lowest = TRUE, labels = 1:num){
   uniq_Qs = unique(quantile(x, probs = 0:num/num, na.rm = na.rm))
   if (length(uniq_Qs) - 1L != length(labels) && !is.null(labels)) 
     stop('Overlapping quantiles. Please provide ', length(uniq_Qs) - 1L, ' labels.')
@@ -64,7 +64,7 @@ write.packages <- function(file) {
     pairs = do.call(rbind, strsplit(strsplit(Sys.getlocale(), ';', 
                                              fixed = TRUE)[[1L]], '=', 
                                     fixed = TRUE))
-    setNames(as.list(pairs[ , 2L]), pairs[ , 1L])
+    `names<-`(as.list(pairs[ , 2L]), pairs[ , 1L])
   }
   out = list(
     r_version = list(platform = si$platform,
@@ -125,6 +125,8 @@ stale_package_check = function(file_name) {
 cycle_type = extra = rem = int_yrs = i.start = start = end = NULL
 
 get_age <- function(birthdays, ref_dates){
+  `:=` = function(...) NULL
+  .BY = NULL
   x <- data.table(bday <- unclass(birthdays),
                   rem = ((ref <- unclass(ref_dates)) - bday) %% 1461)
   x[ , cycle_type := 

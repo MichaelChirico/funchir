@@ -8,12 +8,15 @@ export(sanitize2)
 export(create_quantiles, to.pct,
        nx.mlt, divide, dol.form,
        ntostr, embed.mat, D)
-export(get_age, quick_year, quick_mday)
+export(get_age, quick_year, quick_yday, quick_mday)
 export(write.packages, stale_package_check)
 
 importFrom("stats", "quantile")
 importFrom("grDevices", "dev.copy", "dev.list", "dev.new", "dev.off",
              "dev.set", "graphics.off")
+
 importFrom("utils", "sessionInfo")
 importFrom("graphics", "par")
+
 importFrom("jsonlite", "toJSON")
+importFrom(data.table, data.table, foverlaps)
