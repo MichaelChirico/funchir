@@ -1,22 +1,17 @@
-\name{funchir-read}
-\alias{read.xlsx3}
+\name{funchir-io}
 \alias{abbr_to_colClass}
 \title{ Convenient Functions for Data Reading }
 \description{
-   Several functions which come in particular handy for process of reading in data which can turn verbose code into readable, clean code
+   Functions which come in particular handy for process of reading in data which can turn verbose code into readable, clean code.
 }
 \usage{
-   read.xlsx3(...)
    abbr_to_colClass(inits, counts)
 }
 \arguments{
-  \item{...}{ Arguments to be passed to \code{read.xlsx2}. }
   \item{inits}{ Initials of data types to be passed to a \code{colClasses} argument (most typically in \code{fread} from \code{data.table} for me). See details. }
   \item{counts}{ Corresponding counts (as an \emph{unbroken string}) of each type given in \code{inits}. See details }
 }
 \details{
-  \code{read.xlsx3} is a simple wrapper for \code{read.xlsx2} (from the package \code{xlsx}) which subsequently calls \code{gc} (invisibly) due to an apparent memory leak problem in \code{read.xlsx2}.
-
   \code{abbr_to_colClass} was designed specifically for reading in large (read: wide, i.e., with many fields) data files when it is also necessary to specify the types to expect to the reader for speed or for accuracy.
 
   Currently recognized types are \code{blank}, \code{character}, \code{factor}, \code{logical}, \code{integer}, \code{numeric}, \code{Date}, \code{date}, \code{text} and \code{skip}, which are abbreviated to their first initials: \code{"b"}, \code{"c"}, \code{"f"}, \code{"l"}, \code{"i"}, \code{"n"}, \code{"D"}, \code{"d"}, \code{"t"} and \code{"s"}, respectively.
@@ -27,10 +22,5 @@
 }
 
 \examples{
-  \dontrun{
-      fl <- "~/path/to/Excel/file.xlsx"
-      read.xlsx3(fl)
-  }
-  
   abbr_to_colClass(inits = "ncifdfd", counts = "1234567")
 }

@@ -1,7 +1,4 @@
 \name{funchir-plot}
-\alias{pdf2}
-\alias{png2}
-\alias{dev.off2}
 \alias{tile.axes}
 \alias{rel_coord}
 \alias{xdev2in}
@@ -9,16 +6,11 @@
 \alias{xydev2in}
 \title{ Convenience Functions for Plotting }
 \description{
-   Several wrapper functions which make it convenient / parsimonious to simultaneously write a plot to a file (currently limited to .png and .pdf types) \emph{and} to print the plot to the Rstudio graphics window.
-   
    \code{tile.axes} is used in for loops to generate axes in a multi-panel plot with shared x & y axes (within row and column).
-   
+
    \code{xdev2in} is the inverse of \code{graphics::xinch}; namely, it converts from plotting device units into inches.
 }
 \usage{
-   pdf2(...)
-   png2(...)
-   dev.off2(typ = "pdf")
    tile.axes(n, M, N, params = list(x = list(), y = list()),
              use.x = TRUE, use.y = TRUE)
    rel_coord(ax, lambda = 0)
@@ -27,8 +19,6 @@
    xydev2in(xy = 1)
 }
 \arguments{
-  \item{...}{ For \code{pdf2}, \code{png2}: list of arguments to be passed directly to \code{pdf} or \code{png}. }
-  \item{typ}{ Either \code{"pdf"} or \code{"png"}, must match the plot type currently open.}
   \item{n}{ Integer. Cell in \code{mfrow} to which to apply the axes; fills by \emph{row}, following base functionality.}
   \item{M}{ Integer. Number of rows specified in \code{mfrow}. }
   \item{N}{ Integer. Number of columns specified in \code{mfrow}. }
@@ -42,31 +32,17 @@
   \item{xy}{ \code{numeric} value to convert into inches (along both axes simultaneously). }
 }
 \details{
-  Instead of the standard \code{pdf("file.pdf") [plot code] dev.off()} approach used to write a plot to file, simply replacing the former and latter with these convenience functions will write the same file, but also print the output in the RStudio plotting window.
-
   \code{tile.axes} provides a simple way to incorporate the plotting of axes into a loop which creates the plots in a matrix of plots (e.g., by using \code{par(mfrow=c(2, 2))}) \emph{when the axes are shared by all plots}. x axes are only printed on the bottom row of plots, and y axes are only printed on the first column of plots--this saves potentially wasted / white space by eliminating redundant axes, yet can still be done in a loop.
 
-
   \code{rel_coord} gives a simple way to place text, labels, etc. in a plot by specifying only relative coordinates. The first form mimics the flexibility of \code{\link{legend}}, which accepts such relatively-defined positions as \code{"top"} and \code{"left"}. For example, specifying \code{lambda = "right"} will return an x coordinate close to the right endpoint of the currently defined axes. Alternatively, an exact proportion can be supplied -- if the desired coordinate is 75\% of the way to the right endpoint, for example, specify \code{rel_coord("x", .75)}.
-  
+
   Some graphics functions specify some arguments with units in inches (namely, \code{graphics::arrows}' \code{length} argument). \code{graphics::xinch} provides the inverse functionality enabling conversion from inches into plotting units; up to numerical accuracy, then, \code{graphics::xinch(xdev2in(x)) == x}.
   }
-\seealso{ 
-  \code{\link{pdf}}, \code{\link{png}} , \code{\link{dev.off}}, \code{\link{xinch}}
+\seealso{
+  \code{\link{xinch}}
 }
 \examples{
   smpl <- rnorm(100)
-  
-  \dontrun{
-    #Runs in RStudio
-    pdf2(file.path(temp.dir(), 'test.pdf')) 
-    hist(smpl)
-    dev.off2()
-
-    png2(file.path(temp.dir(), 'test.png'))
-    hist(smpl)
-    dev.off2(typ="png")
-  }
 
   par(mfrow = c(2, 1), mar = c(0, 0, 0, 0), oma=c(5, 4, 4, 2) + .1)
   for (ii in 1:2){

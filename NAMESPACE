@@ -1,7 +1,5 @@
 export("%+%", "%^%", "%u%", "%\\%")
-export(read.xlsx3)
-export(pdf2, png2, dev.off2, tile.axes, rel_coord,
-       xdev2in, ydev2in, xydev2in)
+export(tile.axes, rel_coord, xdev2in, ydev2in, xydev2in)
 export(table2)
 export(abbr_to_colClass)
 export(sanitize2)
@@ -12,8 +10,6 @@ export(get_age, quick_year, quick_yday, quick_mday)
 export(write.packages, stale_package_check)
 
 importFrom("stats", "quantile")
-importFrom("grDevices", "dev.copy", "dev.list", "dev.new", "dev.off",
-             "dev.set", "graphics.off")
 
 importFrom("utils", "sessionInfo")
 importFrom("graphics", "par")
