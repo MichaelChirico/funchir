@@ -55,21 +55,31 @@ ntostr <- function(n, dig = 2L){
 
 # Write the output of sessionInfo() & the date to a file
 #   (for tracking package versions over time)
-write.packages <- function(file) {
+write.packages <- function(con = stdout()) {
   si = sessionInfo()
   desc_fields = c('Version', 'Depends', 'Imports', 'Suggests',
                   'License', 'URL', 'Packaged', 'Built')
   desc_pad = function(desc) `names<-`(desc[desc_fields], desc_fields)
-  locale_list = function(loc_str) {
-    pairs = do.call(rbind, strsplit(strsplit(Sys.getlocale(), ';',
-                                             fixed = TRUE)[[1L]], '=',
-                                    fixed = TRUE))
-    `names<-`(as.list(pairs[ , 2L]), pairs[ , 1L])
+  locale_list = function() {
+    # query these individually given proviso in ?Sys.getlocale:
+    # > For portability, it is best to query categories individually...
+    # this list of categories taken from the output of my Linux Mint machine
+    lc_names = c('LC_CTYPE', 'LC_NUMERIC', 'LC_TIME', 'LC_COLLATE',
+                 'LC_MONETARY', 'LC_MESSAGES', 'LC_PAPER',
+                 'LC_NAME', 'LC_ADDRESS', 'LC_TELEPHONE',
+                 'LC_MEASUREMENT', 'LC_IDENTIFICATION')
+    as.list(
+      sapply(lc_names, function(x) {
+        tryCatch(Sys.getlocale(x), error = function(e) {
+          if (e$message == "invalid 'category' argument") '' else stop(e$message)
+        })
+      })
+    )
   }
   out = list(
     r_version = list(platform = si$platform,
                      version.string = si$R.version$version.string),
-    locale = locale_list(si$locale),
+    locale = locale_list(),
     running = si$running,
     linear_algebra = list(matrix_products = si$matprod,
                           blas = si$BLAS, lapack= si$LAPACK),
@@ -78,7 +88,7 @@ write.packages <- function(file) {
     loaded_via_namespace = lapply(si$loadedOnly, desc_pad),
     write_package_time = format(Sys.time(), tz = 'UTC', usetz = TRUE)
   )
-  writeLines(toJSON(out, pretty = TRUE, auto_unbox = TRUE), file)
+  writeLines(toJSON(out, pretty = TRUE, auto_unbox = TRUE), con = con)
   return(out)
 }
 
@@ -100,8 +110,8 @@ embed.mat <- function(mat, M = nrow(mat), N = ncol(mat),
 
 # Quick scan of code for whether the
 #   packages loaded are actually used
-stale_package_check = function(file_name) {
-  code = readLines(file_name)
+stale_package_check = function(con) {
+  code = readLines(con = con)
   #should fix this to match require calls too...
   pkg_used =
     #also misses lines with multiple package calls
