@@ -89,7 +89,7 @@ write.packages <- function(con = stdout()) {
     write_package_time = format(Sys.time(), tz = 'UTC', usetz = TRUE)
   )
   writeLines(toJSON(out, pretty = TRUE, auto_unbox = TRUE), con = con)
-  return(out)
+  return(invisible(out))
 }
 
 # Embed the matrix mat in a larger matrix by

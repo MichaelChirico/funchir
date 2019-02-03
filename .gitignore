@@ -2,3 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
+
+# package build file
+funchir*.tar.gz
