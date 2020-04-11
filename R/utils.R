@@ -163,7 +163,7 @@ stale_package_check = function(con) {
 
 # Accurately calculate fractional age, quickly
 ## R CMD check appeasement
-rem = int_yrs = i.start = start = end = NULL
+int_yrs = i.start = start = end = NULL
 
 get_age <- function(birthdays, ref_dates) {
   x <- data.table(
