@@ -115,6 +115,10 @@ stale_package_check = function(con) {
   #should fix this to match require calls too...
   #remove comments
   code = gsub("#.*","",code)
+  #remove empty lines and tabs
+  code = gsub("\t","",code)
+  code[code != ""]
+  
   pkg_used =
     #also misses lines with multiple package calls
     gsub('.*library\\(["]?([^)]*)["]?\\).*', '\\1',
