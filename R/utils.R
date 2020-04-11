@@ -113,6 +113,8 @@ embed.mat <- function(mat, M = nrow(mat), N = ncol(mat),
 stale_package_check = function(con) {
   code = readLines(con = con)
   #should fix this to match require calls too...
+  #remove comments
+  code = gsub("#.*","",code)
   pkg_used =
     #also misses lines with multiple package calls
     gsub('.*library\\(["]?([^)]*)["]?\\).*', '\\1',
