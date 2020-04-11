@@ -8,10 +8,11 @@ export(create_quantiles, to.pct,
 export(get_age, quick_year, quick_yday, quick_mday)
 export(write.packages, stale_package_check)
 
-importFrom("stats", "quantile")
+importFrom(stats, quantile)
 
-importFrom("utils", "sessionInfo")
-importFrom("graphics", "par")
+importFrom(utils, sessionInfo)
+importFrom(graphics, par)
 
-importFrom("jsonlite", "toJSON")
+importFrom(jsonlite, toJSON)
 importFrom(data.table, data.table, foverlaps)
+importFrom(data.table, .BY, `:=`)
