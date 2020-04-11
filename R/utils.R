@@ -108,32 +108,56 @@ embed.mat <- function(mat, M = nrow(mat), N = ncol(mat),
   out
 }
 
+parse_library_calls = function(e) {
+  if (is.call(e)) {
+    if (e[[1L]] == 'library' || e[[1L]] == 'require') {
+      return(e[[2L]])
+    } else return(lapply(e[-1L], parse_library_calls))
+  }
+  return(NULL)
+}
+# SKIP base::sample namespace-accessed calls -- if always using ::, it's
+#   not necessary to run library()
+# TODO: maybe it's there just to signal what will be used though?
+get_all_plain_calls = function(e) {
+  if (is.call(e) && is.name(e[[1L]])) return(c(e[[1L]], lapply(e[-1L], get_all_calls)))
+}
+
 # Quick scan of code for whether the
 #   packages loaded are actually used
+#' @param con A connection
 stale_package_check = function(con) {
-  code = readLines(con = con)
-  #should fix this to match require calls too...
-  #remove comments
-  code = gsub("#.*","",code)
-  #remove empty lines and tabs
-  code = gsub("\t","",code)
-  code[code != ""]
-  
-  pkg_used =
-    #also misses lines with multiple package calls
-    gsub('.*library\\(["]?([^)]*)["]?\\).*', '\\1',
-         grep('library', code, value = TRUE, fixed = TRUE))
-  for (pkg in unique(pkg_used)) {
-    fns = getNamespaceExports(pkg)
-    # issue: short function names like D are likely
-    #   to be matched even if unused as a function --
-    #   this check could be more sophisticated
-    used = names(which(sapply(fns, function(x)
-      any(grepl(x, code, fixed = TRUE)))))
-    if (length(used)) cat('\nFunctions matched from package ', pkg, ': ',
-                          paste(used, collapse = ', '), sep = '')
-    else cat('\n**No exported functions matched from ', pkg, '**', sep = '')
+  code = tryCatch(parse(con), error = identity)
+  if (inherits(code, 'error')) {
+    cat('Failed to parse R script, please fix syntax errors first\n')
+    return(invisible())
   }
+
+  all_packages = unique(as.character(unlist(lapply(code, parse_library_calls))))
+  if (!length(all_packages)) {
+    cat('No library() or require() calls found\n')
+    return(invisible())
+  }
+
+  # e.g. := from data.table comes out `:=` but := from getNamespaceExports
+  all_plain_calls = setdiff(
+    gsub(
+      pattern = '`', replacement = '', fixed = TRUE,
+      unique(as.character(unlist(lapply(code, get_all_plain_calls))))
+    ),
+    c('library', 'require')
+  )
+
+  for (pkg in all_packages) {
+    fns = getNamespaceExports(pkg)
+
+    used = fns %in% all_plain_calls
+    if (any(used))
+      cat('Functions matched from package ', pkg, ':\n\t',
+          paste(fns[used], collapse = ', '), '\n', sep = '')
+    else cat('**No exported functions matched from ', pkg, '**\n', sep = '')
+  }
+  return(invisible())
 }
 
 # Accurately calculate fractional age, quickly
