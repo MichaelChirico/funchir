@@ -1,11 +1,10 @@
 export("%+%", "%^%", "%u%", "%\\%")
 export(tile.axes, rel_coord, xdev2in, ydev2in, xydev2in)
-export(table2)
 export(abbr_to_colClass)
 export(sanitize2)
 export(create_quantiles, to.pct,
        nx.mlt, divide, dol.form,
-       ntostr, embed.mat, D)
+       ntostr, embed.mat)
 export(get_age, quick_year, quick_yday, quick_mday)
 export(write.packages, stale_package_check)
 
