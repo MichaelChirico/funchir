@@ -15,4 +15,4 @@ importFrom(graphics, par)
 
 importFrom(jsonlite, toJSON)
 importFrom(data.table, data.table, foverlaps)
-importFrom(data.table, .BY, `:=`)
+importFrom(data.table, .BY, ':=')

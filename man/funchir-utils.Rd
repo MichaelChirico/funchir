@@ -13,7 +13,6 @@
 \alias{quick_year}
 \alias{quick_mday}
 \alias{quick_yday}
-\alias{D}
 \title{ Miscellaneous utile functions }
 \description{
    Several odds-and-ends functions for data manipulation & representation, etc. See details and examples.
@@ -33,7 +32,6 @@
    quick_year(dates)
    quick_mday(dates)
    quick_yday(dates)
-   D(...)
 }
 \arguments{
   \item{x}{ A numeric vector. }
@@ -55,7 +53,6 @@
   \item{birthdays}{ A vector of \code{Date}s. }
   \item{ref_dates}{ A vector of \code{Date}s. }
   \item{dates}{ A vector of \code{Date}s. }
-  \item{...}{ Items and possibly arguments to (methods of) \code{as.Date}. }
 }
 \value{
   \code{create_quantiles} is a parsimonious function for generating quantiles of a vector (e.g., quartiles for \code{num=4} or quintiles for \code{num=5}). Basically a wrapper for the \code{cut} function; the type of the output is \code{factor}. Fails for vectors with overlapping quantiles (e.g., with >50\% of values of \code{x} equal to zero) unless the correct number of labels (i.e., the number of unique quantile breaks) is given in the \code{labels} argument.
@@ -79,8 +76,6 @@
   \code{get_age} returns the accurate, fractional age (in years) of each individual, quickly. Accuracy deteriorates when non-leap century years are involved (i.e., any year congruent to 0 mod 100 but not 0 mod 400); designed for use with currently-relevant birthdays and ages.
 
   \code{quick_year} converts a \code{Date} object into its year efficiently; also ignores concerns of leap centuries. \code{quick_mday} returns the day of the month. \code{quick_yday} returns the day of the year. Returns as an \code{integer}.
-
-  \code{D} is designed with the simplicity of \code{c} in mind to create vectors of \code{Date}s.
 }
 
 \seealso{
@@ -110,11 +105,9 @@
   embed.mat(inmat, M = 4L, N = 4L)
   embed.mat(inmat, N = 6L, n = 4L, fill = NA)
 
-  D("01-01-2016", format = "\%m-\%d-\%Y")
-  D("2004-03-02")
-  D(1L, 2L, origin = D("1980-01-01"))
-
-  get_age(D("1987-05-02"), D("2016-02-23"))
-  quick_year(D("1987-05-02"))
-  quick_mday(D("1987-05-02"))
+  d1 = as.Date('1987-05-02')
+  d2 = as.Date('2016-02-23')
+  get_age(d1, d2)
+  quick_year(d1)
+  quick_mday(d1)
 }

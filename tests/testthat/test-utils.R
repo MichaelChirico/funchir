@@ -20,7 +20,7 @@ test_that('stale_package_check works', {
   )
 
   expect_output(
-    stale_package_check(file.path(script_dir, 'use_namespace_call.R')),
+    stale_package_check(file.path(script_dir, 'wont-parse.R')),
     'Failed to parse R script, please fix syntax errors first',
     fixed = TRUE
   )
