@@ -120,7 +120,8 @@ parse_library_calls = function(e) {
 #   not necessary to run library()
 # TODO: maybe it's there just to signal what will be used though?
 get_all_plain_calls = function(e) {
-  if (is.call(e) && is.name(e[[1L]])) return(c(e[[1L]], lapply(e[-1L], get_all_calls)))
+  if (is.call(e) && is.name(e[[1L]]))
+    return(c(e[[1L]], lapply(e[-1L], get_all_plain_calls)))
 }
 
 # Quick scan of code for whether the
@@ -162,27 +163,38 @@ stale_package_check = function(con) {
 
 # Accurately calculate fractional age, quickly
 ## R CMD check appeasement
-cycle_type = extra = rem = int_yrs = i.start = start = end = NULL
+rem = int_yrs = i.start = start = end = NULL
 
-get_age <- function(birthdays, ref_dates){
-  `:=` = function(...) NULL
-  .BY = NULL
-  x <- data.table(bday <- unclass(birthdays),
-                  rem = ((ref <- unclass(ref_dates)) - bday) %% 1461)
-  x[ , cycle_type :=
-       foverlaps(data.table(start = bdr <- bday %% 1461, end = bdr),
-                 data.table(start = c(0, 59, 424, 790, 1155),
-                            end = c(58, 423, 789, 1154, 1460),
-                            val = c(3L, 2L, 1L, 4L, 3L),
-                            key = "start,end"))$val]
+get_age <- function(birthdays, ref_dates) {
+  x <- data.table(
+    bday <- unclass(birthdays),
+    rem = ((ref <- unclass(ref_dates)) - bday) %% 1461L
+  )
+  x[ , 'cycle_type' := {
+    overlaps = foverlaps(
+      data.table(start = bdr <- bday %% 1461L, end = bdr),
+      data.table(
+        start = c(0L, 59L, 424L, 790L, 1155L),
+        end = c(58L, 423L, 789L, 1154L, 1460L),
+        val = c(3L, 2L, 1L, 4L, 3L),
+        key = c('start', 'end')
+      )
+    )
+    overlaps$val
+  }]
   I4 <- diag(4L)[ , -4L]
-  x[ , extra :=
-       foverlaps(data.table(start = rem, end = rem),
-                 data.table(start = st <- cumsum(c(0, rep(365, 3L) +
-                                                     I4[.BY[[1L]], ])),
-                            end = c(st[-1L] - 1L, 1461),
-                            int_yrs = c(0, 1, 2, 3), key = "start,end")
-       )[ , int_yrs + (i.start - start) / (end + 1L - start)], by = cycle_type]
+  x[ , by = cycle_type, 'extra' := {
+    overlaps = foverlaps(
+      data.table(start = rem, end = rem),
+      data.table(
+        start = st <- cumsum(c(0L, rep(365L, 3L) + I4[.BY[[1L]], ])),
+        end = c(st[-1L] - 1L, 1461L),
+        int_yrs = 0:3,
+        key = c('start', 'end')
+      )
+    )
+    overlaps[ , int_yrs + (i.start - start) / (end + 1L - start)]
+  }]
   4 * ((ref - bday) %/% 1461) + x$extra
 }
 
@@ -194,9 +206,11 @@ quick_year = function(dates) {
   1970L + 4L * quadrennia + rem_yrs
 }
 
-quick_yday = function(dates)
-  ((((unclass(dates) %% 1461L) %% 1096L) %% 730L) %% 365L) +
-  365L * (unclass(dates) == 1095L) + 1L
+quick_yday = function(dates) {
+  dint = as.integer(dates)
+  ((((dint %% 1461L) %% 1096L) %% 730L) %% 365L) +
+    365L * (dint == 1095L) + 1L
+}
 
 #Month days in the quadrennial cycle
 .mday1461__ = c(1L:31L, 1L:28L, 1L:31L, 1L:30L, 1L:31L, 1L:30L,
@@ -210,11 +224,3 @@ quick_yday = function(dates)
 
 quick_mday = function(dates)
   .mday1461__[1L + unclass(dates) %% 1461L]
-
-# Tired of over-using as.Date everywhere...
-D <- function(...){
-  if (is.null(names(dl <- list(...))))
-    return(do.call("as.Date", list(do.call("c", dl))))
-  do.call("as.Date", c(list(do.call("c", dl[nm <- names(dl) == ""])), dl[!nm]))
-}
-
