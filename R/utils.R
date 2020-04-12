@@ -2,8 +2,19 @@
 create_quantiles <- function(x, num, right = FALSE, na.rm = FALSE,
                              include.lowest = TRUE, labels = 1:num){
   uniq_Qs = unique(quantile(x, probs = 0:num/num, na.rm = na.rm))
-  if (length(uniq_Qs) - 1L != length(labels) && !is.null(labels))
-    stop(gettextf('Overlapping quantiles. Please provide %d labels.', length(uniq_Qs) - 1L, domain="R-funchir"))
+  if (length(uniq_Qs) - 1L != length(labels) && !is.null(labels)) {
+    stop(
+      sprintf(
+        ngettext(
+          length(uniq_Qs) - 1L, domain="R-funchir",
+          'Overlapping quantiles. Please provide %d label.',
+          'Overlapping quantiles. Please provide %d labels.'
+        ),
+        length(uniq_Qs) - 1L
+      ),
+      domain=NULL
+    )
+  }
   cut(x, breaks = uniq_Qs, labels = labels, right = right,
       include.lowest = include.lowest)
 }

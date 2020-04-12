@@ -106,3 +106,25 @@ test_that('get_age works', {
   )
 })
 
+test_that('create_quantiles works', {
+  expect_equal(create_quantiles(1:10, 4L), factor(rep(1:4, c(3L, 2L, 2L, 3L))))
+  expect_equal(create_quantiles(1:10, 3L), factor(rep(1:3, c(3L, 3L, 4L))))
+
+  expect_error(create_quantiles(rep(1:2, c(100L, 1L)), 2L), error='Overlapping quantiles. Please provide 1 label.')
+  expect_error(create_quantiles(rep(1:2, c(2L, 1L)), 3L), error='Overlapping quantiles. Please provide 2 labels.')
+})
+
+test_that('write_packages works', {
+  invisible(capture.output(out <- write.packages()))
+
+  expect_equal(
+    names(out), c(
+      "r_version", "locale", "running", "linear_algebra", "base_packages",
+      "other_packages", "loaded_via_namespace", "write_package_time"
+    )
+  )
+
+  expect_equal(out$r_version$version.string, R.version.string)
+)
+
+})
