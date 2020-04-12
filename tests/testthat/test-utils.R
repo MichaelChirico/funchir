@@ -125,6 +125,4 @@ test_that('write_packages works', {
   )
 
   expect_equal(out$r_version$version.string, R.version.string)
-)
-
 })
