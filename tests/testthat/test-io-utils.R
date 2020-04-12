@@ -13,6 +13,6 @@ test_that('abbr_to_colClass works', {
 test_that('sanitize2 works', {
   expect_equal(
     sanitize2('$\\\\text[lw=.5]{hey}|u| % 4 & _#^~$'),
-    "\\$$\\backslash$$\\backslash$text\\lbracklw=.5\\rbrack\\{hey\\}$|$u$|$ \\% 4 \\& \\_\\#\\verb|^|\\~{}\\$"
+    "\\$$\\backslash$text\\lbracklw=.5\\rbrack\\{hey\\}$|$u$|$ \\% 4 \\& \\_\\#\\verb|^|\\~{}\\$"
   )
 })
