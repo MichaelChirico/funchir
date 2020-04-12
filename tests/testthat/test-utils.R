@@ -79,3 +79,30 @@ test_that('quick date utils work', {
   expect_equal(quick_yday(dates), dates_lt$yday + 1L)
   expect_equal(quick_mday(dates), dates_lt$mday)
 })
+
+test_that('get_age works', {
+  test_df = data.frame(
+    birth_date = .Date(c(
+      3285, 3286, 3287, -2559, -2558, -2557, 11124, 11125,
+      11126, 13590, 13591, 13592, -672, -672, -672
+    )),
+    given_date = .Date(c(
+      16800, 16800, 16800, 16800, 16800, 16800, 29387, 29387,
+      29387, 13957, 13957, 13957, 16494, 16495, 16496
+    ))
+  )
+  expect_equal(
+    with(test_df, get_age(birth_date, given_date)), c(
+      37.0027322404372, # will be 366 days until 12/31/16, so fraction is 1/366
+      37, 36.9972602739726,
+      53.0027322404372, # ditto here
+      53, 52.9972602739726, 50.0027397260274, 50,
+      49.9972602739726, # fraction should be 364/365
+      1.0027397260274,  # 2/29 already passed, only 365 days until 3/19/2009
+      1, 0.997267759562842,
+      46.9972602739726, # my judgment: birthday occurs on 3/1 for 2/29 babies, so 364/365 the way there
+      47, 47.0027322404372
+    )
+  )
+})
+
