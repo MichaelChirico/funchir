@@ -56,6 +56,11 @@ ntostr <- function(n, dig = 2L){
 # Write the output of sessionInfo() & the date to a file
 #   (for tracking package versions over time)
 write.packages <- function(con = stdout()) {
+  # nocov start
+  if (!requireNamespace('jsonlite', quietly = TRUE)) {
+    stop('jsonlite is required for this functionality, please install first')
+  }
+  # nocov end
   si = sessionInfo()
   desc_fields = c('Version', 'Depends', 'Imports', 'Suggests',
                   'License', 'URL', 'Packaged', 'Built')
@@ -88,7 +93,7 @@ write.packages <- function(con = stdout()) {
     loaded_via_namespace = lapply(si$loadedOnly, desc_pad),
     write_package_time = format(Sys.time(), tz = 'UTC', usetz = TRUE)
   )
-  writeLines(toJSON(out, pretty = TRUE, auto_unbox = TRUE), con = con)
+  writeLines(jsonlite::toJSON(out, pretty = TRUE, auto_unbox = TRUE), con = con)
   return(invisible(out))
 }
 
@@ -199,17 +204,17 @@ get_age <- function(birthdays, ref_dates) {
 }
 
 # Quickly get the year of a date
+cum_days_by_year = c(0L, 365L, 730L, 1096L, 1461L)
 quick_year = function(dates) {
   quadrennia = as.integer(unclass(dates) %/% 1461L)
-  rr = unclass(dates) %% 1461L
-  rem_yrs = (rr > 365L) + (rr > 730L) + (rr > 1096L)
+  day_in_quad = unclass(dates) %% 1461L
+  rem_yrs = findInterval(day_in_quad, cum_days_by_year) - 1L
   1970L + 4L * quadrennia + rem_yrs
 }
 
 quick_yday = function(dates) {
-  dint = as.integer(dates)
-  ((((dint %% 1461L) %% 1096L) %% 730L) %% 365L) +
-    365L * (dint == 1095L) + 1L
+  day_in_quad = as.integer(dates) %% 1461L
+  day_in_quad - cum_days_by_year[findInterval(day_in_quad, cum_days_by_year)] + 1L
 }
 
 #Month days in the quadrennial cycle
@@ -223,3 +228,19 @@ quick_yday = function(dates) {
 
 quick_mday = function(dates)
   .mday1461__[1L + unclass(dates) %% 1461L]
+
+## See discussion here for why this exists
+## http://stackoverflow.com/questions/32748895/
+"%<unescaped bksl>%" <- function() stop("What are you thinking? Don't use this function. See ?\"%\\%\"") # nocov
+
+
+## Set operations shorthand
+### Set difference
+###  *Note: only need one backslash for use
+"%\\%" <- function(A, B) setdiff(A, B)
+
+### Set union
+"%u%" <- function(A, B) union(A, B)
+
+### Set intersection
+"%^%" <- function(A, B) intersect(A, B)

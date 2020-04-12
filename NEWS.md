@@ -5,6 +5,7 @@
  * Removed some functions that were convenient only to a younger/more inexperienced self:
    + `D` - `as.Date` wrapper, masks `stats::D`, and is not the most readable
    + `table2` - `table` wrapper, mainly I was using it for what `sort(table())` can accomplish
+   + `%+%` - string concatentation. just get used to `paste`/`paste0` folks.
  
  * Structured the repo more like a "modern" R package -- added `tests` (via `testthat`), CI (via `GitHub Actions`), and this `NEWS.md` file!
 

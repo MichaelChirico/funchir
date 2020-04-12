@@ -1,4 +1,4 @@
-export("%+%", "%^%", "%u%", "%\\%")
+export("%^%", "%u%", "%\\%")
 export(tile.axes, rel_coord, xdev2in, ydev2in, xydev2in)
 export(abbr_to_colClass)
 export(sanitize2)
@@ -13,6 +13,5 @@ importFrom(stats, quantile)
 importFrom(utils, sessionInfo)
 importFrom(graphics, par)
 
-importFrom(jsonlite, toJSON)
 importFrom(data.table, data.table, foverlaps)
 importFrom(data.table, .BY, ':=')

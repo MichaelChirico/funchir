@@ -59,3 +59,23 @@ test_that('embed.mat works', {
   expect_error(embed.mat(m, 1, 1), 'Supplied matrix too large for supplied enclosing matrix')
   expect_error(embed.mat(m, m=10, n=10), 'Supplied starting position outside supplied enclosing matrix bounds')
 })
+
+test_that('set utilities work', {
+  A = 1:5
+  B = 3:8
+  expect_equal(A %u% B, 1:8)
+  expect_equal(A %\% B, 1:2)
+  expect_equal(A %^% B, 3:5)
+})
+
+# works as long as range(dates) doesn't include leap centuries:
+#   1900-03-01 = -25508
+#   2100-02-28 =  47540
+test_that('quick date utils work', {
+  dates = .Date(c(-1e4, 0, 365, 730, 1096, 1461, 1e4))
+  dates_lt = as.POSIXlt(dates)
+
+  expect_equal(quick_year(dates), dates_lt$year + 1900L)
+  expect_equal(quick_yday(dates), dates_lt$yday + 1L)
+  expect_equal(quick_mday(dates), dates_lt$mday)
+})
