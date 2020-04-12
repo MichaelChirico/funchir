@@ -12,7 +12,7 @@ abbr_to_colClass <- function(inits, counts){
 
 sanitize2 <- function(str) {
   result <- str
-  result <- gsub("\\\\", "SANITIZE.BACKSLASH", result)
+  result <- gsub("\\\\", "SANITIZE.BACKSLASH", result, fixed = TRUE)
   result <- gsub("$", "\\$", result, fixed = TRUE)
   result <- gsub(">", "$>$", result, fixed = TRUE)
   result <- gsub("<", "$<$", result, fixed = TRUE)

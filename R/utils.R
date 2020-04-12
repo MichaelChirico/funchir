@@ -87,7 +87,7 @@ write.packages <- function(con = stdout()) {
     as.list(
       sapply(lc_names, function(x) {
         tryCatch(Sys.getlocale(x), error = function(e) {
-          if (e$message == "invalid 'category' argument") '' else stop(e$message)
+          if (e$message == "invalid 'category' argument") '' else stop(e$message) # nocov
         })
       })
     )

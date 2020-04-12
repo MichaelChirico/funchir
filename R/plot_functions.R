@@ -7,25 +7,7 @@ tile.axes <- function(n, M, N, params = list(x = list(), y = list()),
   if ((n > (M - 1) * N | M == 1) && use.x) do.call("axis", c(side = 1, params$x))
   #only print y axes on the first column
   if ((n %% N == 1 | N == 1) && use.y) do.call("axis", c(side = 2, params$y))
-}
-
-## Methods for getting relative position in axes
-##  **TODO: more sophistication with handling text input,
-#   **perhaps ideally mimicking 'legend'
-rel_coord <- function(ax, lambda = 0){
-  lmc <- is.character(lambda)
-  lamn <- if (lmc){if (lambda %in% c("right", "top")) .95 else .05} else lambda
-  usr <- par("usr")
-  if (ax == "x"){
-    lims <- usr[1:2]
-    if (lmc & !lambda %in% c("left", "right"))
-        stop('Valid text arguments for `lambda` are "left" and "right" on the x axis')
-  } else if (ax == "y"){
-    lims <- usr[3:4]
-    if (lmc & !lambda %in% c("top", "bottom"))
-        stop('Valid text arguments for `lambda` are "top" and "bottom" on the y axis')
-  }
-  sum(lims * c(1 - lamn, lamn))
+  return(invisible())
 }
 
 # Functions to invert graphics::{x,y,xy}inch --

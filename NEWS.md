@@ -6,6 +6,7 @@
    + `D` - `as.Date` wrapper, masks `stats::D`, and is not the most readable
    + `table2` - `table` wrapper, mainly I was using it for what `sort(table())` can accomplish
    + `%+%` - string concatentation. just get used to `paste`/`paste0` folks.
+   + `rel_coord` - for naming coordinates relatively (e.g. 20% of the way on the x-axis). was a bit simplistic & not too hard to just do manually (I rarely use it). Better would be something like `ggrepel` which is what this was really trying to do.
  
  * Structured the repo more like a "modern" R package -- added `tests` (via `testthat`), CI (via `GitHub Actions`), and this `NEWS.md` file!
 
