@@ -5,3 +5,5 @@
 
 # package build file
 funchir*.tar.gz
+funchir\.Rcheck
+
