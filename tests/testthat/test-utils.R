@@ -1,12 +1,15 @@
 context('Utility functions')
 
 test_that('stale_package_check works', {
-  script_dir = 'stale_package_test_scripts'
+  stale_package_path <- function(path) test_path('stale_package_test_scripts', path)
+
   expect_output(
-    stale_package_check(file.path(script_dir, 'simple.R')),
+    stale_package_check(stale_package_path('simple.R')),
     paste(
-      c("Functions matched from package stats:", "\tdensity, rnorm",
-        "Functions matched from package tools:", "\tfile_ext",
+      c("Functions matched from package stats:",
+        paste0("\t", toString(sort(c("density", "rnorm")))),
+        "Functions matched from package tools:",
+        "\tfile_ext",
         "**No exported functions matched from tcltk**"),
       collapse = '\n'
     ),
@@ -14,19 +17,19 @@ test_that('stale_package_check works', {
   )
 
   expect_output(
-    stale_package_check(file.path(script_dir, 'use_namespace_call.R')),
+    stale_package_check(stale_package_path('use_namespace_call.R')),
     '**No exported functions matched from stats**',
     fixed = TRUE
   )
 
   expect_output(
-    stale_package_check(file.path(script_dir, 'wont-parse.R')),
+    stale_package_check(stale_package_path('wont_parse.R')),
     'Failed to parse R script, please fix syntax errors first',
     fixed = TRUE
   )
 
   expect_output(
-    stale_package_check(file.path(script_dir, 'no_library.R')),
+    stale_package_check(stale_package_path('no_library.R')),
     'No library() or require() calls found',
     fixed = TRUE
   )

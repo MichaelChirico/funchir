@@ -147,6 +147,7 @@ stale_package_check = function(con) {
   code = tryCatch(parse(con), error = identity)
   if (inherits(code, 'error')) {
     cat('Failed to parse R script, please fix syntax errors first\n')
+    cat('  failed with: ', conditionMessage(code), '\n', sep = '')
     return(invisible())
   }
 
@@ -166,13 +167,13 @@ stale_package_check = function(con) {
   )
 
   for (pkg in all_packages) {
-    fns = getNamespaceExports(pkg)
+    fns = sort(getNamespaceExports(pkg)) # for #13
 
     used = fns %in% all_plain_calls
     if (any(used))
-      cat('Functions matched from package ', pkg, ':\n\t',
-          paste(fns[used], collapse = ', '), '\n', sep = '')
-    else cat('**No exported functions matched from ', pkg, '**\n', sep = '')
+      cat('Functions matched from package ', pkg, ':\n\t', toString(fns[used]), '\n', sep = '')
+    else
+      cat('**No exported functions matched from ', pkg, '**\n', sep = '')
   }
   return(invisible())
 }
