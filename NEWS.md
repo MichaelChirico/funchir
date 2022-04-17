@@ -1,3 +1,7 @@
+### v0.2.1
+
+ * Fix a minor issue where `getNamespaceExports()` returns objects in unspecified order (#13)
+
 ### v0.2.0
 
  * Overhaul of `stale_package_check` to use the abstract syntax tree (AST) instead of regular expressions to detect unused packages. This approach should be much more comprehensive & reliable for 99% of use cases. Please file an issue if you'd like support for any of the remaining cases.
