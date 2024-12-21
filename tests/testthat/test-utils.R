@@ -8,7 +8,7 @@ test_that('stale_package_check works', {
         paste0("\t", toString(sort(c("density", "rnorm")))),
         "Functions matched from package tools:",
         "\tfile_ext",
-        "**No exported functions matched from tcltk**"),
+        "**No exported functions matched from parallel**"),
       collapse = '\n'
     ),
     fixed = TRUE
