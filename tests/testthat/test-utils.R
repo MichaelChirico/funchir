@@ -40,7 +40,7 @@ test_that('one-line utilities work', {
   expect_identical(nx.mlt(3, 5L), 5.0)
   expect_identical(nx.mlt(24, 17L), 34.0)
 
-  expect_identical(divide(c(1.0, 4.0, 8.0, 9.0, 11.0, 2.0, 2.0), 3L), c(1L, 6L, 11L))
+  expect_identical(divide(c(1.0, 4.0, 8.0, 9.0, 11.0, 2.0, 2.0), 3L), c(1.0, 6.0, 11.0))
 
   expect_identical(dol.form(1.0e6), '$1,000,000')
   expect_identical(dol.form(1.0e6, suff='m'), '$1m')
