@@ -3,7 +3,7 @@ test_that('abbr_to_colClass works', {
     abbr_to_colClass('bcflinDtds', '1234567891'),
     rep(
       c("blank", "character", "factor", "logical", "integer", "numeric", "Date", "text", "date", "skip"),
-      c(1:9, 1)
+      c(1:9, 1L)
     )
   )
 })

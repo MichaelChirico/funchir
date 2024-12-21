@@ -20,7 +20,7 @@ create_quantiles <- function(x, num, right = FALSE, na.rm = FALSE,
 }
 
 # Inline conversion to percentage
-to.pct <- function(x, dig = Inf) round(100 * x, digits = dig)
+to.pct <- function(x, dig = Inf) round(100.0 * x, digits = dig)
 
 # Get the nearest multiple of n weakly larger than x
 nx.mlt <- function(x, n) n * ceiling(x / n)
@@ -34,8 +34,8 @@ divide = function(x, n, na.rm = FALSE) {
 # Convert numbers for printing to dollar format
 dol.form <- function(x, dig = 0L, suff = "", tex = FALSE){
   neg <- rep("", length(x))
-  neg[x < 0] <- "-"
-  div <- c(1, "k"=1e3, "m"=1e6, "b"=1e9)
+  neg[x < 0.0] <- "-"
+  div <- c(1.0, "k"=1.0e3, "m"=1.0e6, "b"=1.0e9)
   idx <- which(names(div) == suff)
   paste0(neg, if (tex) "\\", "$",
          prettyNum(round(abs(x)/div[idx], digits = dig),
@@ -47,22 +47,6 @@ dol.form <- function(x, dig = 0L, suff = "", tex = FALSE){
 ntostr <- function(n, dig = 2L){
   sprintf(sprintf("%%0%dd", dig), n %% 10L^dig)
 }
-
-# Condensed cleaning of work space at
-#   outset of R script
-# **has some errors when applied to more general setups**
-# clean_slate = function(detach.packages = TRUE, gc = TRUE,
-#                        all = TRUE, envir = .GlobalEnv) {
-#   rm(list = ls(envir = envir, all.names = all), envir = envir)
-#   if (gc) gc(verbose = FALSE)
-#   if (detach.packages) {
-#     base.pkg = "package:" %+% c("stats", "graphics", "grDevices",
-#                                 "utils", "datasets", "methods", "base")
-#     invisible(lapply(setdiff(grep("^package:",
-#                                   search(), value = TRUE), base.pkg),
-#                      detach, character.only = TRUE, unload = TRUE))
-#   }
-# }
 
 # Write the output of sessionInfo() & the date to a file
 #   (for tracking package versions over time)
@@ -212,7 +196,7 @@ get_age <- function(birthdays, ref_dates) {
     )
     overlaps[ , int_yrs + (i.start - start) / (end + 1L - start)]
   }]
-  4 * ((ref - bday) %/% 1461) + x$extra
+  4L * ((ref - bday) %/% 1461L) + x$extra
 }
 
 # Quickly get the year of a date

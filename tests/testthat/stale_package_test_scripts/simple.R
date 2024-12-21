@@ -2,6 +2,6 @@ library(stats)
 require(tools)
 library(parallel) # unused
 
-density(rnorm(100))
+density(rnorm(100L))
 
 file_ext('.')
