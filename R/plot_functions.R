@@ -1,12 +1,14 @@
 # Plotting Convenience Functions ####
 ## Multiplot axis generator
 ##   Plot #n in an MxN grid
-tile.axes <- function(n, M, N, params = list(x = list(), y = list()),
-                      use.x = TRUE, use.y = TRUE){
+tile.axes <- function(n, M, N,
+                      params = list(x = list(), y = list()),
+                      use.x = TRUE, use.y = TRUE) {
+  stopifnot(length(n) == 1L, length(M) == 1L, length(N) == 1L)
   #only print x axes on the last row
-  if ((n > (M - 1) * N | M == 1) && use.x) do.call("axis", c(side = 1, params$x))
+  if ((n > (M - 1L) * N || M == 1L) && use.x) do.call("axis", c(side = 1L, params$x))
   #only print y axes on the first column
-  if ((n %% N == 1 | N == 1) && use.y) do.call("axis", c(side = 2, params$y))
+  if ((n %% N == 1L || N == 1L) && use.y) do.call("axis", c(side = 2L, params$y))
   return(invisible())
 }
 
@@ -15,15 +17,15 @@ tile.axes <- function(n, M, N, params = list(x = list(), y = list()),
 #   into inches (in particular useful for
 #   specifying length argument in arrows); inspiration:
 #   https://stackoverflow.com/questions/47034898
-xdev2in = function(x = 1) {
+xdev2in = function(x = 1.0) {
   x * par('pin')[1L]/diff(par('usr')[1L:2L])
 }
 
-ydev2in = function(y = 1) {
+ydev2in = function(y = 1.0) {
   y * par('pin')[2L]/diff(par('usr')[3L:4L])
 }
 
-xydev2in = function(xy = 1) {
+xydev2in = function(xy = 1.0) {
   u = par('usr')
   xy * par('pin')/c(u[2L] - u[1L], u[4L] - u[3L])
 }

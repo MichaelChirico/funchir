@@ -1,4 +1,3 @@
 library(stats)
 
-stats::density(stats::rnorm(100))
-
+stats::density(stats::rnorm(100L))
