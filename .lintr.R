@@ -4,6 +4,7 @@ linters = all_linters(
   line_length_linter(120L),
   undesirable_function_linter(modify_defaults(
     default_undesirable_functions,
+    library = NULL,
     par = NULL
   )),
   assignment_linter = NULL,
