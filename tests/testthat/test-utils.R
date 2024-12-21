@@ -34,11 +34,11 @@ test_that('stale_package_check works', {
 })
 
 test_that('one-line utilities work', {
-  expect_identical(to.pct(0.8, 2L), 80.0)
-  expect_identical(to.pct(0.8030432, 3L), 80.304)
+  expect_identical(to.pct(0.8, 2.0), 80.0)
+  expect_identical(to.pct(0.8030432, 3.0), 80.304)
 
-  expect_identical(nx.mlt(3, 5L), 5.0)
-  expect_identical(nx.mlt(24, 17L), 34.0)
+  expect_identical(nx.mlt(3.0, 5.0), 5.0)
+  expect_identical(nx.mlt(24.0, 17.0), 34.0)
 
   expect_identical(divide(c(1.0, 4.0, 8.0, 9.0, 11.0, 2.0, 2.0), 3L), c(1.0, 6.0, 11.0))
 
@@ -122,7 +122,9 @@ test_that('create_quantiles works', {
 })
 
 test_that('write_packages works', {
-  invisible(capture.output(out <- write.packages()))
+  invisible(capture.output({
+    out <- write.packages()
+  }))
 
   expect_named(out, c(
     "r_version", "locale", "running", "linear_algebra", "base_packages",

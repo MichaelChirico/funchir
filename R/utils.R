@@ -122,7 +122,7 @@ parse_library_calls = function(e) {
 # TODO: maybe it's there just to signal what will be used though?
 get_all_plain_calls = function(e) {
   if (is.call(e) && is.name(e[[1L]]))
-    return(c(e[[1L]], lapply(e[-1L], get_all_plain_calls)))
+    c(e[[1L]], lapply(e[-1L], get_all_plain_calls))
 }
 
 # Quick scan of code for whether the

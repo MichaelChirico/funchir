@@ -6,9 +6,9 @@ tile.axes <- function(n, M, N,
                       use.x = TRUE, use.y = TRUE) {
   stopifnot(length(n) == 1L, length(M) == 1L, length(N) == 1L)
   #only print x axes on the last row
-  if ((n > (M - 1L) * N || M == 1) && use.x) do.call("axis", c(side = 1L, params$x))
+  if ((n > (M - 1L) * N || M == 1L) && use.x) do.call("axis", c(side = 1L, params$x))
   #only print y axes on the first column
-  if ((n %% N == 1 || N == 1) && use.y) do.call("axis", c(side = 2L, params$y))
+  if ((n %% N == 1L || N == 1L) && use.y) do.call("axis", c(side = 2L, params$y))
   return(invisible())
 }
 

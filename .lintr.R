@@ -18,6 +18,7 @@ linters = all_linters(
   quotes_linter = NULL,
   spaces_inside_linter = NULL,
   todo_comment_linter = NULL,
-  unreachable_code_linter = NULL
+  unreachable_code_linter = NULL,
+  unused_import_linter = NULL
 )
 exclusions = list(`tests/testthat/stale_package_test_scripts/wont_parse.R` = Inf)
