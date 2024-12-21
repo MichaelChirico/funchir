@@ -34,8 +34,8 @@ test_that('stale_package_check works', {
 })
 
 test_that('one-line utilities work', {
-  expect_identical(to.pct(.8, 2L), 80.0)
-  expect_identical(to.pct(.8030432, 3L), 80.304)
+  expect_identical(to.pct(0.8, 2L), 80.0)
+  expect_identical(to.pct(0.8030432, 3L), 80.304)
 
   expect_identical(nx.mlt(3, 5L), 5.0)
   expect_identical(nx.mlt(24, 17L), 34.0)
