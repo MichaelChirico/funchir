@@ -164,44 +164,38 @@ stale_package_check = function(con) {
 }
 
 # Accurately calculate fractional age, quickly
-## R CMD check appeasement
-cycle_type = rem = int_yrs = i.start = start = end = NULL
-
 get_age <- function(birthdays, ref_dates) {
-  bday <- unclass(birthdays)
-  ref <- unclass(ref_dates)
-  x <- data.table(
-    bday,
-    rem = (ref - bday) %% 1461L
+  stopifnot(inherits(birthdays, "Date"), inherits(ref_dates, "Date"))
+  # NB: Strips fractional day parts
+  birthdays_unix <- as.integer(birthdays)
+  birthdays_quadrennial_date <- birthdays_unix %% 1461L
+  ref_dates_unix <- as.integer(ref_dates)
+  rem = (ref_dates_unix - birthdays_unix) %% 1461L
+  # Use double-fcase() for #18, though earlier this used double-foverlaps()
+  #   and could also easily use double-findInterval().
+  extra_part = fcase(
+    birthdays_quadrennial_date < 59L | birthdays_quadrennial_date >= 1155L,
+      fcase(rem < 365L,  0.0+(rem-   0.0)/365.0,
+            rem < 730L,  1.0+(rem- 365.0)/365.0,
+            rem < 1096L, 2.0+(rem- 730.0)/366.0,
+            rem < 1461L, 3.0+(rem-1096.0)/365.0),
+    birthdays_quadrennial_date < 424L,
+      fcase(rem < 365L,  0.0+(rem-   0.0)/365.0,
+            rem < 731L,  1.0+(rem- 365.0)/366.0,
+            rem < 1096L, 2.0+(rem- 731.0)/365.0,
+            rem < 1461L, 3.0+(rem-1096.0)/365.0),
+    birthdays_quadrennial_date < 790L,
+      fcase(rem < 366L,  0.0+(rem-   0.0)/366.0,
+            rem < 731L,  1.0+(rem- 366.0)/365.0,
+            rem < 1096L, 2.0+(rem- 730.0)/365.0,
+            rem < 1461L, 3.0+(rem-1096.0)/365.0),
+    birthdays_quadrennial_date < 1155L,
+      fcase(rem < 365L,  0.0+(rem-   0.0)/365.0,
+            rem < 730L,  1.0+(rem- 365.0)/365.0,
+            rem < 1095L, 2.0+(rem- 730.0)/365.0,
+            rem < 1461L, 3.0+(rem-1095.0)/366.0)
   )
-  x[ , 'cycle_type' := {
-    bdr <- bday %% 1461L
-    overlaps = foverlaps(
-      data.table(start = bdr, end = bdr),
-      data.table(
-        start = c(0L, 59L, 424L, 790L, 1155L),
-        end = c(58L, 423L, 789L, 1154L, 1460L),
-        val = c(3L, 2L, 1L, 4L, 3L),
-        key = c('start', 'end')
-      )
-    )
-    overlaps$val
-  }]
-  I4 <- diag(4L)[ , -4L]
-  x[ , by = cycle_type, 'extra' := {
-    st <- cumsum(c(0L, rep(365L, 3L) + I4[.BY[[1L]], ]))
-    overlaps = foverlaps(
-      data.table(start = rem, end = rem),
-      data.table(
-        start = st,
-        end = c(st[-1L] - 1L, 1461L),
-        int_yrs = 0:3,
-        key = c('start', 'end')
-      )
-    )
-    overlaps[ , int_yrs + (i.start - start) / (end + 1L - start)]
-  }]
-  4L * ((ref - bday) %/% 1461L) + x$extra
+  4.0 * ((ref_dates_unix - birthdays_unix) %/% 1461.0) + extra_part
 }
 
 # Quickly get the year of a date
