@@ -68,13 +68,11 @@ write.packages <- function(con = stdout()) {
                  'LC_MONETARY', 'LC_MESSAGES', 'LC_PAPER',
                  'LC_NAME', 'LC_ADDRESS', 'LC_TELEPHONE',
                  'LC_MEASUREMENT', 'LC_IDENTIFICATION')
-    as.list(
-      sapply(lc_names, function(x) {
-        tryCatch(Sys.getlocale(x), error = function(e) {
-          if (e$message == "invalid 'category' argument") '' else stop(e$message) # nocov
-        })
+    lapply(setNames(nm=lc_names), function(x) {
+      tryCatch(Sys.getlocale(x), error = function(e) {
+        if (e$message == "invalid 'category' argument") '' else stop(e) # nocov
       })
-    )
+    })
   }
   out = list(
     r_version = list(platform = si$platform,
