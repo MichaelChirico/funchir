@@ -34,28 +34,28 @@ test_that('stale_package_check works', {
 })
 
 test_that('one-line utilities work', {
-  expect_equal(to.pct(.8, 2L), 80.0)
-  expect_equal(to.pct(.8030432, 3L), 80.304)
+  expect_identical(to.pct(.8, 2L), 80.0)
+  expect_identical(to.pct(.8030432, 3L), 80.304)
 
-  expect_equal(nx.mlt(3, 5L), 5.0)
-  expect_equal(nx.mlt(24, 17L), 34.0)
+  expect_identical(nx.mlt(3, 5L), 5.0)
+  expect_identical(nx.mlt(24, 17L), 34.0)
 
-  expect_equal(divide(c(1.0, 4.0, 8.0, 9.0, 11.0, 2.0, 2.0), 3L), c(1L, 6L, 11L))
+  expect_identical(divide(c(1.0, 4.0, 8.0, 9.0, 11.0, 2.0, 2.0), 3L), c(1L, 6L, 11L))
 
-  expect_equal(dol.form(1.0e6), '$1,000,000')
-  expect_equal(dol.form(1.0e6, suff='m'), '$1m')
-  expect_equal(dol.form(-1.0e6), '-$1,000,000')
-  expect_equal(dol.form(123.456, dig = 0L), '$123')
-  expect_equal(dol.form(123.0, tex = TRUE), '\\$123')
+  expect_identical(dol.form(1.0e6), '$1,000,000')
+  expect_identical(dol.form(1.0e6, suff='m'), '$1m')
+  expect_identical(dol.form(-1.0e6), '-$1,000,000')
+  expect_identical(dol.form(123.456, dig = 0L), '$123')
+  expect_identical(dol.form(123.0, tex = TRUE), '\\$123')
 
-  expect_equal(ntostr(1999:2020, 2L), sprintf('%02d', c(99L, 0:20)))
+  expect_identical(ntostr(1999:2020, 2L), sprintf('%02d', c(99L, 0:20)))
 })
 
 test_that('embed.mat works', {
   m = matrix(1:10, 5L, 2L)
-  expect_equal(embed.mat(m, 6L, 3L), rbind(cbind(m, 0L), 0L))
-  expect_equal(embed.mat(m, M=6L, N=3L, m=2L, n=2L), rbind(0L, cbind(0L, m)))
-  expect_equal(embed.mat(m, 6L, 3L, fill = 1L), rbind(cbind(m, 1L), 1L))
+  expect_identical(embed.mat(m, 6L, 3L), rbind(cbind(m, 0L), 0L))
+  expect_identical(embed.mat(m, M=6L, N=3L, m=2L, n=2L), rbind(0L, cbind(0L, m)))
+  expect_identical(embed.mat(m, 6L, 3L, fill = 1L), rbind(cbind(m, 1L), 1L))
 
   expect_error(embed.mat(m, 1L, 1L), 'Supplied matrix too large for supplied enclosing matrix')
   expect_error(embed.mat(m, m=10L, n=10L), 'Supplied starting position outside supplied enclosing matrix bounds')
@@ -64,9 +64,9 @@ test_that('embed.mat works', {
 test_that('set utilities work', {
   A = 1:5
   B = 3:8
-  expect_equal(A %u% B, 1:8)
-  expect_equal(A %\% B, 1:2)
-  expect_equal(A %^% B, 3:5)
+  expect_identical(A %u% B, 1:8)
+  expect_identical(A %\% B, 1:2)
+  expect_identical(A %^% B, 3:5)
 })
 
 # works as long as range(dates) doesn't include leap centuries:
@@ -76,9 +76,9 @@ test_that('quick date utils work', {
   dates = .Date(c(-1.0e4, 0.0, 365.0, 730.0, 1096.0, 1461.0, 1.0e4))
   dates_lt = as.POSIXlt(dates)
 
-  expect_equal(quick_year(dates), dates_lt$year + 1900L)
-  expect_equal(quick_yday(dates), dates_lt$yday + 1L)
-  expect_equal(quick_mday(dates), dates_lt$mday)
+  expect_identical(quick_year(dates), dates_lt$year + 1900L)
+  expect_identical(quick_yday(dates), dates_lt$yday + 1L)
+  expect_identical(quick_mday(dates), dates_lt$mday)
 })
 
 test_that('get_age works', {
@@ -92,7 +92,7 @@ test_that('get_age works', {
       29387.0, 13957.0, 13957.0, 13957.0, 16494.0, 16495.0, 16496.0
     ))
   )
-  expect_equal(
+  expect_identical(
     with(test_df, get_age(birth_date, given_date)), c(
       37.0027322404372, # will be 366 days until 12/31/16, so fraction is 1/366
       37.0, 36.9972602739726,
@@ -108,8 +108,8 @@ test_that('get_age works', {
 })
 
 test_that('create_quantiles works', {
-  expect_equal(create_quantiles(1:10, 4L), factor(rep(1:4, c(3L, 2L, 2L, 3L))))
-  expect_equal(create_quantiles(1:10, 3L), factor(rep(1:3, c(3L, 3L, 4L))))
+  expect_identical(create_quantiles(1:10, 4L), factor(rep(1:4, c(3L, 2L, 2L, 3L))))
+  expect_identical(create_quantiles(1:10, 3L), factor(rep(1:3, c(3L, 3L, 4L))))
 
   expect_error(create_quantiles(rep(1:2, c(100L, 1L)), 2L), 'Overlapping quantiles. Please provide 1 label.')
   expect_error(create_quantiles(rep(1:2, c(2L, 1L)), 3L), 'Overlapping quantiles. Please provide 2 labels.')
@@ -118,12 +118,12 @@ test_that('create_quantiles works', {
 test_that('write_packages works', {
   invisible(capture.output(out <- write.packages()))
 
-  expect_equal(
+  expect_identical(
     names(out), c(
       "r_version", "locale", "running", "linear_algebra", "base_packages",
       "other_packages", "loaded_via_namespace", "write_package_time"
     )
   )
 
-  expect_equal(out$r_version$version.string, R.version.string)
+  expect_identical(out$r_version$version.string, R.version.string)
 })
