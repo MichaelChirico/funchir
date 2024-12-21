@@ -1,5 +1,3 @@
-context('I/O Utility Functions')
-
 test_that('abbr_to_colClass works', {
   expect_equal(
     abbr_to_colClass('bcflinDtds', '1234567891'),

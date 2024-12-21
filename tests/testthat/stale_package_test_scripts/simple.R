@@ -1,6 +1,6 @@
 library(stats)
 require(tools)
-library(tcltk) # unused
+library(parallel) # unused
 
 density(rnorm(100))
 

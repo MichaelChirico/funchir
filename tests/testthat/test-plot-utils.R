@@ -1,5 +1,3 @@
-context('Plotting utilities')
-
 test_that('device-units-to-inches functions work', {
   on.exit(dev.off())
   grDevices::png(tempfile())
