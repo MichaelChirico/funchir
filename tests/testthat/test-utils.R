@@ -94,15 +94,21 @@ test_that('get_age works', {
   )
   expect_identical(
     with(test_df, get_age(birth_date, given_date)), c(
-      37.0027322404372, # will be 366 days until 12/31/16, so fraction is 1/366
-      37.0, 36.9972602739726,
-      53.0027322404372, # ditto here
-      53.0, 52.9972602739726, 50.0027397260274, 50.0,
-      49.9972602739726, # fraction should be 364/365
-      1.0027397260274,  # 2/29 already passed, only 365 days until 3/19/2009
-      1.0, 0.997267759562842,
-      46.9972602739726, # my judgment: birthday occurs on 3/1 for 2/29 babies, so 364/365 the way there
-      47.0, 47.0027322404372
+      37.0 + 1.0/366.0, # will be 366 days until 12/31/16
+      37.0,
+      37.0 - 1.0/365.0,
+      53.0 + 1.0/366.0, # ditto here
+      53.0,
+      53.0 - 1.0/365.0,
+      50.0 + 1.0/365.0,
+      50.0,
+      50.0 - 1.0/365.0,
+      1.0 + 1.0/365.0,  # 2/29 already passed, only 365 days until 3/19/2009
+      1.0,
+      1.0 - 1.0/366.0,
+      47.0 - 1.0/365.0, # my judgment: birthday occurs on 3/1 for 2/29 babies, so 364/365 the way there
+      47.0,
+      47.0 + 1.0/366.0
     )
   )
 })
