@@ -93,12 +93,14 @@ write.packages <- function(con = stdout()) {
 # Embed the matrix mat in a larger matrix by
 #   placing the top-left element of mat at the supplied
 #   position (m,n).
-embed.mat <- function(mat, M = nrow(mat), N = ncol(mat),
+embed.mat <- function(mat,
+                      M = nrow(mat), N = ncol(mat),
                       m = 1L, n = 1L, fill = 0L) {
   if (m > M || n > N)
     stop("Supplied starting position outside supplied enclosing matrix bounds")
-  if ((end1 <- m + nrow(mat) - 1L) > M ||
-      (end2 <- n + ncol(mat) - 1L) > N) {
+  end1 <- m + nrow(mat) - 1L
+  end2 <- n + ncol(mat) - 1L
+  if (end1 > M || end2 > N) {
     stop("Supplied matrix too large for supplied enclosing matrix")
   }
   out <- matrix(fill, nrow = M, ncol = N)
@@ -166,13 +168,16 @@ stale_package_check = function(con) {
 cycle_type = rem = int_yrs = i.start = start = end = NULL
 
 get_age <- function(birthdays, ref_dates) {
+  bday <- unclass(birthdays)
+  ref <- unclass(ref_dates)
   x <- data.table(
-    bday <- unclass(birthdays),
-    rem = ((ref <- unclass(ref_dates)) - bday) %% 1461L
+    bday,
+    rem = (ref - bday) %% 1461L
   )
   x[ , 'cycle_type' := {
+    bdr <- bday %% 1461L
     overlaps = foverlaps(
-      data.table(start = bdr <- bday %% 1461L, end = bdr),
+      data.table(start = bdr, end = bdr),
       data.table(
         start = c(0L, 59L, 424L, 790L, 1155L),
         end = c(58L, 423L, 789L, 1154L, 1460L),
@@ -184,10 +189,11 @@ get_age <- function(birthdays, ref_dates) {
   }]
   I4 <- diag(4L)[ , -4L]
   x[ , by = cycle_type, 'extra' := {
+    st <- cumsum(c(0L, rep(365L, 3L) + I4[.BY[[1L]], ]))
     overlaps = foverlaps(
       data.table(start = rem, end = rem),
       data.table(
-        start = st <- cumsum(c(0L, rep(365L, 3L) + I4[.BY[[1L]], ])),
+        start = st,
         end = c(st[-1L] - 1L, 1461L),
         int_yrs = 0:3,
         key = c('start', 'end')
