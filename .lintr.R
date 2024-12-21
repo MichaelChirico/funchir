@@ -2,6 +2,10 @@ linters = all_linters(
   packages = "lintr",
   implicit_integer_linter(allow_colon=TRUE),
   line_length_linter(120L),
+  undesirable_function_linter(modify_defaults(
+    default_undesirable_functions,
+    par = NULL
+  )),
   assignment_linter = NULL,
   commas_linter = NULL,
   commented_code_linter = NULL,
