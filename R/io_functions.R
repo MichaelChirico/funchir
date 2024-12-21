@@ -1,7 +1,7 @@
 ## Shorthand for colClasses arguments,
 ##   particularly useful if the number of fields
 ##   starts to mushroom considerably
-abbr_to_colClass <- function(inits, counts){
+abbr_to_colClass <- function(inits, counts) {
   x <- strsplit(inits, split = "")[[1L]]
   lookup <- c(b = "blank", c = "character", f = "factor",
               l = "logical", i = "integer", n = "numeric",

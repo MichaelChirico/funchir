@@ -1,6 +1,6 @@
 # Specific wrapper of cut to create a factor of quantiles of a vector
 create_quantiles <- function(x, num, right = FALSE, na.rm = FALSE,
-                             include.lowest = TRUE, labels = 1:num){
+                             include.lowest = TRUE, labels = 1:num) {
   uniq_Qs = unique(quantile(x, probs = 0:num/num, na.rm = na.rm))
   if (length(uniq_Qs) - 1L != length(labels) && !is.null(labels)) {
     stop(
@@ -32,7 +32,7 @@ divide = function(x, n, na.rm = FALSE) {
 }
 
 # Convert numbers for printing to dollar format
-dol.form <- function(x, dig = 0L, suff = "", tex = FALSE){
+dol.form <- function(x, dig = 0L, suff = "", tex = FALSE) {
   neg <- rep("", length(x))
   neg[x < 0.0] <- "-"
   div <- c(1.0, "k"=1.0e3, "m"=1.0e6, "b"=1.0e9)
@@ -44,7 +44,7 @@ dol.form <- function(x, dig = 0L, suff = "", tex = FALSE){
 
 # Convert numbers to strings OF SPECIFIED LENGTH
 #   Convenient for getting c("99","00") from 99:100
-ntostr <- function(n, dig = 2L){
+ntostr <- function(n, dig = 2L) {
   sprintf(sprintf("%%0%dd", dig), n %% 10L^dig)
 }
 
@@ -98,7 +98,7 @@ embed.mat <- function(mat, M = nrow(mat), N = ncol(mat),
   if (m > M || n > N)
     stop("Supplied starting position outside supplied enclosing matrix bounds")
   if ((end1 <- m + nrow(mat) - 1L) > M ||
-      (end2 <- n + ncol(mat) - 1L) > N){
+      (end2 <- n + ncol(mat) - 1L) > N) {
     stop("Supplied matrix too large for supplied enclosing matrix")
   }
   out <- matrix(fill, nrow = M, ncol = N)
@@ -107,13 +107,14 @@ embed.mat <- function(mat, M = nrow(mat), N = ncol(mat),
 }
 
 parse_library_calls = function(e) {
-  if (is.call(e)) {
-    if (e[[1L]] == 'library' || e[[1L]] == 'require') {
-      return(e[[2L]])
-    } else return(lapply(e[-1L], parse_library_calls))
+  if (!is.call(e)) return(NULL)
+  if (e[[1L]] == 'library' || e[[1L]] == 'require') {
+    e[[2L]]
+  } else {
+    lapply(e[-1L], parse_library_calls)
   }
-  return(NULL)
 }
+
 # SKIP base::sample namespace-accessed calls -- if always using ::, it's
 #   not necessary to run library()
 # TODO: maybe it's there just to signal what will be used though?
@@ -220,8 +221,7 @@ quick_yday = function(dates) {
   1L:31L, 1L:28L, 1L:31L, 1L:30L, 1L:31L, 1L:30L, 1L:31L, 1L:31L, 1L:30L, 1L:31L, 1L:30L, 1L:31L
 )
 
-quick_mday = function(dates)
-  .mday1461__[1L + unclass(dates) %% 1461L]
+quick_mday = function(dates) .mday1461__[1L + unclass(dates) %% 1461L]
 
 ## See discussion here for why this exists
 ## http://stackoverflow.com/questions/32748895/
