@@ -35,7 +35,7 @@ divide = function(x, n, na.rm = FALSE) {
 dol.form <- function(x, dig = 0L, suff = "", tex = FALSE) {
   neg <- rep("", length(x))
   neg[x < 0.0] <- "-"
-  div <- c(1.0, "k"=1.0e3, "m"=1.0e6, "b"=1.0e9)
+  div <- c(1.0, k=1.0e3, m=1.0e6, b=1.0e9)
   idx <- which(names(div) == suff)
   paste0(neg, if (tex) "\\", "$",
          prettyNum(round(abs(x)/div[idx], digits = dig),
@@ -225,16 +225,16 @@ quick_mday = function(dates) .mday1461__[1L + unclass(dates) %% 1461L]
 
 ## See discussion here for why this exists
 ## http://stackoverflow.com/questions/32748895/
-"%<unescaped bksl>%" <- function() stop("What are you thinking? Don't use this function. See ?\"%\\%\"") # nocov
+`%<unescaped bksl>%` <- function() stop('What are you thinking? Don\'t use this function. See ?"%\\%"') # nocov
 
 
 ## Set operations shorthand
 ### Set difference
 ###  *Note: only need one backslash for use
-"%\\%" <- function(A, B) setdiff(A, B)
+`%\\%` <- function(A, B) setdiff(A, B)
 
 ### Set union
-"%u%" <- function(A, B) union(A, B)
+`%u%` <- function(A, B) union(A, B)
 
 ### Set intersection
-"%^%" <- function(A, B) intersect(A, B)
+`%^%` <- function(A, B) intersect(A, B)
