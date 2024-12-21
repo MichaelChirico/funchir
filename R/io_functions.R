@@ -29,5 +29,5 @@ sanitize2 <- function(str) {
   result <- gsub("~", "\\~{}", result, fixed = TRUE)
   result <- gsub("SANITIZE.BACKSLASH", "$\\backslash$",
                  result, fixed = TRUE)
-  return(result)
+  result
 }

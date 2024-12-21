@@ -160,7 +160,7 @@ stale_package_check = function(con) {
     else
       cat('**No exported functions matched from ', pkg, '**\n', sep = '')
   }
-  return(invisible())
+  invisible()
 }
 
 # Accurately calculate fractional age, quickly
