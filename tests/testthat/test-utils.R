@@ -1,5 +1,3 @@
-context('Utility functions')
-
 test_that('stale_package_check works', {
   stale_package_path <- function(path) test_path('stale_package_test_scripts', path)
 
@@ -113,8 +111,8 @@ test_that('create_quantiles works', {
   expect_equal(create_quantiles(1:10, 4L), factor(rep(1:4, c(3L, 2L, 2L, 3L))))
   expect_equal(create_quantiles(1:10, 3L), factor(rep(1:3, c(3L, 3L, 4L))))
 
-  expect_error(create_quantiles(rep(1:2, c(100L, 1L)), 2L), error='Overlapping quantiles. Please provide 1 label.')
-  expect_error(create_quantiles(rep(1:2, c(2L, 1L)), 3L), error='Overlapping quantiles. Please provide 2 labels.')
+  expect_error(create_quantiles(rep(1:2, c(100L, 1L)), 2L), 'Overlapping quantiles. Please provide 1 label.')
+  expect_error(create_quantiles(rep(1:2, c(2L, 1L)), 3L), 'Overlapping quantiles. Please provide 2 labels.')
 })
 
 test_that('write_packages works', {
