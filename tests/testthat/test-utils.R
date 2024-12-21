@@ -118,12 +118,10 @@ test_that('create_quantiles works', {
 test_that('write_packages works', {
   invisible(capture.output(out <- write.packages()))
 
-  expect_identical(
-    names(out), c(
-      "r_version", "locale", "running", "linear_algebra", "base_packages",
-      "other_packages", "loaded_via_namespace", "write_package_time"
-    )
-  )
+  expect_named(out, c(
+    "r_version", "locale", "running", "linear_algebra", "base_packages",
+    "other_packages", "loaded_via_namespace", "write_package_time"
+  ))
 
   expect_identical(out$r_version$version.string, R.version.string)
 })
