@@ -167,6 +167,22 @@ stale_package_check = function(con) {
 ## R CMD check appeasement
 cycle_type = rem = int_yrs = i.start = start = end = NULL
 
+cycle_types = data.table(
+  start = c(0L, 59L, 424L, 790L, 1155L),
+  end = c(58L, 423L, 789L, 1154L, 1460L),
+  val = c(3L, 2L, 1L, 4L, 3L),
+  key = c('start', 'end')
+)
+
+extra_part_mapping = list(
+  data.table(start = c(0L, 366L, 731L, 1096L), end=c(365L, 730L, 1095L, 1461L)),
+  data.table(start = c(0L, 365L, 731L, 1096L), end=c(364L, 730L, 1095L, 1461L)),
+  data.table(start = c(0L, 365L, 730L, 1096L), end=c(364L, 729L, 1095L, 1461L)),
+  data.table(start = c(0L, 365L, 730L, 1095L), end=c(364L, 729L, 1094L, 1460L))
+)
+for (DT in extra_part_mapping) DT[, `:=`(int_yrs=0:3, n_days=end + 1L - start)]
+for (DT in extra_part_mapping) setkeyv(DT, c('start', 'end'))
+
 get_age <- function(birthdays, ref_dates) {
   bday <- unclass(birthdays)
   ref <- unclass(ref_dates)
@@ -176,29 +192,11 @@ get_age <- function(birthdays, ref_dates) {
   )
   x[ , 'cycle_type' := {
     bdr <- bday %% 1461L
-    overlaps = foverlaps(
-      data.table(start = bdr, end = bdr),
-      data.table(
-        start = c(0L, 59L, 424L, 790L, 1155L),
-        end = c(58L, 423L, 789L, 1154L, 1460L),
-        val = c(3L, 2L, 1L, 4L, 3L),
-        key = c('start', 'end')
-      )
-    )
+    overlaps = foverlaps(data.table(start = bdr, end = bdr), cycle_types)
     overlaps$val
   }]
-  I4 <- diag(4L)[ , -4L]
   x[ , by = cycle_type, 'extra' := {
-    st <- cumsum(c(0L, rep(365L, 3L) + I4[.BY[[1L]], ]))
-    overlaps = foverlaps(
-      data.table(start = rem, end = rem),
-      data.table(
-        start = st,
-        end = c(st[-1L] - 1L, 1461L),
-        int_yrs = 0:3,
-        key = c('start', 'end')
-      )
-    )
+    overlaps = foverlaps(data.table(start = rem, end = rem), extra_part_mapping[[.BY$cycle_type]])
     overlaps[ , int_yrs + (i.start - start) / (end + 1L - start)]
   }]
   4L * ((ref - bday) %/% 1461L) + x$extra
