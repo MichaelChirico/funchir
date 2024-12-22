@@ -181,7 +181,7 @@ extra_part_mapping = list(
   data.table(start = c(0L, 365L, 730L, 1095L), end=c(364L, 729L, 1094L, 1460L))
 )
 for (DT in extra_part_mapping) DT[, `:=`(int_yrs=0:3, n_days=end + 1L - start)]
-for (DT in extra_part_mapping) setkeyv(extra_part_mapping, c('start', 'end'))
+for (DT in extra_part_mapping) setkeyv(DT, c('start', 'end'))
 
 get_age <- function(birthdays, ref_dates) {
   bday <- unclass(birthdays)
