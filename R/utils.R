@@ -187,7 +187,7 @@ get_age <- function(birthdays, ref_dates) {
     birthdays_quadrennial_date < 790L,
       fcase(rem < 366L,  0.0+(rem-   0.0)/366.0,
             rem < 731L,  1.0+(rem- 366.0)/365.0,
-            rem < 1096L, 2.0+(rem- 730.0)/365.0,
+            rem < 1096L, 2.0+(rem- 731.0)/365.0,
             rem < 1461L, 3.0+(rem-1096.0)/365.0),
     birthdays_quadrennial_date < 1155L,
       fcase(rem < 365L,  0.0+(rem-   0.0)/365.0,
