@@ -175,11 +175,13 @@ cycle_types = data.table(
 )
 
 extra_part_mapping = list(
-  data.table(start = c(0L, 366L, 731L, 1096L), end=c(365L, 730L, 1095L, 1461L), int_yrs=0:3, key=c('start', 'end')),
-  data.table(start = c(0L, 365L, 731L, 1096L), end=c(364L, 730L, 1095L, 1461L), int_yrs=0:3, key=c('start', 'end')),
-  data.table(start = c(0L, 365L, 730L, 1096L), end=c(364L, 729L, 1095L, 1461L), int_yrs=0:3, key=c('start', 'end')),
-  data.table(start = c(0L, 365L, 730L, 1095L), end=c(364L, 729L, 1094L, 1460L), int_yrs=0:3, key=c('start', 'end'))
+  data.table(start = c(0L, 366L, 731L, 1096L), end=c(365L, 730L, 1095L, 1461L)),
+  data.table(start = c(0L, 365L, 731L, 1096L), end=c(364L, 730L, 1095L, 1461L)),
+  data.table(start = c(0L, 365L, 730L, 1096L), end=c(364L, 729L, 1095L, 1461L)),
+  data.table(start = c(0L, 365L, 730L, 1095L), end=c(364L, 729L, 1094L, 1460L))
 )
+for (DT in extra_part_mapping) DT[, `:=`(int_yrs=0:3, n_days=end + 1L - start)]
+for (DT in extra_part_mapping) setkeyv(extra_part_mapping, c('start', 'end'))
 
 get_age <- function(birthdays, ref_dates) {
   bday <- unclass(birthdays)
