@@ -173,6 +173,7 @@ get_age <- function(birthdays, ref_dates) {
   rem = (ref_dates_unix - birthdays_unix) %% 1461L
   # Use double-fcase() for #18, though earlier this used double-foverlaps()
   #   and could also easily use double-findInterval().
+  # nolint start: indentation_linter, spaces_left_parentheses_linter.
   extra_part = fcase(
     birthdays_quadrennial_date < 59L | birthdays_quadrennial_date >= 1155L,
       fcase(rem < 365L,  0.0+(rem-   0.0)/365.0,
@@ -195,6 +196,7 @@ get_age <- function(birthdays, ref_dates) {
             rem < 1095L, 2.0+(rem- 730.0)/365.0,
             rem < 1461L, 3.0+(rem-1095.0)/366.0)
   )
+  # nolint end.
   4.0 * ((ref_dates_unix - birthdays_unix) %/% 1461.0) + extra_part
 }
 
