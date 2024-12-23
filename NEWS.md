@@ -1,4 +1,8 @@
-### v0.2.1
+### v0.2.99
+
+ * `get_age()` gives the right age in some cases, e.g. 7 1/366 years for someone born Dec. 22, 2024 as of Dec. 23, 2031 (#23)
+
+### v0.2.2
 
  * Fix a minor issue where `getNamespaceExports()` returns objects in unspecified order (#13)
 
