@@ -165,24 +165,34 @@ stale_package_check = function(con) {
 
 # Accurately calculate fractional age, quickly
 ## R CMD check appeasement
-cycle_type = rem = int_yrs = i.start = start = end = NULL
+cycle_type = rem = int_yrs = i.start = start = end = n_days NULL
 
-cycle_types = data.table(
+
+# Used to pick elements of 'age_within_quadrennium' based
+#   where March 1 can fall for a Unix date modulo 1461.
+mar1_cycle_types = data.table(
   start = c(0L, 59L, 424L, 790L, 1155L),
   end = c(58L, 423L, 789L, 1154L, 1460L),
   val = c(3L, 2L, 1L, 4L, 3L),
   key = c('start', 'end')
 )
 
-extra_part_mapping = list(
-  data.table(start = c(0L, 366L, 731L, 1096L), end=c(365L, 730L, 1095L, 1461L)),
+# These are # of days with in a life's quadrennial partitioning. If your age in
+#   days modulo 1461 d satisfies start[1L]<=d<=end[1L], you haven't reached
+#   one year within the current quadrennium (int_yrs==0). The exact boundaries
+#   vary based on whether you were born before/after March 1 and when the next
+#   leap year will happen.
+age_within_quadrennium = list(
+  data.table(start = c(0L, 366L, 731L, 1096L), end=c(365L, 730L, 1095L, 1460L)),
   data.table(start = c(0L, 365L, 731L, 1096L), end=c(364L, 730L, 1095L, 1460L)),
   data.table(start = c(0L, 365L, 730L, 1096L), end=c(364L, 729L, 1095L, 1460L)),
   data.table(start = c(0L, 365L, 730L, 1095L), end=c(364L, 729L, 1094L, 1460L))
 )
-for (DT in extra_part_mapping) DT[, `:=`(int_yrs=0:3, n_days=end + 1L - start)]
-for (DT in extra_part_mapping) setkeyv(DT, c('start', 'end'))
+for (DT in age_within_quadrennium) DT[, `:=`(int_yrs=0:3, n_days=end + 1L - start)]
+for (DT in age_within_quadrennium) setkeyv(DT, c('start', 'end'))
 
+# Approach: split life into 4-year intervals (quadrennia): each of those has 1461 days.
+#   within the most recent quadrennium, calculate full + partial years.
 get_age <- function(birthdays, ref_dates) {
   bday <- unclass(birthdays)
   ref <- unclass(ref_dates)
@@ -192,12 +202,12 @@ get_age <- function(birthdays, ref_dates) {
   )
   x[ , 'cycle_type' := {
     bdr <- bday %% 1461L
-    overlaps = foverlaps(data.table(start = bdr, end = bdr), cycle_types)
+    overlaps = foverlaps(data.table(start = bdr, end = bdr), mar1_cycle_types)
     overlaps$val
   }]
   x[ , by = cycle_type, 'extra' := {
-    overlaps = foverlaps(data.table(start = rem, end = rem), extra_part_mapping[[.BY$cycle_type]])
-    overlaps[ , int_yrs + (i.start - start) / (end + 1L - start)]
+    overlaps = foverlaps(data.table(start = rem, end = rem), age_within_quadrennium[[.BY$cycle_type]])
+    overlaps[ , int_yrs + (i.start - start) / n_days]
   }]
   4L * ((ref - bday) %/% 1461L) + x$extra
 }
