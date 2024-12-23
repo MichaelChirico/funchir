@@ -158,7 +158,7 @@ test_that('get_age works', {
   expect_identical(get_age(c('2023-01-01', '2024-01-01'), '2025-01-01'), c(2.0, 1.0))
   expect_identical(get_age('2023-01-01', c('2024-01-01', '2025-01-01')), c(1.0, 2.0))
   expect_identical(get_age(numeric(), numeric()), numeric())
-  expect_error(get_age(numeric(3), numeric(4)), "must have equal length")
+  expect_error(get_age(numeric(3L), numeric(4L)), "must have equal length")
 })
 
 test_that('create_quantiles works', {
