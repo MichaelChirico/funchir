@@ -168,6 +168,8 @@ get_age <- function(birthdays, ref_dates) {
   stopifnot(inherits(birthdays, "Date"), inherits(ref_dates, "Date"))
   # NB: Strips fractional day parts
   birthdays_unix <- as.integer(birthdays)
+  # offset by 790 days to center around the Mar. 1 following a Feb. 29.
+  #   (.Date(790) is Mar. 1, 1972, i.e. a leap year)
   days_after_feb29 <- (birthdays_unix - 790L) %% 1461L
   ref_dates_unix <- as.integer(ref_dates)
   # days in current quadrennium _of life_, i.e. relative quadrennial date
@@ -195,7 +197,7 @@ get_age <- function(birthdays, ref_dates) {
       fcase(rem < 366L,  0.0+(rem-   0.0)/366.0,
             rem < 731L,  1.0+(rem- 366.0)/365.0,
             rem < 1096L, 2.0+(rem- 731.0)/365.0,
-            rem < 1461L, 3.0+(rem-1096.0)/365.0),
+            rem < 1461L, 3.0+(rem-1096.0)/365.0)
   )
   # nolint end.
   4.0 * ((ref_dates_unix - birthdays_unix) %/% 1461.0) + extra_part
