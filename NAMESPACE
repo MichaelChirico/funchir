@@ -13,5 +13,4 @@ importFrom(stats, quantile, setNames)
 importFrom(utils, sessionInfo)
 importFrom(graphics, par)
 
-importFrom(data.table, data.table, foverlaps, setkeyv)
-importFrom(data.table, .BY, ':=')
+importFrom(data.table, fcase)

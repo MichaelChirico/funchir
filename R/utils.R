@@ -164,52 +164,43 @@ stale_package_check = function(con) {
 }
 
 # Accurately calculate fractional age, quickly
-## R CMD check appeasement
-cycle_type = rem = int_yrs = i.start = start = end = n_days = NULL
-
-
-# Used to pick elements of 'age_within_quadrennium' based
-#   where March 1 can fall for a Unix date modulo 1461.
-mar1_cycle_types = data.table(
-  start = c(0L, 59L, 424L, 790L, 1155L),
-  end = c(58L, 423L, 789L, 1154L, 1460L),
-  val = c(3L, 2L, 1L, 4L, 3L),
-  key = c('start', 'end')
-)
-
-# These are # of days with in a life's quadrennial partitioning. If your age in
-#   days modulo 1461 d satisfies start[1L]<=d<=end[1L], you haven't reached
-#   one year within the current quadrennium (int_yrs==0). The exact boundaries
-#   vary based on whether you were born before/after March 1 and when the next
-#   leap year will happen.
-age_within_quadrennium = list(
-  data.table(start = c(0L, 366L, 731L, 1096L), end=c(365L, 730L, 1095L, 1460L)),
-  data.table(start = c(0L, 365L, 731L, 1096L), end=c(364L, 730L, 1095L, 1460L)),
-  data.table(start = c(0L, 365L, 730L, 1096L), end=c(364L, 729L, 1095L, 1460L)),
-  data.table(start = c(0L, 365L, 730L, 1095L), end=c(364L, 729L, 1094L, 1460L))
-)
-for (DT in age_within_quadrennium) DT[, `:=`(int_yrs=0:3, n_days=end + 1L - start)]
-for (DT in age_within_quadrennium) setkeyv(DT, c('start', 'end'))
-
-# Approach: split life into 4-year intervals (quadrennia): each of those has 1461 days.
-#   within the most recent quadrennium, calculate full + partial years.
 get_age <- function(birthdays, ref_dates) {
-  bday <- unclass(birthdays)
-  ref <- unclass(ref_dates)
-  x <- data.table(
-    bday,
-    rem = (ref - bday) %% 1461L
+  stopifnot(inherits(birthdays, "Date"), inherits(ref_dates, "Date"))
+  # NB: Strips fractional day parts
+  birthdays_unix <- as.integer(birthdays)
+  # offset by 790 days to center around the Mar. 1 following a Feb. 29.
+  #   (.Date(790) is Mar. 1, 1972, i.e. a leap year)
+  days_after_feb29 <- (birthdays_unix - 790L) %% 1461L
+  ref_dates_unix <- as.integer(ref_dates)
+  # days in current quadrennium _of life_, i.e. relative quadrennial date
+  rem = (ref_dates_unix - birthdays_unix) %% 1461L
+  # Use double-fcase() for #18, though earlier this used double-foverlaps()
+  #   and could also easily use double-findInterval().
+  # nolint start: indentation_linter, spaces_left_parentheses_linter.
+  extra_part = fcase(
+    days_after_feb29 < 365L,
+      fcase(rem < 365L,  0.0+(rem-   0.0)/365.0,
+            rem < 730L,  1.0+(rem- 365.0)/365.0,
+            rem < 1095L, 2.0+(rem- 730.0)/365.0,
+            rem < 1461L, 3.0+(rem-1095.0)/366.0),
+    days_after_feb29 < 730L,
+      fcase(rem < 365L,  0.0+(rem-   0.0)/365.0,
+            rem < 730L,  1.0+(rem- 365.0)/365.0,
+            rem < 1096L, 2.0+(rem- 730.0)/366.0,
+            rem < 1461L, 3.0+(rem-1096.0)/365.0),
+    days_after_feb29 < 1095L,
+      fcase(rem < 365L,  0.0+(rem-   0.0)/365.0,
+            rem < 731L,  1.0+(rem- 365.0)/366.0,
+            rem < 1096L, 2.0+(rem- 731.0)/365.0,
+            rem < 1461L, 3.0+(rem-1096.0)/365.0),
+    days_after_feb29 < 1461L, # TODO: use default=. Just let vector default bake longer.
+      fcase(rem < 366L,  0.0+(rem-   0.0)/366.0,
+            rem < 731L,  1.0+(rem- 366.0)/365.0,
+            rem < 1096L, 2.0+(rem- 731.0)/365.0,
+            rem < 1461L, 3.0+(rem-1096.0)/365.0)
   )
-  x[ , 'cycle_type' := {
-    bdr <- bday %% 1461L
-    overlaps = foverlaps(data.table(start = bdr, end = bdr), mar1_cycle_types)
-    overlaps$val
-  }]
-  x[ , by = cycle_type, 'extra' := {
-    overlaps = foverlaps(data.table(start = rem, end = rem), age_within_quadrennium[[.BY$cycle_type]])
-    overlaps[ , int_yrs + (i.start - start) / n_days]
-  }]
-  4L * ((ref - bday) %/% 1461L) + x$extra
+  # nolint end.
+  4.0 * ((ref_dates_unix - birthdays_unix) %/% 1461.0) + extra_part
 }
 
 # Quickly get the year of a date
