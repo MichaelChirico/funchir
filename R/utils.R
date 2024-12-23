@@ -207,7 +207,7 @@ get_age <- function(birthdays, ref_dates) {
   }]
   x[ , by = cycle_type, 'extra' := {
     overlaps = foverlaps(data.table(start = rem, end = rem), age_within_quadrennium[[.BY$cycle_type]])
-    overlaps[ , int_yrs + (i.start - start) / (end + 1L - start)]
+    overlaps[ , int_yrs + (i.start - start) / n_days]
   }]
   4L * ((ref - bday) %/% 1461L) + x$extra
 }
