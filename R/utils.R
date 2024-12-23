@@ -168,29 +168,30 @@ get_age <- function(birthdays, ref_dates) {
   stopifnot(inherits(birthdays, "Date"), inherits(ref_dates, "Date"))
   # NB: Strips fractional day parts
   birthdays_unix <- as.integer(birthdays)
-  birthdays_quadrennial_date <- birthdays_unix %% 1461L
+  days_in_unix_quadrennium <- birthdays_unix %% 1461L
   ref_dates_unix <- as.integer(ref_dates)
+  # days in current quadrennium _of life_, i.e. relative quadrennial date
   rem = (ref_dates_unix - birthdays_unix) %% 1461L
   # Use double-fcase() for #18, though earlier this used double-foverlaps()
   #   and could also easily use double-findInterval().
   # nolint start: indentation_linter, spaces_left_parentheses_linter.
   extra_part = fcase(
-    birthdays_quadrennial_date < 59L | birthdays_quadrennial_date >= 1155L,
+    days_in_unix_quadrennium < 59L | days_in_unix_quadrennium >= 1155L,
       fcase(rem < 365L,  0.0+(rem-   0.0)/365.0,
             rem < 730L,  1.0+(rem- 365.0)/365.0,
             rem < 1096L, 2.0+(rem- 730.0)/366.0,
             rem < 1461L, 3.0+(rem-1096.0)/365.0),
-    birthdays_quadrennial_date < 424L,
+    days_in_unix_quadrennium < 424L,
       fcase(rem < 365L,  0.0+(rem-   0.0)/365.0,
             rem < 731L,  1.0+(rem- 365.0)/366.0,
             rem < 1096L, 2.0+(rem- 731.0)/365.0,
             rem < 1461L, 3.0+(rem-1096.0)/365.0),
-    birthdays_quadrennial_date < 790L,
+    days_in_unix_quadrennium < 790L,
       fcase(rem < 366L,  0.0+(rem-   0.0)/366.0,
             rem < 731L,  1.0+(rem- 366.0)/365.0,
             rem < 1096L, 2.0+(rem- 731.0)/365.0,
-            rem < 1461L, 3.0+(rem-1096.0)/366.0),
-    birthdays_quadrennial_date < 1155L,
+            rem < 1461L, 3.0+(rem-1096.0)/365.0),
+    days_in_unix_quadrennium < 1155L,
       fcase(rem < 365L,  0.0+(rem-   0.0)/365.0,
             rem < 730L,  1.0+(rem- 365.0)/365.0,
             rem < 1095L, 2.0+(rem- 730.0)/365.0,
