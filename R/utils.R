@@ -165,7 +165,7 @@ stale_package_check = function(con) {
 
 # Accurately calculate fractional age, quickly
 ## R CMD check appeasement
-cycle_type = rem = int_yrs = i.start = start = end = NULL
+cycle_type = rem = int_yrs = i.start = start = end = n_days NULL
 
 
 # Used to pick elements of 'age_within_quadrennium' based
