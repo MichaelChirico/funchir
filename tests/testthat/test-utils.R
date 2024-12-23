@@ -132,7 +132,7 @@ test_that('get_age works', {
       3.0 + 296.0/365.0, # 365 days until 2029-03-01, not 366 (#26)
       3.0 + 1.0/365.0, # 365 days until 2030-03-01, not 366 (#28)
       3.0 + 1.0/365.0, # 365 days until 2031-03-02, not 366 (#30)
-  
+
       NA_real_, NA_real_, NA_real_,
       NULL
     )
