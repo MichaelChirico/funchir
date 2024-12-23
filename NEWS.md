@@ -1,7 +1,7 @@
 ### v0.2.99
 
  * `get_age()` gives the right age in some cases, e.g. 7 1/366 years for someone born Dec. 22, 2024 as of Dec. 23, 2031 (#23). Accuracy is now confirmed for a full grid of >2 million possible birthday, age combinations.
- * `get_age()` implementation is improved for about 2x speed-up. This was in service of making the implementation friendlier for static translation to other execution engines (in particular {arrow}, #18). Thanks @TPDeramus for the request and @jonkeane for consulting on {acero} particulars.
+ * `get_age()` implementation is improved for about 2x speed-up. This was in service of making the implementation friendlier for static translation to other execution engines (in particular {arrow}, #18). Thanks @TPDeramus for the request and @jonkeane for consulting on acero particulars.
 
 ### v0.2.2
 
