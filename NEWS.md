@@ -4,6 +4,7 @@
  * `get_age()` implementation is improved for about 2x speed-up. This was in service of making the implementation friendlier for static translation to other execution engines (in particular {arrow}, #18). Thanks @TPDeramus for the request and @jonkeane for consulting on acero particulars.
  * `get_age()` doesn't require its input to be `Date` as long as `as.Date()` succeeds, for convenience in quick examples like `get_age('2003-02-04', '2008-12-30')`.
  * `get_age()` supports recycling of one length-1 input and handles missing values in either argument.
+ * Delete some long-unused functions: `abbr_to_colClasses()`, `sanitize2()`. I haven't used these myself in a very long time, and I don't see any other users on GitHub either.
 
 ### v0.2.2
 

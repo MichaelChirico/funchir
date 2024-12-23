@@ -1,7 +1,5 @@
 export("%^%", "%u%", "%\\%")
 export(tile.axes, xdev2in, ydev2in, xydev2in)
-export(abbr_to_colClass)
-export(sanitize2)
 export(create_quantiles, to.pct,
        nx.mlt, divide, dol.form,
        ntostr, embed.mat)
