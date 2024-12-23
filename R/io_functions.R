@@ -1,15 +1,3 @@
-## Shorthand for colClasses arguments,
-##   particularly useful if the number of fields
-##   starts to mushroom considerably
-abbr_to_colClass <- function(inits, counts) {
-  x <- strsplit(inits, NULL)[[1L]]
-  lookup <- c(b = "blank", c = "character", f = "factor",
-              l = "logical", i = "integer", n = "numeric",
-              #For readxl's read_excel options
-              D = "Date", t = "text", d = "date", s = 'skip')
-  rep(unname(lookup[x]), strsplit(counts, NULL)[[1L]])
-}
-
 sanitize2 <- function(str) {
   result <- str
   result <- gsub("\\\\", "SANITIZE.BACKSLASH", result, fixed = TRUE)
