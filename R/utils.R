@@ -165,7 +165,9 @@ stale_package_check = function(con) {
 
 # Accurately calculate fractional age, quickly
 get_age <- function(birthdays, ref_dates) {
-  stopifnot(inherits(birthdays, "Date"), inherits(ref_dates, "Date"))
+  if (!inherits(birthdays, "Date")) birthdays = as.Date(birthdays)
+  if (!inherits(ref_dates, "Date")) ref_dates = as.Date(ref_dates)
+
   # NB: Strips fractional day parts
   birthdays_unix <- as.integer(birthdays)
   # offset by 790 days to center around the Mar. 1 following a Feb. 29.
