@@ -134,6 +134,22 @@ test_that('get_age works', {
       NULL
     )
   )
+
+  # Don't require Date input if it can be coerced thereto
+  bday = as.Date('2023-01-01')
+  tday = as.Date('2025-01-01')
+  ## Y-M-D character
+  expect_identical(get_age(format(bday), format(tday)), get_age(bday, tday))
+  expect_identical(get_age(format(bday), tday), get_age(bday, tday))
+  expect_identical(get_age(bday, format(tday)), get_age(bday, tday))
+  ## IDate
+  expect_identical(get_age(data.table::as.IDate(bday), data.table::as.IDate(tday)), get_age(bday, tday))
+  expect_identical(get_age(data.table::as.IDate(bday), tday), get_age(bday, tday))
+  expect_identical(get_age(bday, data.table::as.IDate(tday)), get_age(bday, tday))
+  ## POSIXct
+  expect_identical(get_age(as.POSIXct(bday), as.POSIXct(tday)), get_age(bday, tday))
+  expect_identical(get_age(as.POSIXct(bday), tday), get_age(bday, tday))
+  expect_identical(get_age(bday, as.POSIXct(tday)), get_age(bday, tday))
 })
 
 test_that('create_quantiles works', {
