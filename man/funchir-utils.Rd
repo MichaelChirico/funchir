@@ -9,7 +9,6 @@
 \alias{stale_package_check}
 \alias{clean_slate}
 \alias{embed.mat}
-\alias{get_age}
 \alias{quick_year}
 \alias{quick_mday}
 \alias{quick_yday}
@@ -28,7 +27,6 @@
    write.packages(con)
    stale_package_check(con)
    embed.mat(mat, M = nrow(mat), N = ncol(mat), m = 1L, n = 1L, fill = 0L)
-   get_age(birthdays, ref_dates)
    quick_year(dates)
    quick_mday(dates)
    quick_yday(dates)
@@ -50,8 +48,6 @@
   \item{N}{ An integer specifying the number of columns in the enclosing matrix. }
   \item{m}{ An integer specifying the row at which to insert \code{mat}. }
   \item{fill}{ An atomic vector specifying how to fill the enclosing matrix. }
-  \item{birthdays}{ A vector of \code{Date}s. }
-  \item{ref_dates}{ A vector of \code{Date}s. }
   \item{dates}{ A vector of \code{Date}s. }
 }
 \value{
@@ -72,8 +68,6 @@
   \code{stale_package_check} reads a file (with \code{\link{readLines}}) and checks which functions are actually used from each loaded package. Currently only checks for \code{library} (i.e., not \code{require}) calls.
 
   \code{embed.mat} inserts a supplied matrix into a (weakly) larger enclosing matrix, typically filled with 0s, at a specified position.
-
-  \code{get_age} returns the accurate, fractional age (in years) of each individual, quickly. Accuracy deteriorates when non-leap century years are involved (i.e., any year congruent to 0 mod 100 but not 0 mod 400); designed for use with currently-relevant birthdays and ages.
 
   \code{quick_year} converts a \code{Date} object into its year efficiently; also ignores concerns of leap centuries. \code{quick_mday} returns the day of the month. \code{quick_yday} returns the day of the year. Returns as an \code{integer}.
 }
@@ -107,7 +101,6 @@
 
   d1 = as.Date('1987-05-02')
   d2 = as.Date('2016-02-23')
-  get_age(d1, d2)
   quick_year(d1)
   quick_mday(d1)
 }
