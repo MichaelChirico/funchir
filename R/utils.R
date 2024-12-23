@@ -168,7 +168,7 @@ get_age <- function(birthdays, ref_dates) {
   stopifnot(inherits(birthdays, "Date"), inherits(ref_dates, "Date"))
   # NB: Strips fractional day parts
   birthdays_unix <- as.integer(birthdays)
-  days_in_unix_quadrennium <- birthdays_unix %% 1461L
+  days_after_feb29 <- (birthdays_unix - 790L) %% 1461L
   ref_dates_unix <- as.integer(ref_dates)
   # days in current quadrennium _of life_, i.e. relative quadrennial date
   rem = (ref_dates_unix - birthdays_unix) %% 1461L
@@ -176,26 +176,26 @@ get_age <- function(birthdays, ref_dates) {
   #   and could also easily use double-findInterval().
   # nolint start: indentation_linter, spaces_left_parentheses_linter.
   extra_part = fcase(
-    days_in_unix_quadrennium < 59L | days_in_unix_quadrennium >= 1155L,
+    days_after_feb29 < 365L,
+      fcase(rem < 365L,  0.0+(rem-   0.0)/365.0,
+            rem < 730L,  1.0+(rem- 365.0)/365.0,
+            rem < 1095L, 2.0+(rem- 730.0)/365.0,
+            rem < 1461L, 3.0+(rem-1095.0)/366.0),
+    days_after_feb29 < 730L,
       fcase(rem < 365L,  0.0+(rem-   0.0)/365.0,
             rem < 730L,  1.0+(rem- 365.0)/365.0,
             rem < 1096L, 2.0+(rem- 730.0)/366.0,
             rem < 1461L, 3.0+(rem-1096.0)/365.0),
-    days_in_unix_quadrennium < 424L,
+    days_after_feb29 < 1095L,
       fcase(rem < 365L,  0.0+(rem-   0.0)/365.0,
             rem < 731L,  1.0+(rem- 365.0)/366.0,
             rem < 1096L, 2.0+(rem- 731.0)/365.0,
             rem < 1461L, 3.0+(rem-1096.0)/365.0),
-    days_in_unix_quadrennium < 790L,
+    days_after_feb29 < 1461L, # TODO: use default=. Just let vector default bake longer.
       fcase(rem < 366L,  0.0+(rem-   0.0)/366.0,
             rem < 731L,  1.0+(rem- 366.0)/365.0,
             rem < 1096L, 2.0+(rem- 731.0)/365.0,
             rem < 1461L, 3.0+(rem-1096.0)/365.0),
-    days_in_unix_quadrennium < 1155L,
-      fcase(rem < 365L,  0.0+(rem-   0.0)/365.0,
-            rem < 730L,  1.0+(rem- 365.0)/365.0,
-            rem < 1095L, 2.0+(rem- 730.0)/365.0,
-            rem < 1461L, 3.0+(rem-1095.0)/366.0)
   )
   # nolint end.
   4.0 * ((ref_dates_unix - birthdays_unix) %/% 1461.0) + extra_part
