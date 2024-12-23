@@ -165,6 +165,20 @@ stale_package_check = function(con) {
 
 # Accurately calculate fractional age, quickly
 get_age <- function(birthdays, ref_dates) {
+  if (length(birthdays) != length(ref_dates)) {
+    if (length(birthdays) == 1L) {
+      birthdays = rep(birthdays, length(ref_dates))
+    } else if (length(ref_dates) == 1L) {
+      ref_dates = rep(ref_dates, length(birthdays))
+    } else {
+      stop(sprintf(
+        "'birthdays' and 'ref_dates' must have equal length or one be a scalar, but got respective lengths %d and %d",
+        length(birthdays), length(ref_dates)
+      ))
+    }
+  }
+  if (!length(birthdays)) return(numeric())
+
   if (!inherits(birthdays, "Date")) birthdays = as.Date(birthdays)
   if (!inherits(ref_dates, "Date")) ref_dates = as.Date(ref_dates)
 

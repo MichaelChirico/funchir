@@ -91,7 +91,8 @@ test_that('get_age works', {
     "2007-03-18", "2007-03-19", "2007-03-20",
     "1968-02-29", "1968-02-29", "1968-02-29",
     "2024-12-22", "2025-03-01", "2026-03-01",
-    "2027-03-01", NA_character_,
+    "2027-03-01",
+    NA_character_, Sys.Date(), NA_character_,
     NULL
   ))
   given_date = as.Date(c(
@@ -101,7 +102,8 @@ test_that('get_age works', {
     "2008-03-19", "2008-03-19", "2008-03-19",
     "2015-02-28", "2015-03-01", "2015-03-02",
     "2031-12-23", "2028-12-22", "2029-03-02",
-    "2030-03-02", Sys.Date(),
+    "2030-03-02",
+    Sys.Date(), NA_character_, NA_character_,
     NULL
   ))
   expect_identical(
@@ -130,7 +132,8 @@ test_that('get_age works', {
       3.0 + 296.0/365.0, # 365 days until 2029-03-01, not 366 (#26)
       3.0 + 1.0/365.0, # 365 days until 2030-03-01, not 366 (#28)
       3.0 + 1.0/365.0, # 365 days until 2031-03-02, not 366 (#30)
-      NA_real_,
+  
+      NA_real_, NA_real_, NA_real_,
       NULL
     )
   )
@@ -150,6 +153,12 @@ test_that('get_age works', {
   expect_identical(get_age(as.POSIXct(bday), as.POSIXct(tday)), get_age(bday, tday))
   expect_identical(get_age(as.POSIXct(bday), tday), get_age(bday, tday))
   expect_identical(get_age(bday, as.POSIXct(tday)), get_age(bday, tday))
+
+  # Input validation: lengths & recycling
+  expect_identical(get_age(c('2023-01-01', '2024-01-01'), '2025-01-01'), c(2.0, 1.0))
+  expect_identical(get_age('2023-01-01', c('2024-01-01', '2025-01-01')), c(1.0, 2.0))
+  expect_identical(get_age(numeric(), numeric()), numeric())
+  expect_error(get_age(numeric(3), numeric(4)), "must have equal lengths")
 })
 
 test_that('create_quantiles works', {
