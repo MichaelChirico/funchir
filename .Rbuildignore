@@ -1,5 +1,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^\.devcontainer$
 ^\.github$
 ^funchir_.*\.tar\.gz$
 ^\.lintr\.R$
