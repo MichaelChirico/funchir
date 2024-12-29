@@ -4,6 +4,8 @@
 
    I tried looking around GitHub for existing users, but if this affects you, please don't hesitate to file a FR and I can restore anything deleted too hastily.
 
+ * `stale_package_check()` is also deprecated. Prefer using `lintr::unused_import_linter()` instead. {lintr} will have better maintenance, reliability, and correctness.
+
  * `get_age()` got some substantial improvements.
    + Gives the right age in some cases, e.g. 7 1/366 years for someone born Dec. 22, 2024 as of Dec. 23, 2031 (#23). Accuracy is now confirmed for a full grid of >2 million possible birthday, age combinations.
    + Implementation is improved for about 2x speed-up. This was in service of making the implementation friendlier for static translation to other execution engines (in particular {arrow}, #18). Thanks @TPDeramus for the request and @jonkeane for consulting on acero particulars.
