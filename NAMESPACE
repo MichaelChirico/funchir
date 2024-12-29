@@ -1,14 +1,8 @@
-export("%^%", "%u%", "%\\%")
+export("%\\%")
 export(tile.axes, xdev2in, ydev2in, xydev2in)
-export(create_quantiles, to.pct,
-       nx.mlt, divide, dol.form,
-       ntostr, embed.mat)
+export(embed.mat)
 export(get_age, quick_year, quick_yday, quick_mday)
-export(write.packages, stale_package_check)
+export(stale_package_check)
 
-importFrom(stats, quantile, setNames)
-
-importFrom(utils, sessionInfo)
 importFrom(graphics, par)
-
 importFrom(data.table, fcase)
