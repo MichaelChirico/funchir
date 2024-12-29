@@ -1,10 +1,14 @@
 ### v0.2.99
 
- * `get_age()` gives the right age in some cases, e.g. 7 1/366 years for someone born Dec. 22, 2024 as of Dec. 23, 2031 (#23). Accuracy is now confirmed for a full grid of >2 million possible birthday, age combinations.
- * `get_age()` implementation is improved for about 2x speed-up. This was in service of making the implementation friendlier for static translation to other execution engines (in particular {arrow}, #18). Thanks @TPDeramus for the request and @jonkeane for consulting on acero particulars.
- * `get_age()` doesn't require its input to be `Date` as long as `as.Date()` succeeds, for convenience in quick examples like `get_age('2003-02-04', '2008-12-30')`.
- * `get_age()` supports recycling of one length-1 input and handles missing values in either argument.
- * Delete some long-unused functions: `abbr_to_colClasses()`, `sanitize2()`. I haven't used these myself in a very long time, and I don't see any other users on GitHub either.
+ * I removed most of the functionality from the package. I think only `stale_package_check()` and `get_age()` have gotten any real downstream usage aside from my own; the few functions I kept are those that I actually continue to use myself with any regularity, or which I think it's worth having written down to save re-inventing the wheel for functions only needed rarely.
+
+   I tried looking around GitHub for existing users, but if this affects you, please don't hesitate to file a FR and I can restore anything deleted too hastily.
+
+ * `get_age()` got some substantial improvements.
+   + Gives the right age in some cases, e.g. 7 1/366 years for someone born Dec. 22, 2024 as of Dec. 23, 2031 (#23). Accuracy is now confirmed for a full grid of >2 million possible birthday, age combinations.
+   + Implementation is improved for about 2x speed-up. This was in service of making the implementation friendlier for static translation to other execution engines (in particular {arrow}, #18). Thanks @TPDeramus for the request and @jonkeane for consulting on acero particulars.
+   + Input not required to be `Date` as long as `as.Date()` succeeds, for convenience in quick examples like `get_age('2003-02-04', '2008-12-30')`.
+   + Supports recycling of one length-1 input and handles missing values in either argument.
 
 ### v0.2.2
 
