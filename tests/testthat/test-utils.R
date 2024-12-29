@@ -2,7 +2,7 @@ test_that('stale_package_check works', {
   stale_package_path <- function(path) test_path('stale_package_test_scripts', path)
 
   expect_output(
-    stale_package_check(stale_package_path('simple.R')),
+    expect_warning(stale_package_check(stale_package_path('simple.R')), "lintr::unused_import_linter"),
     paste(
       c("Functions matched from package stats:",
         paste0("\t", toString(sort(c("density", "rnorm")))),
@@ -15,19 +15,19 @@ test_that('stale_package_check works', {
   )
 
   expect_output(
-    stale_package_check(stale_package_path('use_namespace_call.R')),
+    expect_warning(stale_package_check(stale_package_path('use_namespace_call.R')), "lintr::unused_import_linter"),
     '**No exported functions matched from stats**',
     fixed = TRUE
   )
 
   expect_output(
-    stale_package_check(stale_package_path('wont_parse.R')),
+    expect_warning(stale_package_check(stale_package_path('wont_parse.R')), "lintr::unused_import_linter"),
     'Failed to parse R script, please fix syntax errors first',
     fixed = TRUE
   )
 
   expect_output(
-    stale_package_check(stale_package_path('no_library.R')),
+    expect_warning(stale_package_check(stale_package_path('no_library.R')), "lintr::unused_import_linter"),
     'No library() or require() calls found',
     fixed = TRUE
   )

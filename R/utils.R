@@ -37,6 +37,7 @@ get_all_plain_calls = function(e) {
 #   packages loaded are actually used
 #' @param con A connection
 stale_package_check = function(con) {
+  warning("This function is deprecated. Use lintr::unused_import_linter() instead")
   code = tryCatch(parse(con), error = identity)
   if (inherits(code, 'error')) {
     cat('Failed to parse R script, please fix syntax errors first\n')
