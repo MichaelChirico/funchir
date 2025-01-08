@@ -1,7 +1,8 @@
-FROM rocker/r-base
+FROM FROM docker.io/rhub/r-minimal:devel
 
-RUN apt-get -qq update && \
-  apt-get install -y --no-install-recommends git
+RUN apk update && \
+  apk add --no-cache git \
+  && echo 'options(repos="https://cloud.r-project.org")' >> /usr/local/lib/R/etc/Rprofile.site
 
 COPY DESCRIPTION .
 
