@@ -1,4 +1,5 @@
 test_that('device-units-to-inches functions work', {
+  skip_if_not(capabilities()["X11"], "Test requires png() device, assumed to require X11")
   on.exit(dev.off())
   grDevices::png(tempfile())
   plot(NA, xlim=0:1, ylim=0:1)

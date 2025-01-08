@@ -1,8 +1,10 @@
 Package: funchir
-Version: 0.3.0
+Version: 0.3.0-1
 Title: Convenience Functions by Michael Chirico
-Author: Michael Chirico
-Maintainer: Michael Chirico <MichaelChirico4@gmail.com>
+Authors@R: person(given = "Michael",
+                  family = "Chirico",
+                  role = c("aut", "cre"),
+                  email = "MichaelChirico4@gmail.com")
 Depends: R (>= 3.2.2)
 Description: YACFP (Yet Another Convenience Function Package). get_age() is a fast & accurate tool for measuring fractional years between two dates. stale_package_check() tries to identify any library() calls to unused packages.
 Imports: data.table
