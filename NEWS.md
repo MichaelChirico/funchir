@@ -1,4 +1,4 @@
-### v0.2.99
+### v0.3.0
 
  * I removed most of the functionality from the package. I think only `stale_package_check()` and `get_age()` have gotten any real downstream usage aside from my own; the few functions I kept are those that I actually continue to use myself with any regularity, or which I think it's worth having written down to save re-inventing the wheel for functions only needed rarely.
 
