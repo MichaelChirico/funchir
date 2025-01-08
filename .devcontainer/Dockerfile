@@ -1,4 +1,4 @@
-FROM FROM docker.io/rhub/r-minimal:devel
+FROM docker.io/rhub/r-minimal:devel
 
 RUN apk update && \
   apk add --no-cache git \
