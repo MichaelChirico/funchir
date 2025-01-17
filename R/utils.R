@@ -16,61 +16,7 @@ embed.mat <- function(mat,
   out
 }
 
-parse_library_calls = function(e) {
-  if (!is.call(e)) return(NULL)
-  if (e[[1L]] == 'library' || e[[1L]] == 'require') {
-    e[[2L]]
-  } else {
-    lapply(e[-1L], parse_library_calls)
-  }
-}
-
-# SKIP base::sample namespace-accessed calls -- if always using ::, it's
-#   not necessary to run library()
-# TODO: maybe it's there just to signal what will be used though?
-get_all_plain_calls = function(e) {
-  if (is.call(e) && is.name(e[[1L]]))
-    c(e[[1L]], lapply(e[-1L], get_all_plain_calls))
-}
-
-# Quick scan of code for whether the
-#   packages loaded are actually used
-#' @param con A connection
-stale_package_check = function(con) {
-  warning("This function is deprecated. Use lintr::unused_import_linter() instead")
-  code = tryCatch(parse(con), error = identity)
-  if (inherits(code, 'error')) {
-    cat('Failed to parse R script, please fix syntax errors first\n')
-    cat('  failed with: ', conditionMessage(code), '\n', sep = '')
-    return(invisible())
-  }
-
-  all_packages = unique(as.character(unlist(lapply(code, parse_library_calls))))
-  if (!length(all_packages)) {
-    cat('No library() or require() calls found\n')
-    return(invisible())
-  }
-
-  # e.g. := from data.table comes out `:=` but := from getNamespaceExports
-  all_plain_calls = setdiff(
-    gsub(
-      pattern = '`', replacement = '', fixed = TRUE,
-      unique(as.character(unlist(lapply(code, get_all_plain_calls))))
-    ),
-    c('library', 'require')
-  )
-
-  for (pkg in all_packages) {
-    fns = sort(getNamespaceExports(pkg)) # for #13
-
-    used = fns %in% all_plain_calls
-    if (any(used))
-      cat('Functions matched from package ', pkg, ':\n\t', toString(fns[used]), '\n', sep = '')
-    else
-      cat('**No exported functions matched from ', pkg, '**\n', sep = '')
-  }
-  invisible()
-}
+stale_package_check = function(con) stop("This function is deprecated. Use lintr::unused_import_linter() instead")
 
 # Accurately calculate fractional age, quickly
 get_age <- function(birthdays, ref_dates) {

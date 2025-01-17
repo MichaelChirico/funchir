@@ -26,7 +26,7 @@
   \item{dates}{ A vector of \code{Date}s. }
 }
 \value{
-  \code{stale_package_check} (DEPRECATED in favor of lintr::unused_import_linter) reads a file (with \code{\link{readLines}}) and checks which functions are actually used from each loaded package. Currently only checks for \code{library} (i.e., not \code{require}) calls.
+  \code{stale_package_check} DEPRECATED in favor of lintr::unused_import_linter.
 
   \code{embed.mat} inserts a supplied matrix into a (weakly) larger enclosing matrix, typically filled with 0s, at a specified position.
 
